@@ -14,7 +14,8 @@
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.7",
         "uspdev/laravel-usp-theme": "^2.3",
-        "uspdev/replicado": "^1.9"
+        "uspdev/replicado": "^1.9",
+        "uspdev/senhaunica-socialite": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
