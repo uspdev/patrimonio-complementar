@@ -20,7 +20,7 @@ class Bempatrimoniado
             B.stabem,
             B.sglcendsp setor, --predio
             CONCAT(RTRIM(l.idfblc), '+', RTRIM(l.idfadr)) piso, -- piso
-            B.codlocusp localusp, CONCAT(RTRIM(l.tiplocusp),'+', RTRIM(l.stiloc)) sala, -- local
+            B.codlocusp, CONCAT(RTRIM(l.tiplocusp),'+', RTRIM(l.stiloc)) sala, -- local
             CONCAT(RTRIM(P.codpes),' - ', P.nompesttd) responsavel, P.nompesttd nompes, P.codpes, -- pessoa
             B.numpat,   B.epforibem,
             c.tipitmmat tipo, c.nomsgpitmmat nome, -- classificacao

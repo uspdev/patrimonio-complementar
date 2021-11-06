@@ -15,7 +15,7 @@
         <div class="input-group-text">{!! $prepend !!}</div>
       </div>
     @endif
-    <input id="{{ $id }}" class="form-control" type="text"
+    <input id="{{ $id }}" class="form-control" type="number"
       wire:dirty.class="border-danger" 
       wire:model.lazy="{{ $model }}" 
       {{ $attributes }} title="@error($model){{ $message }}@enderror" 

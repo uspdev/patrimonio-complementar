@@ -15,6 +15,12 @@ class CreatePatrimoniosTable extends Migration
     {
         Schema::create('patrimonios', function (Blueprint $table) {
             $table->id();
+            $table->integer('numpat');
+            $table->datetime('conferido_em')->nullable();
+            $table->string('setor')->nullable();
+            $table->string('codlocusp')->nullable();
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('codpes')->nullable();
             $table->timestamps();
         });
     }
