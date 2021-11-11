@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Bempatrimoniado;
+use App\Models\Localusp;
 use App\Models\Patrimonio;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -16,15 +17,18 @@ class BuscarPatrimonio extends Component
     public $numpat;
     public $bem;
     public $patrimonio;
+    public $localusp;
 
     // form editar
     public $editar; // true or false
 
     protected $rules = [
         'patrimonio.numpat' => 'integer',
-        'patrimonio.setor' => 'string',
-        'patrimonio.codlocusp' => 'integer|min:0',
-        'patrimonio.codpes' => 'integer|min:1',
+        'patrimonio.setor' => 'required|string',
+        'patrimonio.codlocusp' => 'required|integer',
+        'patrimonio.codpes' => 'required|integer|min:1',
+        'patrimonio.usuario' => 'string|nullable',
+        'patrimonio.local' => 'string|nullable',
     ];
 
     // protected $queryString = ['numpat'];
@@ -37,14 +41,17 @@ class BuscarPatrimonio extends Component
     public function buscar()
     {
         $this->bem = Bempatrimoniado::obter($this->numpat);
-        $this->patrimonio = Patrimonio::firstOrNew(['numpat' => $this->numpat]);
+        if ($this->bem) {
+            $this->patrimonio = Patrimonio::importar($this->bem);
+            $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
+        }
         $this->dispatchBrowserEvent('update-url', ['url' => 'numpat/' . $this->numpat]);
     }
 
     public function confirmar()
     {
-        //$this->validate();
-        $this->authorize('user');
+        $this->validate();
+        $this->authorize('gerente');
         $this->patrimonio->conferido_em = now();
         $this->patrimonio->user_id = Auth::id();
         $this->patrimonio->replicado = $this->bem;
@@ -56,7 +63,7 @@ class BuscarPatrimonio extends Component
 
     public function confirmarUndo()
     {
-        $this->authorize('user');
+        $this->authorize('gerente');
         $this->patrimonio->conferido_em = null;
         $this->patrimonio->save();
         $this->patrimonio->refresh();
@@ -72,7 +79,7 @@ class BuscarPatrimonio extends Component
 
     public function render()
     {
-        $this->authorize('user');
+        $this->authorize('gerente');
         return view('livewire.buscar-patrimonio')->extends('layouts.app')->slot('content');
     }
 }

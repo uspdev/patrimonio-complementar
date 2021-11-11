@@ -17,11 +17,18 @@
           <div class="text-danger">Estado: {{ $bem['stabem'] }}</div>
         @endif
         Nro: <b>{{ formatarNumpat($bem['numpat']) }}</b><br>
-        {{ $bem['tipo'] }} | {{ $bem['nome'] }}<br>
-        Desc: {{ $bem['descricao'] }}<br>
-        Setor/bloco: @include('patrimonio.partials.setor')<br>
-        Local: @include('patrimonio.partials.local')<br>
-        Resp: @include('patrimonio.partials.responsavel') <br>
+
+        @if (!$editar)
+          {{ $bem['tipo'] }} | {{ $bem['nome'] }}<br>
+          Desc: {{ $bem['descricao'] }}<br>
+          Setor/bloco: @include('patrimonio.partials.setor')<br>
+          Local: @include('patrimonio.partials.local')<br>
+          Resp: @include('patrimonio.partials.responsavel') <br>
+          <div class="mb-2"></div>
+          Usuário: <b>{{ $patrimonio->usuario }}</b> <br>
+          Local na sala: <b>{{ $patrimonio->local }}</b>
+        @endif
+
       </div>
 
       @include('patrimonio.partials.editar-form')
@@ -31,8 +38,7 @@
           @include('patrimonio.partials.conferir-button')
 
           <div class="float-right">
-            <button class="btn btn-warning" wire:click="$set('editar', true)"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-secondary" wire:click="buscar"><i class="fas fa-redo"></i></button>
+            <button class="btn btn-primary" wire:click="$set('editar', true)"><i class="fas fa-edit"></i></button>
           </div>
           <div class="clearfix"></div>
         </div>

@@ -17,7 +17,7 @@
       @endif
 
     </div>
-    @if ($patrimonio->temPendencias($bem))
+    @if ($patrimonio->temPendencias())
       <span class="badge badge-warning">Com pendências</span>
     @endif
   </div>

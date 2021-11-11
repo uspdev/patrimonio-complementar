@@ -15,15 +15,16 @@
         <div class="input-group-text">{!! $prepend !!}</div>
       </div>
     @endif
-    <input id="{{ $id }}" class="form-control" type="text"
+    <input 
+      id="{{ $id }}" 
+      class="form-control" 
+      type="text"
       wire:dirty.class="border-danger" 
       wire:model.lazy="{{ $model }}" 
-      {{ $attributes }} title="@error($model){{ $message }}@enderror" 
+      {{ $attributes }} 
+      title="@error($model){{ $message }}@enderror" 
     />
     {{ $slot }}
-    {{-- <button class="btn bg-transparent" wire:click="$set('{{ $model }}','')" style="margin-left: -40px; z-index: 100;">
-      <i class="fa fa-times"></i>
-    </button> --}}
   </div>
 
     @error($model) <span class="small text-danger">{{ $message }}</span> @enderror

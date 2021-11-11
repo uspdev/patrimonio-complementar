@@ -1,4 +1,5 @@
-@if ($patrimonio->codpes && $bem['codpes'] != $patrimonio->codpes)
+
+@if ($bem['codpes'] != $patrimonio->codpes)
   {{ $patrimonio->codpes }} 
   (<span class="text-danger">USP: <b>{{ $bem['nompes'] }}</b> - {{ $bem['codpes'] }}</span>)
 @else

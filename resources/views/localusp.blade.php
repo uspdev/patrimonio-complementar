@@ -10,44 +10,50 @@
     </form>
   </div>
 
-  <div class="mb-3">
-    Total: {{ count($patrimonios) }}<br />
-    @if (count($patrimonios))
-      LocalUSP: {{ $codlocusp }}
-    @endif
-  </div>
+  @if (count($patrimonios))
+    <div class="h4 mb-3">
+      Local {{ $localusp->codlocusp }} - {{ $localusp->nome }}
+      <span class="badge badge-primary">{{ count($patrimonios) }} registros</span>
+    </div>
 
-  <table class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Número</th>
-        <th>Responsável</th>
-        <th>Tipo/Descrição</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($patrimonios as $patrimonio)
+    <table class="table table-bordered table-hover">
+      <thead>
         <tr>
-          <td>
-            @if ($patrimonio->conferido_em)
-              @if ($patrimonio->temPendencias($patrimonio->replicado))
-                <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span>
-              @else
-                <span class="badge badge-success"><i class="fas fa-check"></i></span>
-              @endif
-            @else
-              <span class="badge badge-secondary"><i class="fas fa-question"></i></span>
-            @endif
-          </td>
-          <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
-          <td>{{ $patrimonio->replicado['responsavel'] }}</td>
-          <td>{{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
-            {{ $patrimonio->replicado['descricao'] }}</td>
+          <th></th>
+          <th>Número</th>
+          <th>Responsável</th>
+          <th>Tipo/Descrição</th>
         </tr>
-      @endforeach
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @foreach ($patrimonios as $patrimonio)
+          <tr>
+            <td>
+              @if ($patrimonio->conferido_em)
+                @if ($patrimonio->temPendencias())
+                  <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span>
+                @else
+                  <span class="badge badge-success"><i class="fas fa-check"></i></span>
+                @endif
+              @else
+                <span class="badge badge-secondary"><i class="fas fa-question"></i></span>
+              @endif
+            </td>
+            <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
+            <td>{{ $patrimonio->replicado['responsavel'] }}</td>
+            <td>{{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
+              {{ $patrimonio->replicado['descricao'] }}</td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+
+  @else
+    @if ($localusp->codlocusp)
+      Não foram encontrados registros na sala {{ $localusp->codlocusp }}
+    @endif
+  @endif
+
 
 @endsection
 

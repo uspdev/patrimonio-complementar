@@ -3,8 +3,12 @@
 @section('content')
 
   <h2 class="text-danger">
-      Acesso negado!!
+    Acesso negado!!
   </h2>
-  Faça <a href="{{ route('login') }}">login</a> para acessar esta página.
+  @if (Gate::check('user'))
+    Você não tem privilégios para acessar esse recurso.
+  @else
+    Faça <a href="{{ route('login') }}">login</a> para acessar esta página.
+  @endif
 
 @endsection

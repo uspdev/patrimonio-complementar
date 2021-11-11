@@ -52,18 +52,31 @@ class Patrimonio extends Model implements Auditable
         );
     }
 
-    public function temPendencias($bem = null)
+    public function temPendencias()
     {
-        if ($bem) {
-            if (
-                (!empty($this->codlocusp) && $this->codlocusp != $bem['codlocusp']) ||
-                (!empty($this->setor) && $this->setor != $bem['setor']) ||
-                (!empty($this->codpes) && $this->codpes != $bem['codpes'])
-            ) {
-                return true;
-            }
+        if (
+            (!empty($this->codlocusp) && $this->codlocusp != $this->replicado['codlocusp']) ||
+            (!empty($this->setor) && $this->setor != $this->replicado['setor']) ||
+            (!empty($this->codpes) && $this->codpes != $this->replicado['codpes'])
+        ) {
+            return true;
         }
         return false;
+    }
+
+    /**
+     * Cria um novo patrimonio a partir de $bem mas não persiste
+     */
+    public static function importar($bem)
+    {
+        $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
+        $patrimonio->replicado = $bem;
+        $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
+        $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
+        $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
+        $patrimonio->user_id = \Auth::id();
+
+        return $patrimonio;
     }
 
     /**

@@ -17,6 +17,7 @@ class CreatePatrimoniosTable extends Migration
             $table->id();
             $table->integer('numpat');
             $table->string('usuario')->nullable();
+            $table->string('local')->nullable();
 
             $table->datetime('conferido_em')->nullable();
             $table->foreignId('user_id')->constrained('users');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bempatrimoniado;
+use App\Models\Localusp;
 use App\Models\Patrimonio;
 use Illuminate\Http\Request;
 
@@ -118,21 +119,18 @@ class PatrimonioController extends Controller
         return view('patrimonio.listar-por-numero', ['data' => $out]);
     }
 
-    public function localusp($codlocusp)
+    public function localusp($codlocusp = null)
     {
-        \Gate::authorize('user');
+        \Gate::authorize('gerente');
 
+        if (!$codlocusp) {
+            return view('localusp', ['patrimonios' => [], 'localusp'=>new Localusp]);
+        }
         // todos do replicado
         $bensPorLocal = collect(Bempatrimoniado::listarPorSala($codlocusp));
 
         foreach ($bensPorLocal as $bem) {
-            $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
-            $patrimonio->replicado = $bem;
-            $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
-            $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
-            $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
-            $patrimonio->user_id = \Auth::id();
-
+            $patrimonio = Patrimonio::importar($bem);
             $patrimonio->save();
         }
         $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
@@ -140,7 +138,9 @@ class PatrimonioController extends Controller
             ->orderBy('numpat', 'ASC')
             ->get();
 
-        return view('localusp', compact('codlocusp', 'patrimonios'));
+        $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
+
+        return view('localusp', compact('localusp', 'patrimonios'));
     }
 
     /**

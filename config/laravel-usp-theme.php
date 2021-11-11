@@ -7,7 +7,7 @@ $admin = [
     ],
     [
         'text' => 'SubItem 2',
-        'url' =>  '/subitem2',
+        'url' => '/subitem2',
         'can' => 'admin',
     ],
     [
@@ -34,22 +34,32 @@ $submenu2 = [
     ],
 ];
 
+$buscar = [
+    [
+        'text' => 'Numpat',
+        'url' => 'numpat',
+        'can' => 'gerente',
+    ],
+    [
+        'text' => 'Localusp',
+        'url' => 'localusp',
+        'can' => 'gerente',
+    ],
+];
+
 $menu = [
-    // [
-    //     'text' => 'Listar',
-    //     'submenu' => $submenu2,
-    //     'can' => '',
-    // ],
-    // [
-    //     'text' => 'Está logado',
-    //     'url' => config('app.url') . '/logado', // com caminho absoluto
-    //     'can' => 'user',
-    // ],
-    // [
-    //     'text' => 'Menu gerente',
-    //     'url' => 'gerente',
-    //     'can' => 'gerente',
-    // ],
+    [
+        'text' => 'Listar',
+        'submenu' => $submenu2,
+        'can' => '',
+    ],
+    [
+        'text' => 'Buscar',
+        'submenu' => $buscar,
+        'can' => 'gerente',
+    ],
+
+
     // [
     //     'text' => 'Menu admin',
     //     'submenu' => $admin,
@@ -71,13 +81,12 @@ $right_menu = [
     // ],
 ];
 
-
 return [
     # valor default para a tag title, dentro da section title.
     # valor pode ser substituido pela aplicação.
     'title' => config('app.name'),
 
-    # USP_THEME_SKIN deve ser colocado no .env da aplicação 
+    # USP_THEME_SKIN deve ser colocado no .env da aplicação
     'skin' => env('USP_THEME_SKIN', 'uspdev'),
 
     # chave da sessão. Troque em caso de colisão com outra variável de sessão.
