@@ -25,9 +25,10 @@ Route::resource('/', PatrimonioController::class);
 //     }
 // });
 
-Route::get('/numpat', \App\Http\Livewire\BuscarPatrimonio::class);
+Route::get('/numpat/{numpat?}', \App\Http\Livewire\BuscarPatrimonio::class);
+Route::get('/localusp/{codlocusp}', [PatrimonioController::class, 'localusp']);
+// Route::get('/localusp/{codlocusp?}', [PatrimonioController::class, 'localusp']);
 
 Route::get('/listarPorSala', [PatrimonioController::class, 'listarPorSala']);
 // Route::get('/listarPorSala/{codlocusp?}', [PatrimonioController::class, 'listarPorSala']);
-Route::get('/localusp/{codlocusp?}', [PatrimonioController::class, 'localusp']);
 Route::get('/listarPorNumero', [PatrimonioController::class, 'listarPorNumero']);

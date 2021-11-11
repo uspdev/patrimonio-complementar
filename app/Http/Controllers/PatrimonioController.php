@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class PatrimonioController extends Controller
 {
 
-    public function localusp($codlocusp = null)
+    public function listarlocalusp($codlocusp = null)
     {
         $data = Bempatrimoniado::listarPorSala($codlocusp);
         // dd($data);
@@ -118,41 +118,41 @@ class PatrimonioController extends Controller
         return view('patrimonio.listar-por-numero', ['data' => $out]);
     }
 
+    public function localusp($codlocusp)
+    {
+        \Gate::authorize('user');
+
+        // todos do replicado
+        $bensPorLocal = collect(Bempatrimoniado::listarPorSala($codlocusp));
+
+        foreach ($bensPorLocal as $bem) {
+            $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
+            $patrimonio->replicado = $bem;
+            $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
+            $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
+            $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
+            $patrimonio->user_id = \Auth::id();
+
+            $patrimonio->save();
+        }
+        $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
+            ->orWhere('replicado->codlocusp', $codlocusp)
+            ->orderBy('numpat', 'ASC')
+            ->get();
+
+        return view('localusp', compact('codlocusp', 'patrimonios'));
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         \Gate::authorize('user');
 
-        if ($request->codlocusp) {
-            $codlocusp = $request->codlocusp;
-
-            // todos do replicado
-            $bensPorLocal = collect(Bempatrimoniado::listarPorSala($codlocusp));
-
-            foreach ($bensPorLocal as $bem) {
-                $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
-                $patrimonio->replicado = $bem;
-                $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
-                $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
-                $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
-                $patrimonio->user_id = \Auth::id();
-
-                $patrimonio->save();
-            }
-            $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
-                ->orWhere('replicado->codlocusp', $codlocusp)
-                ->orderBy('numpat', 'ASC')
-                ->get();
-
-            return view('localusp', compact('codlocusp', 'patrimonios'));
-        }
-
-        $numpat = $request->numpat ?? null;
-        return view('patrimonio.index', compact('numpat'));
+        return view('patrimonio.index');
     }
 
     /**

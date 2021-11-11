@@ -3,7 +3,7 @@
 @section('content')
 
   <div class="mb-3">
-    <form method="GET" action="">
+    <form id="form-localusp" method="GET" action="">
       Numero da sala
       <input type="number" name="codlocusp" />
       <button class="btn btn-sm btn-primary" type="submit">OK</button>
@@ -40,7 +40,7 @@
               <span class="badge badge-secondary"><i class="fas fa-question"></i></span>
             @endif
           </td>
-          <td><a href="numpat?numpat={{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
+          <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
           <td>{{ $patrimonio->replicado['responsavel'] }}</td>
           <td>{{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
             {{ $patrimonio->replicado['descricao'] }}</td>
@@ -48,5 +48,19 @@
       @endforeach
     </tbody>
   </table>
+
+@endsection
+
+@section('javascripts_bottom')
+  @parent
+  <script>
+    $(document).ready(function() {
+      $('#form-localusp').submit(function(e) {
+        e.preventDefault(e)
+        window.location.href = 'localusp/' + $(this).find('input').val()
+        // console.log(codlocusp)
+      })
+    })
+  </script>
 
 @endsection

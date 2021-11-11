@@ -2,14 +2,16 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\Patrimonio;
 use App\Models\Bempatrimoniado;
+use App\Models\Patrimonio;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use Livewire\Component;
 
 class BuscarPatrimonio extends Component
 {
+
+    use AuthorizesRequests;
 
     public $numpat;
     public $bem;
@@ -25,9 +27,10 @@ class BuscarPatrimonio extends Component
         'patrimonio.codpes' => 'integer|min:1',
     ];
 
-    protected $queryString = ['numpat'];
+    // protected $queryString = ['numpat'];
 
-    public function updatedNumpat() {
+    public function updatedNumpat()
+    {
         $this->buscar();
     }
 
@@ -35,11 +38,13 @@ class BuscarPatrimonio extends Component
     {
         $this->bem = Bempatrimoniado::obter($this->numpat);
         $this->patrimonio = Patrimonio::firstOrNew(['numpat' => $this->numpat]);
+        $this->dispatchBrowserEvent('update-url', ['url' => 'numpat/' . $this->numpat]);
     }
 
     public function confirmar()
     {
         //$this->validate();
+        $this->authorize('user');
         $this->patrimonio->conferido_em = now();
         $this->patrimonio->user_id = Auth::id();
         $this->patrimonio->replicado = $this->bem;
@@ -51,21 +56,23 @@ class BuscarPatrimonio extends Component
 
     public function confirmarUndo()
     {
+        $this->authorize('user');
         $this->patrimonio->conferido_em = null;
         $this->patrimonio->save();
         $this->patrimonio->refresh();
     }
 
-    public function mount() {
+    public function mount()
+    {
 
         if ($this->numpat) {
-            // $this->numpat = $request->numpat;
             $this->buscar();
         }
     }
 
     public function render()
     {
+        $this->authorize('user');
         return view('livewire.buscar-patrimonio')->extends('layouts.app')->slot('content');
     }
 }

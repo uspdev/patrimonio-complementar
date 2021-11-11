@@ -20,14 +20,15 @@
       {{-- wire:model.lazy="{{ $model }}"  --}}
       {{ $attributes }} title="@error($model){{ $message }}@enderror" 
     />
+    {{ $slot }}
     @if ($append)
       <div class="input-group-prepend">
         <div class="input-group-text">{!! $append !!}</div>
       </div>
     @endif
-    <button class="btn bg-transparent clear-input" style="margin-left: -40px; z-index: 100;">
+    {{-- <button class="btn bg-transparent clear-input" style="margin-left: -40px; z-index: 100;">
       <i class="fa fa-times"></i>
-    </button>
+    </button> --}}
   </div>
 
     @error($model) <span class="small text-danger">{{ $message }}</span> @enderror

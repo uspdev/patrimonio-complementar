@@ -21,9 +21,6 @@
       {{ $attributes }} title="@error($model){{ $message }}@enderror" 
     />
     {{ $slot }}
-    {{-- <button class="btn bg-transparent" wire:click="$set('{{ $model }}','')" style="margin-left: -40px; z-index: 100;">
-      <i class="fa fa-times"></i>
-    </button> --}}
   </div>
 
     @error($model) <span class="small text-danger">{{ $message }}</span> @enderror

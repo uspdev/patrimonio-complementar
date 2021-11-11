@@ -51,4 +51,15 @@
     @includeWhen(Gate::check('admin'),'patrimonio.partials.audit')
 
   </div>
+
+  @section('javascripts_bottom')
+    @parent
+    <script>
+      // Atualiza a url ao mudar o numpat
+      // https://stackoverflow.com/questions/4475367/how-to-change-url-at-address-bar-without-reloading-the-page
+      window.addEventListener('update-url', event => {
+        window.history.pushState('', '', event.detail.url)
+      })
+    </script>
+  @endsection
 </div>
