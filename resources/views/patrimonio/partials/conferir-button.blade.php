@@ -1,16 +1,16 @@
-@if (!$patrimonio->conferido_em || $patrimonio->conferido_em->diff(now())->days > 90)
+@if ($patrimonio->mostrarBotaoConfirmar())
   <button class="btn btn-primary" wire:click="confirmar">
     <i class="fas fa-check-circle"></i> Confirmar
   </button>
 @endif
-@if ($patrimonio->conferido_em && $patrimonio->conferido_em->addMinutes(30)->gt(now()))
+@if ($patrimonio->mostrarBotaoConfirmarUndo())
   <button class="btn btn-warning" wire:click="confirmarUndo">
-    <i class="fas fa-undo"></i> Desfazer confirmar
-    <span class="countdown"></span>
+    <i class="fas fa-undo"></i> Desf. confirmar
+    {{-- <span class="countdown"></span> --}}
   </button>
 @endif
 
-@section('javascripts_bottom')
+{{-- @section('javascripts_bottom')
   @parent
   <script>
     $(function() {
@@ -27,4 +27,4 @@
       }, 1000);
     })
   </script>
-@endsection
+@endsection --}}

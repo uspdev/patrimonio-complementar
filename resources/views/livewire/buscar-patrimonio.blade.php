@@ -10,13 +10,12 @@
   {{-- {{ $numpat }} --}}
   <div>
     @if ($bem)
-
       @include('patrimonio.partials.conferido-badge')
 
-      @if ($bem['stabem'] != 'Ativo')
-        <div class="text-danger">Estado: {{ $bem['stabem'] }}</div>
-      @endif
       <div>
+        @if ($bem['stabem'] != 'Ativo')
+          <div class="text-danger">Estado: {{ $bem['stabem'] }}</div>
+        @endif
         Nro: <b>{{ formatarNumpat($bem['numpat']) }}</b><br>
         {{ $bem['tipo'] }} | {{ $bem['nome'] }}<br>
         Desc: {{ $bem['descricao'] }}<br>
@@ -24,9 +23,10 @@
         Local: @include('patrimonio.partials.local')<br>
         Resp: @include('patrimonio.partials.responsavel') <br>
       </div>
+
       @include('patrimonio.partials.editar-form')
 
-      @if ($bem['stabem'] == 'Ativo')
+      @if ($bem['stabem'] == 'Ativo' && $editar == false)
         <div class="mt-3">
           @include('patrimonio.partials.conferir-button')
 
@@ -34,6 +34,7 @@
             <button class="btn btn-warning" wire:click="$set('editar', true)"><i class="fas fa-edit"></i></button>
             <button class="btn btn-secondary" wire:click="buscar"><i class="fas fa-redo"></i></button>
           </div>
+          <div class="clearfix"></div>
         </div>
       @endif
 
@@ -46,5 +47,8 @@
         @endif
       </div>
     @endif
+    <hr />
+    @includeWhen(Gate::check('admin'),'patrimonio.partials.audit')
+
   </div>
 </div>

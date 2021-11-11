@@ -1,6 +1,6 @@
 @if ($editar)
   <div class="mb-2">
-    Editando ..<br>
+    <div class="h5">Editando ..</div>
     <x-wire-input-text model="patrimonio.setor" prepend="Setor">
       </x-input-text>
       <x-wire-input-number model="patrimonio.codlocusp" prepend="Local">

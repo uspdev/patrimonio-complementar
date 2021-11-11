@@ -8,9 +8,17 @@ use Illuminate\Http\Request;
 
 class PatrimonioController extends Controller
 {
-    public function listarPorSala(Request $request)
+
+    public function localusp($codlocusp = null)
     {
-        $data = Bempatrimoniado::listarPorSala();
+        $data = Bempatrimoniado::listarPorSala($codlocusp);
+        // dd($data);
+        return view('localusp', compact('data'));
+    }
+
+    public function listarPorSala(Request $request, $codlocusp = null)
+    {
+        $data = Bempatrimoniado::listarPorSala($codlocusp);
 
         $data2 = \Arr::sort($data, function ($value) {
             return $value['numpat'];
@@ -115,9 +123,36 @@ class PatrimonioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('patrimonio.index');
+        \Gate::authorize('user');
+
+        if ($request->codlocusp) {
+            $codlocusp = $request->codlocusp;
+
+            // todos do replicado
+            $bensPorLocal = collect(Bempatrimoniado::listarPorSala($codlocusp));
+
+            foreach ($bensPorLocal as $bem) {
+                $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
+                $patrimonio->replicado = $bem;
+                $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
+                $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
+                $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
+                $patrimonio->user_id = \Auth::id();
+
+                $patrimonio->save();
+            }
+            $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
+                ->orWhere('replicado->codlocusp', $codlocusp)
+                ->orderBy('numpat', 'ASC')
+                ->get();
+
+            return view('localusp', compact('codlocusp', 'patrimonios'));
+        }
+
+        $numpat = $request->numpat ?? null;
+        return view('patrimonio.index', compact('numpat'));
     }
 
     /**

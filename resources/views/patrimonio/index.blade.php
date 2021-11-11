@@ -2,6 +2,6 @@
 
 @section('content')
 
-  @livewire('buscar-patrimonio')
+  @livewire('buscar-patrimonio',['numpat'=>$numpat])
 
 @endsection

@@ -1,7 +1,7 @@
 @if ($patrimonio->conferido_em)
   <div class="mb-2">
     <button href="#conferido-em-details" class="badge badge-success" data-toggle="collapse">
-      <i class="fas fa-check mr-2"></i> 
+      <i class="fas fa-check mr-2"></i>
       Conferido {{ dias($patrimonio->conferido_em) }}
       <i class="fas fa-caret-down ml-2"></i>
     </button>
@@ -17,5 +17,9 @@
       @endif
 
     </div>
+    @if ($patrimonio->temPendencias($bem))
+      <span class="badge badge-warning">Com pendências</span>
+    @endif
   </div>
+
 @endif
