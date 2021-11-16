@@ -41,11 +41,10 @@ class BuscarPatrimonio extends Component
 
     public function buscar()
     {
-        $this->bem = Bempatrimoniado::obter($this->numpat);
-        if ($this->bem) {
-            $this->patrimonio = Patrimonio::importar($this->bem);
-            $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
-        }
+        $this->patrimonio = Patrimonio::importar($this->numpat);
+        $this->bem = $this->patrimonio->replicado;
+        $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
+
         $this->dispatchBrowserEvent('update-url', ['url' => 'numpat/' . $this->numpat]);
     }
 

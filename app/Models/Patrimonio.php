@@ -66,9 +66,29 @@ class Patrimonio extends Model implements Auditable
     }
 
     /**
+     * Cria um novo patrimonio a partir de $numpat e persiste se existir
+     */
+    public static function importar($numpat)
+    {
+        $bem = Bempatrimoniado::obter($numpat);
+        $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
+        $patrimonio->replicado = $bem;
+        $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
+        $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
+        $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
+        $patrimonio->user_id = \Auth::id();
+
+        if ($bem) {
+            $patrimonio->save();
+        }
+
+        return $patrimonio;
+    }
+
+     /**
      * Cria um novo patrimonio a partir de $bem mas não persiste
      */
-    public static function importar($bem)
+    public static function obter($bem)
     {
         $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
         $patrimonio->replicado = $bem;

@@ -40,7 +40,7 @@ class Bempatrimoniado
         return DB::fetch($query, $param);
     }
 
-    public static function listarPorSala($codlocusp=null)
+    public static function listarPorSala($codlocusp = null)
     {
         $params = [];
         $filtroLocal = '';
@@ -60,7 +60,7 @@ class Bempatrimoniado
             INNER JOIN dbo.PESSOA P on P.codpes = B.codpes
             INNER JOIN dbo.LOCALUSP l on l.codlocusp = B.codlocusp
             INNER JOIN dbo.CLASSIFITEMMAT c on c.coditmmat = B.coditmmat
-        WHERE B.sglcendsp IN ('SET','LAMEM','LMABC') 
+        WHERE B.sglcendsp IN ('SET','LAMEM','LMABC')
             AND stabem='Ativo'
             {$filtroLocal}
         ORDER BY
@@ -69,5 +69,28 @@ class Bempatrimoniado
     ";
 
         return DB::fetchAll($query, $params);
+    }
+
+    public static function listarPorSetores($setores)
+    {
+        $query = "SELECT
+            B.sglcendsp setor, --predio
+            CONCAT(RTRIM(l.idfblc), '+', RTRIM(l.idfadr)) piso, -- piso
+            B.codlocusp, CONCAT(RTRIM(l.tiplocusp),'+', RTRIM(l.stiloc)) sala, -- local
+            P.codpes, CONCAT(RTRIM(P.codpes),' - ', P.nompesttd) responsavel, P.nompesttd nompes, -- pessoa
+            B.numpat,   B.epforibem,
+            c.tipitmmat tipo, c.nomsgpitmmat nome, -- classificacao
+            CONCAT(B.epfmarpat,' / ', B.modpat, ' / ', B.tippat) descricao
+        FROM BEMPATRIMONIADO B
+            INNER JOIN dbo.PESSOA P on P.codpes = B.codpes
+            INNER JOIN dbo.LOCALUSP l on l.codlocusp = B.codlocusp
+            INNER JOIN dbo.CLASSIFITEMMAT c on c.coditmmat = B.coditmmat
+        WHERE B.sglcendsp IN ({$setores})
+            AND stabem = 'Ativo'
+        ORDER BY
+            --B.numpat ASC
+	        B.sglcendsp ASC, piso ASC, B.codlocusp ASC, B.numpat ASC
+        ";
+        return DB::fetchAll($query);
     }
 }

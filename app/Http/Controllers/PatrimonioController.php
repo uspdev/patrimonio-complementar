@@ -130,7 +130,7 @@ class PatrimonioController extends Controller
         $bensPorLocal = collect(Bempatrimoniado::listarPorSala($codlocusp));
 
         foreach ($bensPorLocal as $bem) {
-            $patrimonio = Patrimonio::importar($bem);
+            $patrimonio = Patrimonio::obter($bem);
             $patrimonio->save();
         }
         $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
@@ -147,14 +147,15 @@ class PatrimonioController extends Controller
     {
         \Gate::authorize('gerente');
 
+        $bens = Bempatrimoniado::listarPorSetores("'SET','LMABC','LAMEM'");
+
         $patrimonios = Patrimonio::all();
         $pendentes = [];
         $conferidos = [];
         $naoVerificados = [];
-        foreach ($patrimonios as $patrimonio) {
-            if ($patrimonio->temPendencias()) {
-                $patrimonio->replicado = Bempatrimoniado::obter($patrimonio->numpat);
-            }
+        foreach ($bens as $bem) {
+            $patrimonio = Patrimonio::obter($bem);
+
             if ($patrimonio->temPendencias()) {
                 $pendentes[] = $patrimonio;
             } elseif ($patrimonio->conferido_em) {
@@ -162,13 +163,10 @@ class PatrimonioController extends Controller
             } else {
                 $naoVerificados[] = $patrimonio;
             }
-
+            $patrimonio->isDirty() && $patrimonio->save();
         }
 
         return view('relatorio', compact('pendentes', 'conferidos', 'naoVerificados'));
-
-        dd(count($pendentes), count($conferidos));
-
     }
 
     /**
