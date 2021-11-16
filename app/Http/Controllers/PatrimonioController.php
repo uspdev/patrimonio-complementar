@@ -147,7 +147,11 @@ class PatrimonioController extends Controller
     {
         \Gate::authorize('gerente');
 
-        $bens = Bempatrimoniado::listarPorSetores("'SET','LMABC','LAMEM'");
+        $setores = \Auth::user()->setores;
+        $setores = "'" . implode("','", explode(',', $setores)) . "'";
+        // dd($setores);
+
+        $bens = Bempatrimoniado::listarPorSetores($setores);
 
         $patrimonios = Patrimonio::all();
         $pendentes = [];

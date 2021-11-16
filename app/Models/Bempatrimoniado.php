@@ -91,6 +91,7 @@ class Bempatrimoniado
             --B.numpat ASC
 	        B.sglcendsp ASC, piso ASC, B.codlocusp ASC, B.numpat ASC
         ";
+
         return DB::fetchAll($query);
     }
 }

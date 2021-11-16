@@ -30,7 +30,7 @@
         @foreach ($page as $col)
           <td>
             @foreach ($col as $row)
-              {{ formatarNumpat($row['numpat']) }} | {{ $row['localusp'] }} |
+              {{ formatarNumpat($row['numpat']) }} | {{ $row['codlocusp'] }} |
               {{ truncateMiddle($row['nompes'], 9) }}<br>
             @endforeach
           </td>

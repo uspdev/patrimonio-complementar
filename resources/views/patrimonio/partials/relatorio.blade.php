@@ -1,8 +1,8 @@
-@php $prev['localusp'] = 0 @endphp
+@php $prev['codlocusp'] = 0 @endphp
 @foreach ($data as $row)
-  @if ($prev['localusp'] != $row['localusp'])
+  @if ($prev['codlocusp'] != $row['codlocusp'])
     <div class="page-break"></div>
-    <b>{{ $row['setor'] }} | piso {{ $row['piso'] }} | sala {{ $row['localusp'] }} - {{ $row['sala'] }}</b> <br>
+    <b>{{ $row['setor'] }} | piso {{ $row['piso'] }} | sala {{ $row['codlocusp'] }} - {{ $row['sala'] }}</b> <br>
     <br>
   @endif
   {{-- <div> --}}
