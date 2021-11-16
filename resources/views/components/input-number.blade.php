@@ -4,7 +4,7 @@
     'append' => '',
     'label' => '',
     'class' => '',
-    'id' => mt_rand(1000000, 9999999),
+    'id' => 'input-number-' . mt_rand(1000000, 9999999),
 ])
 
 <div class="form-group {{ $class }} wire-input-text">

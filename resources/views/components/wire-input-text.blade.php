@@ -4,7 +4,7 @@
     'append' => '',
     'label' => '',
     'class' => '',
-    'id' => mt_rand(1000000, 9999999),
+    'id' => 'wire-input-text-' . mt_rand(1000000, 9999999),
 ])
 
 <div class="form-group {{ $class }} wire-input-text">
@@ -15,17 +15,10 @@
         <div class="input-group-text">{!! $prepend !!}</div>
       </div>
     @endif
-    <input 
-      id="{{ $id }}" 
-      class="form-control" 
-      type="text"
-      wire:dirty.class="border-danger" 
-      wire:model.lazy="{{ $model }}" 
-      {{ $attributes }} 
-      title="@error($model){{ $message }}@enderror" 
-    />
-    {{ $slot }}
-  </div>
+    <input id="{{ $id }}" class="form-control" type="text" wire:dirty.class="border-danger"
+      wire:model.lazy="{{ $model }}" {{ $attributes }} title="@error($model){{ $message }}@enderror" />
+      {{ $slot }}
+    </div>
 
     @error($model) <span class="small text-danger">{{ $message }}</span> @enderror
   </div>
