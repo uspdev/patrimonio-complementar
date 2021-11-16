@@ -27,8 +27,8 @@ class BuscarPatrimonio extends Component
         'patrimonio.setor' => 'required|string',
         'patrimonio.codlocusp' => 'required|integer',
         'patrimonio.codpes' => 'required|integer|min:1',
-        'patrimonio.usuario' => 'string|nullable',
-        'patrimonio.local' => 'string|nullable',
+        'patrimonio.usuario' => 'nullable|string',
+        'patrimonio.local' => 'nullable|string',
     ];
 
     // protected $queryString = ['numpat'];
@@ -50,11 +50,11 @@ class BuscarPatrimonio extends Component
 
     public function confirmar()
     {
-        $this->validate();
         $this->authorize('gerente');
+        $this->validate();
+
         $this->patrimonio->conferido_em = now();
         $this->patrimonio->user_id = Auth::id();
-        $this->patrimonio->replicado = $this->bem;
         $this->patrimonio->save();
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
 
@@ -65,6 +65,7 @@ class BuscarPatrimonio extends Component
     public function confirmarUndo()
     {
         $this->authorize('gerente');
+
         $this->patrimonio->conferido_em = null;
         $this->patrimonio->save();
         $this->patrimonio->refresh();
