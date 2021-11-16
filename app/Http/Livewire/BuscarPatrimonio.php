@@ -32,6 +32,7 @@ class BuscarPatrimonio extends Component
     ];
 
     // protected $queryString = ['numpat'];
+    // protected $listeners = ['refresh' => '$refresh'];
 
     public function updatedNumpat()
     {
@@ -56,9 +57,10 @@ class BuscarPatrimonio extends Component
         $this->patrimonio->user_id = Auth::id();
         $this->patrimonio->replicado = $this->bem;
         $this->patrimonio->save();
-        $this->patrimonio->refresh();
+        $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
 
         $this->editar = false;
+        $this->emitSelf('refresh');
     }
 
     public function confirmarUndo()

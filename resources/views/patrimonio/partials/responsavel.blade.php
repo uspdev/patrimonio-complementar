@@ -1,6 +1,6 @@
 
 @if ($bem['codpes'] != $patrimonio->codpes)
-  {{ $patrimonio->codpes }} 
+{{ $patrimonio->obterNomeCodpes() }} - {{ $patrimonio->codpes }}
   (<span class="text-danger">USP: <b>{{ $bem['nompes'] }}</b> - {{ $bem['codpes'] }}</span>)
 @else
   <b>{{ $bem['nompes'] }}</b> - {{ $bem['codpes'] }}

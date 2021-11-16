@@ -124,7 +124,7 @@ class PatrimonioController extends Controller
         \Gate::authorize('gerente');
 
         if (!$codlocusp) {
-            return view('localusp', ['patrimonios' => [], 'localusp'=>new Localusp]);
+            return view('localusp', ['patrimonios' => [], 'localusp' => new Localusp]);
         }
         // todos do replicado
         $bensPorLocal = collect(Bempatrimoniado::listarPorSala($codlocusp));
@@ -141,6 +141,34 @@ class PatrimonioController extends Controller
         $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
 
         return view('localusp', compact('localusp', 'patrimonios'));
+    }
+
+    public function relatorio()
+    {
+        \Gate::authorize('gerente');
+
+        $patrimonios = Patrimonio::all();
+        $pendentes = [];
+        $conferidos = [];
+        $naoVerificados = [];
+        foreach ($patrimonios as $patrimonio) {
+            if ($patrimonio->temPendencias()) {
+                $patrimonio->replicado = Bempatrimoniado::obter($patrimonio->numpat);
+            }
+            if ($patrimonio->temPendencias()) {
+                $pendentes[] = $patrimonio;
+            } elseif ($patrimonio->conferido_em) {
+                $conferidos[] = $patrimonio;
+            } else {
+                $naoVerificados[] = $patrimonio;
+            }
+
+        }
+
+        return view('relatorio', compact('pendentes', 'conferidos', 'naoVerificados'));
+
+        dd(count($pendentes), count($conferidos));
+
     }
 
     /**

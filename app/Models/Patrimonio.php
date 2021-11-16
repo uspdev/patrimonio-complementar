@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Uspdev\Replicado\Pessoa;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patrimonio extends Model implements Auditable
 {
@@ -77,6 +78,10 @@ class Patrimonio extends Model implements Auditable
         $patrimonio->user_id = \Auth::id();
 
         return $patrimonio;
+    }
+
+    public function obterNomeCodpes() {
+        return Pessoa::nomeCompleto($this->codpes);
     }
 
     /**

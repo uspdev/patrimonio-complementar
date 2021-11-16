@@ -58,7 +58,11 @@ $menu = [
         'submenu' => $buscar,
         'can' => 'gerente',
     ],
-
+    [
+        'text' => 'Relatório',
+        'url' => 'relatorio',
+        'can' => 'gerente',
+    ],
 
     // [
     //     'text' => 'Menu admin',

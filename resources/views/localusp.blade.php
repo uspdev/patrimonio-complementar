@@ -16,7 +16,7 @@
       <span class="badge badge-primary">{{ count($patrimonios) }} registros</span>
     </div>
 
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover datatable ">
       <thead>
         <tr>
           <th></th>
@@ -31,11 +31,14 @@
             <td>
               @if ($patrimonio->conferido_em)
                 @if ($patrimonio->temPendencias())
+                  <span class="d-none">1pendente</span>
                   <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span>
                 @else
+                  <span class="d-none">2conferido</span>
                   <span class="badge badge-success"><i class="fas fa-check"></i></span>
                 @endif
               @else
+                <span class="d-none">0naoVerificado</span>
                 <span class="badge badge-secondary"><i class="fas fa-question"></i></span>
               @endif
             </td>
@@ -61,10 +64,11 @@
   @parent
   <script>
     $(document).ready(function() {
+
+      // troca o envio do form por link com o nro da sala
       $('#form-localusp').submit(function(e) {
         e.preventDefault(e)
         window.location.href = 'localusp/' + $(this).find('input').val()
-        // console.log(codlocusp)
       })
     })
   </script>
