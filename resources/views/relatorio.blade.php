@@ -22,7 +22,7 @@
           </tr>
       </thead>
     <tbody>
-      @foreach ($naoVerificados as $patrimonio)
+      @foreach ($pendentes as $patrimonio)
         <tr>
           <td>
             <a href="numpat/{{ $patrimonio->numpat }}">{{ formatarNumpat($patrimonio->numpat) }}</a>
