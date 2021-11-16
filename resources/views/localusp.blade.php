@@ -23,6 +23,7 @@
           <th>Número</th>
           <th>Responsável</th>
           <th>Tipo/Descrição</th>
+          <th>Usuário</th>
         </tr>
       </thead>
       <tbody>
@@ -44,8 +45,13 @@
             </td>
             <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
             <td>{{ $patrimonio->replicado['responsavel'] }}</td>
-            <td>{{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
-              {{ $patrimonio->replicado['descricao'] }}</td>
+            <td>
+              {{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
+              {{ $patrimonio->replicado['descricao'] }}
+            </td>
+            <td>
+              {{ $patrimonio->usuario }}
+            </td>
           </tr>
         @endforeach
       </tbody>

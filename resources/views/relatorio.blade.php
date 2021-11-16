@@ -19,6 +19,7 @@
               <th>Responsável</th>
               <th>Setor</th>
               <th>Descrição</th>
+              <th>Usuário</th>
           </tr>
       </thead>
     <tbody>
@@ -49,6 +50,9 @@
           </td>
           <td>
             {{ $patrimonio->replicado['tipo'] }} | {{ $patrimonio->replicado['nome'] }}
+          </td>
+          <td>
+            {{ $patrimonio->usuario }}
           </td>
         </tr>
       @endforeach
