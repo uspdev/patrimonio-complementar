@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Uspdev\Replicado\Pessoa;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Uspdev\Replicado\Pessoa;
 
 class Patrimonio extends Model implements Auditable
 {
@@ -71,21 +71,23 @@ class Patrimonio extends Model implements Auditable
     public static function importar($numpat)
     {
         $bem = Bempatrimoniado::obter($numpat);
-        $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
-        $patrimonio->replicado = $bem;
-        $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
-        $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
-        $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
-        $patrimonio->user_id = \Auth::id();
-
         if ($bem) {
+            $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
+            $patrimonio->replicado = $bem;
+            $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
+            $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
+            $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
+            $patrimonio->user_id = \Auth::id();
             $patrimonio->save();
+        } else {
+            $patrimonio = new Patrimonio;
+            $patrimonio->user_id = \Auth::id();
         }
 
         return $patrimonio;
     }
 
-     /**
+    /**
      * Cria um novo patrimonio a partir de $bem mas não persiste
      */
     public static function obter($bem)
@@ -100,7 +102,8 @@ class Patrimonio extends Model implements Auditable
         return $patrimonio;
     }
 
-    public function obterNomeCodpes() {
+    public function obterNomeCodpes()
+    {
         return Pessoa::nomeCompleto($this->codpes);
     }
 
