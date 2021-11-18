@@ -12,7 +12,7 @@
             <x-wire-input-text model="patrimonio.local" prepend="Local na sala"></x-wire-input-text>
     </div>
     <button class="btn btn-small btn-primary">OK</button>
-    <button class="btn btn-small btn-warning" wire:click="$set('editar', false)">Cancelar</button>
+    <button class="btn btn-small btn-warning" wire:click="cancelar">Cancelar</button>
   </form>
 
 @endif

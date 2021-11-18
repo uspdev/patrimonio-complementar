@@ -62,6 +62,12 @@ class BuscarPatrimonio extends Component
         $this->emitSelf('refresh');
     }
 
+    public function cancelar()
+    {
+        $this->patrimonio->refresh();
+        $this->editar = false;
+    }
+
     public function confirmarUndo()
     {
         $this->authorize('gerente');
@@ -73,10 +79,7 @@ class BuscarPatrimonio extends Component
 
     public function mount()
     {
-
-        if ($this->numpat) {
-            $this->buscar();
-        }
+        $this->numpat && $this->buscar();
     }
 
     public function render()
