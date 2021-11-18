@@ -8,7 +8,7 @@
     }
 
   </style>
-  @include('minimo')
-  <div class="page-break"></div>
-  @include('relatorio')
+  {{-- @include('minimo') --}}
+  {{-- <div class="page-break"></div> --}}
+  @include('patrimonio.partials.lista-por-sala')
 </body>

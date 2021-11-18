@@ -1,7 +1,7 @@
 @php $prev['codlocusp'] = 0 @endphp
 @foreach ($data as $row)
   @if ($prev['codlocusp'] != $row['codlocusp'])
-    <div class="page-break"></div>
+    <div class="page-break"></div> {{-- para quegrar página no PDF --}}
     <b>{{ $row['setor'] }} | piso {{ $row['piso'] }} | sala {{ $row['codlocusp'] }} - {{ $row['sala'] }}</b> <br>
     <br>
   @endif
