@@ -24,13 +24,14 @@ $admin = [
 ];
 
 $submenu2 = [
-    [
-        'text' => 'Por número de patrimônio',
-        'url' => 'listarPorNumero',
-    ],
+    // [
+    //     'text' => 'Por número de patrimônio',
+    //     'url' => 'listarPorNumero',
+    // ],
     [
         'text' => 'Por sala',
         'url' => 'listarPorSala',
+        'can' => 'gerente',
     ],
 ];
 

@@ -27,7 +27,8 @@ return [
     'destroyUser' => true,
 
     // view para editar campo de usuário personalizado
-    'customUserField' => ['label'=>'Setores','view'=>'users.custom', 'width'=>'200px'],
+    // é passado $user para a view
+    'customUserField' => ['view'=>'user.setores', 'label'=>'Setores', 'width'=>'200px'],
 
     // se true, revoga as permissões do usuario se não estiver no env.
     // quer dizer que as permissões serão gerenciadas todas a partir do env da aplicação.

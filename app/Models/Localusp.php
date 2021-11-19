@@ -12,4 +12,9 @@ class Localusp extends Model
     protected $fillable = [
         'codlocusp',
     ];
+
+    protected $casts = [
+        'replicado' => 'array',
+    ];
+
 }

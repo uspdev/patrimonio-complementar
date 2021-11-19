@@ -18,6 +18,7 @@ class CreateLocaluspsTable extends Migration
             $table->integer('codlocusp');
             $table->string('setor');
             $table->string('nome');
+            $table->json('replicado')->nullable();
             $table->timestamps();
         });
     }

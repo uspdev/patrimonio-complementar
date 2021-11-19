@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\PatrimonioController;
+use Uspdev\Replicado\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Uspdev\Replicado\DB;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PatrimonioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ use Uspdev\Replicado\DB;
  */
 
 Route::resource('/', PatrimonioController::class);
+Route::resource('/user', UserController::class);
 
 // Route::get('/', function(Request $request){
 //     if($request->numpat){

@@ -17,9 +17,12 @@ class PatrimonioController extends Controller
         return view('localusp', compact('data'));
     }
 
-    public function listarPorSala(Request $request, $codlocusp = null)
+    /**
+     * Gera relatório de listagem por sala com geração de PDF
+     */
+    public function listarPorSala(Request $request)
     {
-        $data = Bempatrimoniado::listarPorSala($codlocusp);
+        $data = Bempatrimoniado::listarPorSala();
 
         $data2 = \Arr::sort($data, function ($value) {
             return $value['numpat'];
@@ -61,7 +64,7 @@ class PatrimonioController extends Controller
         // dd($out);
 
         if (isset($request->pdf)) {
-            $pdf = PDF::loadView('pdf', compact('data', 'out'));
+            $pdf = \PDF::loadView('pdf', compact('data', 'out'));
             return $pdf->download('relatorio.pdf');
         }
 
