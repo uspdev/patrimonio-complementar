@@ -25,6 +25,7 @@ class CreatePatrimoniosTable extends Migration
             $table->string('setor')->nullable();
             $table->string('codlocusp')->nullable();
             $table->string('codpes')->nullable();
+
             $table->json('replicado')->nullable();
             $table->timestamps();
         });

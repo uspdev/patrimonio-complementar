@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            LocaluspSeeder::class,
+            //LocaluspSeeder::class,
+            //PatrimonioSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
     }
