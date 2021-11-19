@@ -24,6 +24,7 @@
           <th>Responsável</th>
           <th>Tipo/Descrição</th>
           <th>Usuário</th>
+          <th>Local na sala</th>
         </tr>
       </thead>
       <tbody>
@@ -51,6 +52,9 @@
             </td>
             <td>
               {{ $patrimonio->usuario }}
+            </td>
+            <td>
+              {{ $patrimonio->local }}
             </td>
           </tr>
         @endforeach
