@@ -3,7 +3,7 @@
 @section('content')
 
   <div class="h4">
-      Relatório de conferência |
+    Relatório de conferência |
     <span class="badge badge-warning">{{ count($pendentes) }} com pendências</span>
     <span class="badge badge-success"> {{ count($conferidos) }} conferidos</span>
     <span class="badge badge-secondary"> {{ count($naoVerificados) }} não verificados</span>
@@ -12,17 +12,17 @@
   <div class="h3">Pendentes</div>
 
   <table class="table table-bordered table-sm table-hover datatable">
-      <thead>
-          <tr>
-              <th>Patrimônio</th>
-              <th>LocalUSP</th>
-              <th>Responsável</th>
-              <th>Setor</th>
-              <th>Descrição</th>
-              <th>Usuário</th>
-              <th>Local na sala</th>
-          </tr>
-      </thead>
+    <thead>
+      <tr>
+        <th>Patrimônio</th>
+        <th>LocalUSP</th>
+        <th>Responsável</th>
+        <th>Setor</th>
+        <th>Descrição</th>
+        <th>Usuário</th>
+        <th>Local na sala</th>
+      </tr>
+    </thead>
     <tbody>
       @foreach ($pendentes as $patrimonio)
         <tr>
@@ -31,20 +31,21 @@
           </td>
           <td>
             @if ($patrimonio->codlocusp != $patrimonio->replicado['codlocusp'])
-              {{ $patrimonio->replicado['codlocusp'] }} <i class="fas fa-angle-right"></i>
+              <span class="text-danger">USP: {{ $patrimonio->replicado['codlocusp'] }}</span>
+              <i class="fas fa-angle-right"></i>
             @endif
             <b>{{ $patrimonio->codlocusp }}</b>
           </td>
           <td>
             @if ($patrimonio->codpes != $patrimonio->replicado['codpes'])
-              <span class="text-danger">USP:</span> {{ $patrimonio->replicado['codpes'] }} 
+              <span class="text-danger">USP: {{ $patrimonio->replicado['codpes'] }} </span>
               <i class="fas fa-angle-right"></i>
             @endif
             <b>{{ $patrimonio->codpes }}</b>
           </td>
           <td>
             @if ($patrimonio->setor != $patrimonio->replicado['setor'])
-              <span class="text-danger">USP:</span> {{ $patrimonio->replicado['setor'] }} 
+              <span class="text-danger">USP: {{ $patrimonio->replicado['setor'] }}</span>
               <i class="fas fa-angle-right"></i>
             @endif
             <b>{{ $patrimonio->setor }}</b>
