@@ -10,12 +10,16 @@
     </x-input-number>
   </form>
 
+  <div class="bold">
+    {{ $user->codpes }} - {{ $user->name }}
+  </div>
+
   <table class="table table-bordered table-hover datatable ">
     <thead>
       <tr>
         <th></th>
         <th>Número</th>
-        <th>Responsável</th>
+        <th>Local</th>
         <th>Tipo/Descrição</th>
         <th>Usuário</th>
         <th>Local na sala</th>
@@ -38,8 +42,10 @@
               <span class="badge badge-secondary"><i class="fas fa-question"></i></span>
             @endif
           </td>
-          <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
-          <td>{{ $patrimonio->replicado['responsavel'] }}</td>
+          <td>
+            <a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a>
+          </td>
+          <td>{{ $patrimonio->codlocusp }}</td>
           <td>
             {{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
             {{ $patrimonio->replicado['descricao'] }}
@@ -62,10 +68,9 @@
   <script>
     $('#form-numpat').submit(function(e) {
       e.preventDefault(e)
-      window.location.href =  $(this).attr('action') + '/' + $(this).find('input[name=codpes]').val()
+      window.location.href = $(this).attr('action') + '/' + $(this).find('input[name=codpes]').val()
       // console.log(codlocusp)
     })
-
   </script>
 
 @endsection

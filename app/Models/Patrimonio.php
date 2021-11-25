@@ -89,9 +89,14 @@ class Patrimonio extends Model implements Auditable
         }
 
         if (isset($filter['codlocusp'])) {
-            $bensPorLocal = collect(Bempatrimoniado::listarPorSala($filter['codlocusp']));
+            foreach (Bempatrimoniado::listarPorSala($filter['codlocusp']) as $bem) {
+                $patrimonio = Patrimonio::obter($bem);
+                $patrimonio->save();
+            }
+        }
 
-            foreach ($bensPorLocal as $bem) {
+        if (isset($filter['codpes'])) {
+            foreach (Bempatrimoniado::listarPorResponsavel($filter['codpes']) as $bem) {
                 $patrimonio = Patrimonio::obter($bem);
                 $patrimonio->save();
             }

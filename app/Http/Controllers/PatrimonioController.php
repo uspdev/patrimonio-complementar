@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Bempatrimoniado;
 use App\Models\Localusp;
 use App\Models\Patrimonio;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Bempatrimoniado;
 
 class PatrimonioController extends Controller
 {
-
-    public function listarlocalusp($codlocusp = null)
-    {
-        $data = Bempatrimoniado::listarPorSala($codlocusp);
-        // dd($data);
-        return view('localusp', compact('data'));
-    }
 
     /**
      * Gera relatório de listagem por sala com geração de PDF
@@ -36,6 +29,84 @@ class PatrimonioController extends Controller
         }
 
         return view('patrimonio.listar-por-sala', compact('localusps'));
+    }
+
+    public function buscarPorLocal($codlocusp = null)
+    {
+        \Gate::authorize('gerente');
+
+        if (!$codlocusp) {
+            $localusp = new Localusp;
+            $patrimonios = [];
+        } else {
+            $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
+
+            Patrimonio::importar(['codlocusp' => $codlocusp]);
+            $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
+                ->orWhere('replicado->codlocusp', $codlocusp)
+                ->orderBy('numpat', 'ASC')
+                ->get();
+        }
+
+        return view('localusp', compact('localusp', 'patrimonios'));
+    }
+
+    public function buscarPorResponsavel($codpes = null)
+    {
+        \Gate::authorize('gerente');
+
+        if (!$codpes) {
+            $patrimonios = [];
+            $user = null;
+        } else {
+            Patrimonio::importar(['codpes' => $codpes]);
+
+            $patrimonios = Patrimonio::where('codpes', $codpes)
+                ->orWhere('replicado->despes', $codpes)
+                ->orderBy('numpat', 'ASC')
+                ->get();
+
+            $user = new User;
+            if ($patrimonios->isNotEmpty()) {
+                $user->codpes = $patrimonios[0]->replicado['codpes'];
+                $user->name = $patrimonios[0]->replicado['nompes'];
+            } else {
+                $user->codpes = 0;
+                $user->name = '';
+            }
+        }
+
+        return view('buscar-por-responsavel', compact('patrimonios', 'user'));
+    }
+
+    public function relatorio()
+    {
+        \Gate::authorize('gerente');
+
+        $setores = \Auth::user()->setores;
+        $setores = "'" . implode("','", explode(',', $setores)) . "'";
+        // dd($setores);
+
+        $bens = Bempatrimoniado::listarPorSetores($setores);
+
+        $patrimonios = Patrimonio::all();
+        $pendentes = [];
+        $conferidos = [];
+        $naoVerificados = [];
+        foreach ($bens as $bem) {
+            $patrimonio = Patrimonio::obter($bem);
+
+            if ($patrimonio->temPendencias()) {
+                $pendentes[] = $patrimonio;
+            } elseif ($patrimonio->conferido_em) {
+                $conferidos[] = $patrimonio;
+            } else {
+                $naoVerificados[] = $patrimonio;
+            }
+            $patrimonio->isDirty() && $patrimonio->save();
+        }
+
+        return view('relatorio', compact('pendentes', 'conferidos', 'naoVerificados'));
     }
 
     public function listarPorNumero(Request $request)
@@ -89,78 +160,6 @@ class PatrimonioController extends Controller
         }
 
         return view('patrimonio.listar-por-numero', ['data' => $out]);
-    }
-
-    public function buscarPorLocal($codlocusp = null)
-    {
-        \Gate::authorize('gerente');
-
-        if (!$codlocusp) {
-            $localusp = new Localusp;
-            $patrimonios = [];
-        } else {
-            $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
-
-            Patrimonio::importar(['codlocusp' => $codlocusp]);
-            $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
-                ->orWhere('replicado->codlocusp', $codlocusp)
-                ->orderBy('numpat', 'ASC')
-                ->get();
-        }
-
-        return view('localusp', compact('localusp', 'patrimonios'));
-    }
-
-    public function buscarPorResponsavel($codpes = null)
-    {
-        \Gate::authorize('gerente');
-
-        if (!$codpes) {
-            $patrimonios = [];
-            $user = null;
-        } else {
-            Patrimonio::importar(['codpes' => $codpes]);
-
-            $patrimonios = Patrimonio::where('codpes', $codpes)
-                ->orWhere('replicado->despes', $codpes)
-                ->orderBy('numpat', 'ASC')
-                ->get();
-
-            $user = new User;
-            $user->name = "Masaki";
-        }
-
-        return view('buscar-por-responsavel', compact('patrimonios', 'user'));
-    }
-
-    public function relatorio()
-    {
-        \Gate::authorize('gerente');
-
-        $setores = \Auth::user()->setores;
-        $setores = "'" . implode("','", explode(',', $setores)) . "'";
-        // dd($setores);
-
-        $bens = Bempatrimoniado::listarPorSetores($setores);
-
-        $patrimonios = Patrimonio::all();
-        $pendentes = [];
-        $conferidos = [];
-        $naoVerificados = [];
-        foreach ($bens as $bem) {
-            $patrimonio = Patrimonio::obter($bem);
-
-            if ($patrimonio->temPendencias()) {
-                $pendentes[] = $patrimonio;
-            } elseif ($patrimonio->conferido_em) {
-                $conferidos[] = $patrimonio;
-            } else {
-                $naoVerificados[] = $patrimonio;
-            }
-            $patrimonio->isDirty() && $patrimonio->save();
-        }
-
-        return view('relatorio', compact('pendentes', 'conferidos', 'naoVerificados'));
     }
 
     /**

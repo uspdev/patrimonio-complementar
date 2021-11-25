@@ -94,4 +94,30 @@ class Bempatrimoniado
 
         return DB::fetchAll($query);
     }
+
+    public static function listarPorResponsavel($codpes)
+    {
+        $query = "SELECT
+            B.sglcendsp setor, --predio
+            CONCAT(RTRIM(l.idfblc), '+', RTRIM(l.idfadr)) piso, -- piso
+            B.codlocusp, CONCAT(RTRIM(l.tiplocusp),'+', RTRIM(l.stiloc)) sala, -- local
+            P.codpes, CONCAT(RTRIM(P.codpes),' - ', P.nompesttd) responsavel, P.nompesttd nompes, -- pessoa
+            B.numpat,   B.epforibem,
+            c.tipitmmat tipo, c.nomsgpitmmat nome, -- classificacao
+            CONCAT(B.epfmarpat,' / ', B.modpat, ' / ', B.tippat) descricao
+        FROM BEMPATRIMONIADO B
+            INNER JOIN dbo.PESSOA P on P.codpes = B.codpes
+            INNER JOIN dbo.LOCALUSP l on l.codlocusp = B.codlocusp
+            INNER JOIN dbo.CLASSIFITEMMAT c on c.coditmmat = B.coditmmat
+        WHERE B.codpes = :codpes
+            AND stabem = 'Ativo'
+        ORDER BY
+            --B.numpat ASC
+	        B.sglcendsp ASC, piso ASC, B.codlocusp ASC, B.numpat ASC
+        ";
+
+        $params['codpes'] = $codpes;
+
+        return DB::fetchAll($query, $params);
+    }
 }
