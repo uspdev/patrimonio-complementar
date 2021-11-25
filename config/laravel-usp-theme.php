@@ -42,8 +42,8 @@ $buscar = [
         'can' => 'gerente',
     ],
     [
-        'text' => 'Localusp',
-        'url' => 'localusp',
+        'text' => 'Por local',
+        'url' => 'buscarPorLocal',
         'can' => 'gerente',
     ],
 ];
@@ -60,11 +60,15 @@ $menu = [
         'can' => 'gerente',
     ],
     [
+        'text' => 'Locais',
+        'url' => 'localusp',
+        'can' => 'gerente',
+    ],
+    [
         'text' => 'Relatório',
         'url' => 'relatorio',
         'can' => 'gerente',
     ],
-
     // [
     //     'text' => 'Menu admin',
     //     'submenu' => $admin,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Localusp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LocaluspController extends Controller
 {
@@ -14,7 +15,10 @@ class LocaluspController extends Controller
      */
     public function index()
     {
-        //
+        $setores = explode(',', Auth::user()->setores);
+        $localusps = Localusp::whereIn('setor', $setores)->get();
+
+        return view('localusp.index', compact('localusps'));
     }
 
     /**

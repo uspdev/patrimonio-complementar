@@ -24,51 +24,15 @@ class PatrimonioController extends Controller
     {
         $data = Bempatrimoniado::listarPorSala();
 
-        $data2 = \Arr::sort($data, function ($value) {
-            return $value['numpat'];
-        });
-
-        $linPorPagina = 52;
-        $numCols = 2;
-        $regPorPagina = $linPorPagina * $numCols;
-
-        $out = [];
-        $contRow = 0;
-        $countCol = 0;
-        $pag = [];
-        $col = [];
-        foreach ($data2 as $row) {
-            $col[] = $row;
-            $contRow++;
-
-            // divide colunas
-            if ($contRow == $linPorPagina) {
-                $pag[] = $col;
-                $col = [];
-                $contRow = 0;
-                $countCol++;
-            }
-
-            // divide paginas
-            if ($countCol == $numCols) {
-                $out[] = $pag;
-                $pag = [];
-                $countCol = 0;
-            }
-        }
-
-        // pega ultima coluna/pagina
-        $pag[] = $col;
-        $out[] = $pag;
-
-        // dd($out);
+        $setores = explode(',', \Auth::user()->setores);
+        $localusps = Localusp::whereIn('setor', $setores)->orderBy('setor')->orderBy('codlocusp')->get();
 
         if (isset($request->pdf)) {
-            $pdf = \PDF::loadView('pdf', compact('data', 'out'));
+            $pdf = \PDF::loadView('pdf', compact('localusps'));
             return $pdf->download('relatorio.pdf');
         }
 
-        return view('patrimonio.listar-por-sala', compact('data'));
+        return view('patrimonio.listar-por-sala', compact('localusps'));
     }
 
     public function listarPorNumero(Request $request)

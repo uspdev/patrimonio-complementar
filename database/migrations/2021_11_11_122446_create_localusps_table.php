@@ -15,9 +15,10 @@ class CreateLocaluspsTable extends Migration
     {
         Schema::create('localusps', function (Blueprint $table) {
             $table->id();
-            $table->integer('codlocusp');
+            $table->integer('codlocusp')->unique();
             $table->string('setor');
-            $table->string('nome');
+            $table->string('andar')->nullable();
+            $table->string('nome')->nullable();
             $table->json('replicado')->nullable();
             $table->timestamps();
         });

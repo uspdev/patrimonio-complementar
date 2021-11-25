@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use App\Models\Patrimonio;
+use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -27,7 +27,7 @@ Artisan::command('importarUsuarios {arquivo}', function ($arquivo) {
         die(PHP_EOL);
     }
 
-    if(!User::find(1)) {
+    if (!User::find(1)) {
         echo 'sem usuário criado. Faça login 1x';
         die(PHP_EOL);
     }
@@ -41,12 +41,12 @@ Artisan::command('importarUsuarios {arquivo}', function ($arquivo) {
 Artisan::command('importarLocais {arquivo}', function ($arquivo) {
 
     if (!is_file($arquivo)) {
-        echo 'arquuivo inválido';
+        echo 'arquivo inválido';
         die(PHP_EOL);
     }
 
     require $arquivo;
 
-    \DB::table('localusps')->insert($locais);
+    \DB::table('localusps')->upsert($locais, ['codlocusp'], ['setor', 'andar', 'nome']);
 
 })->purpose('Importar locais');

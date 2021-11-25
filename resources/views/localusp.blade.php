@@ -3,7 +3,7 @@
 @section('content')
 
   <div class="mb-3">
-    <form id="form-localusp" method="GET" action="">
+    <form id="form-localusp" method="GET" action="{{ route('buscarPorLocal') }}">
       Numero da sala
       <input type="number" name="codlocusp" />
       <button class="btn btn-sm btn-primary" type="submit">OK</button>
@@ -78,7 +78,7 @@
       // troca o envio do form por link com o nro da sala
       $('#form-localusp').submit(function(e) {
         e.preventDefault(e)
-        window.location.href = 'localusp/' + $(this).find('input').val()
+        window.location.href = $(this).attr('action')+ '/' + $(this).find('input').val()
       })
     })
   </script>
