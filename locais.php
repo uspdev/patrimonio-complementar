@@ -1,6 +1,7 @@
 <?php
 
 $locais = [
+
     ['codlocusp' => 2767, 'setor'=>'SET','andar'=>'Térreo','nome'=>'Secretaria'],
     ['codlocusp' => 2778, 'setor'=>'SET','andar'=>'Térreo','nome'=>'Sala de Aula SET01'],
     ['codlocusp' => 2779, 'setor'=>'SET','andar'=>'Térreo','nome'=>'Hall de entrada'],
@@ -111,6 +112,7 @@ $locais = [
     ['codlocusp' => 4364, 'setor'=>'LAMEM','andar'=>'Térreo','nome'=>'Depósito de madeiras'],
     ['codlocusp' => 4365, 'setor'=>'LAMEM','andar'=>'Térreo','nome'=>'WC oficina'],
     ['codlocusp' => 4366, 'setor'=>'LAMEM','andar'=>'Térreo','nome'=>'Sala técnicos'],
+    ['codlocusp' => 20307, 'setor'=>'LAMEM','andar'=>'Térreo','nome'=>'Dartec'],
     ['codlocusp' => 4367, 'setor'=>'LAMEM','andar'=>'Térreo','nome'=>'Almoxarifado oficina'],
     ['codlocusp' => 11943, 'setor'=>'LAMEM','andar'=>'Térreo','nome'=>''],
     ['codlocusp' => 2786, 'setor'=>'LE','andar'=>'Térreo','nome'=>'Laboratório de Ensaios'],

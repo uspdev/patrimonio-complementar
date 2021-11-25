@@ -22,6 +22,8 @@ class PatrimonioController extends Controller
      */
     public function listarPorSala(Request $request)
     {
+        \Gate::authorize('gerente');
+
         $data = Bempatrimoniado::listarPorSala();
 
         $setores = explode(',', \Auth::user()->setores);
@@ -37,6 +39,8 @@ class PatrimonioController extends Controller
 
     public function listarPorNumero(Request $request)
     {
+        \Gate::authorize('gerente');
+
         $data = Bempatrimoniado::listarPorSala();
 
         $data = \Arr::sort($data, function ($value) {

@@ -52,7 +52,7 @@ $menu = [
     [
         'text' => 'Listar',
         'submenu' => $submenu2,
-        'can' => '',
+        'can' => 'gerente',
     ],
     [
         'text' => 'Buscar',
