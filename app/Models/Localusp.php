@@ -11,7 +11,7 @@ class Localusp extends Model
     use HasFactory;
 
     protected $fillable = [
-        'codlocusp',
+        'codlocusp','setor','andar','nome'
     ];
 
     protected $casts = [
