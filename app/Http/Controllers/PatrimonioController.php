@@ -55,10 +55,10 @@ class PatrimonioController extends Controller
     {
         \Gate::authorize('gerente');
 
-        if (!$codpes) {
-            $patrimonios = [];
-            $user = null;
-        } else {
+        $user = new User;
+        $patrimonios = [];
+
+        if ($codpes) {
             Patrimonio::importar(['codpes' => $codpes]);
 
             $patrimonios = Patrimonio::where('codpes', $codpes)
@@ -66,13 +66,9 @@ class PatrimonioController extends Controller
                 ->orderBy('numpat', 'ASC')
                 ->get();
 
-            $user = new User;
             if ($patrimonios->isNotEmpty()) {
                 $user->codpes = $patrimonios[0]->replicado['codpes'];
                 $user->name = $patrimonios[0]->replicado['nompes'];
-            } else {
-                $user->codpes = 0;
-                $user->name = '';
             }
         }
 
