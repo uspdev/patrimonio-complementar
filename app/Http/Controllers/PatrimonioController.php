@@ -56,7 +56,7 @@ class PatrimonioController extends Controller
         \Gate::authorize('gerente');
 
         $user = new User;
-        $patrimonios = [];
+        $patrimonios = collect();
 
         if ($codpes) {
             Patrimonio::importar(['codpes' => $codpes]);

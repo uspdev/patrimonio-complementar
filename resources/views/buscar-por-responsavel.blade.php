@@ -14,6 +14,7 @@
     {{ $user->codpes }} - {{ $user->name }}
   </div>
 
+  @if($patrimonios->isNotEmpty())
   <table class="table table-bordered table-hover datatable ">
     <thead>
       <tr>
@@ -60,6 +61,9 @@
       @endforeach
     </tbody>
   </table>
+  @else
+  
+  @endif
 
 @endsection
 
