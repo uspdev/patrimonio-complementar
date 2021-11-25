@@ -46,6 +46,11 @@ $buscar = [
         'url' => 'buscarPorLocal',
         'can' => 'gerente',
     ],
+    [
+        'text' => 'Por responsável',
+        'url' => 'buscarPorResponsavel',
+        'can' => 'admin',
+    ],
 ];
 
 $menu = [

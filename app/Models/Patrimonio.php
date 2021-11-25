@@ -68,23 +68,34 @@ class Patrimonio extends Model implements Auditable
     /**
      * Cria um novo patrimonio a partir de $numpat e persiste se existir
      */
-    public static function importar($numpat)
+    public static function importar($filter)
     {
-        $bem = Bempatrimoniado::obter($numpat);
-        if ($bem) {
-            $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
-            $patrimonio->replicado = $bem;
-            $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
-            $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
-            $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
-            $patrimonio->user_id = \Auth::id();
-            $patrimonio->save();
-        } else {
-            $patrimonio = new Patrimonio;
-            $patrimonio->user_id = \Auth::id();
+        if (isset($filter['numpat'])) {
+            $bem = Bempatrimoniado::obter($filter['numpat']);
+            if ($bem) {
+                $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
+                $patrimonio->replicado = $bem;
+                $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
+                $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
+                $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
+                $patrimonio->user_id = \Auth::id();
+                $patrimonio->save();
+            } else {
+                $patrimonio = new Patrimonio;
+                $patrimonio->user_id = \Auth::id();
+            }
+
+            return $patrimonio;
         }
 
-        return $patrimonio;
+        if (isset($filter['codlocusp'])) {
+            $bensPorLocal = collect(Bempatrimoniado::listarPorSala($filter['codlocusp']));
+
+            foreach ($bensPorLocal as $bem) {
+                $patrimonio = Patrimonio::obter($bem);
+                $patrimonio->save();
+            }
+        }
     }
 
     /**

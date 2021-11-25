@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bempatrimoniado;
+use App\Models\User;
 use App\Models\Localusp;
 use App\Models\Patrimonio;
 use Illuminate\Http\Request;
+use App\Models\Bempatrimoniado;
 
 class PatrimonioController extends Controller
 {
@@ -90,28 +91,46 @@ class PatrimonioController extends Controller
         return view('patrimonio.listar-por-numero', ['data' => $out]);
     }
 
-    public function localusp($codlocusp = null)
+    public function buscarPorLocal($codlocusp = null)
     {
         \Gate::authorize('gerente');
 
         if (!$codlocusp) {
-            return view('localusp', ['patrimonios' => [], 'localusp' => new Localusp]);
-        }
-        // todos do replicado
-        $bensPorLocal = collect(Bempatrimoniado::listarPorSala($codlocusp));
+            $localusp = new Localusp;
+            $patrimonios = [];
+        } else {
+            $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
 
-        foreach ($bensPorLocal as $bem) {
-            $patrimonio = Patrimonio::obter($bem);
-            $patrimonio->save();
+            Patrimonio::importar(['codlocusp' => $codlocusp]);
+            $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
+                ->orWhere('replicado->codlocusp', $codlocusp)
+                ->orderBy('numpat', 'ASC')
+                ->get();
         }
-        $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
-            ->orWhere('replicado->codlocusp', $codlocusp)
-            ->orderBy('numpat', 'ASC')
-            ->get();
-
-        $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
 
         return view('localusp', compact('localusp', 'patrimonios'));
+    }
+
+    public function buscarPorResponsavel($codpes = null)
+    {
+        \Gate::authorize('gerente');
+
+        if (!$codpes) {
+            $patrimonios = [];
+            $user = null;
+        } else {
+            Patrimonio::importar(['codpes' => $codpes]);
+
+            $patrimonios = Patrimonio::where('codpes', $codpes)
+                ->orWhere('replicado->despes', $codpes)
+                ->orderBy('numpat', 'ASC')
+                ->get();
+
+            $user = new User;
+            $user->name = "Masaki";
+        }
+
+        return view('buscar-por-responsavel', compact('patrimonios', 'user'));
     }
 
     public function relatorio()
