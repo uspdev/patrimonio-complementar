@@ -10,11 +10,28 @@ return [
 
     'middleware' => ['web'], // you probably want to include 'web' here
     'session_key' => 'senhaunica-socialite', // chave da sessão. Troque em caso de colisão com outra variável de sessão.
-    'template' => 'laravel-usp-theme::master', // template a ser estendido para as views internas, deve possuir a section "content"
+
+    // -----------------------------------------------------
+    // Para views internas da biblioteca (users)
+
+    // template a ser estendido. Deve possuir a section "content"
+    'template' => 'laravel-usp-theme::master', 
 
     // define as rotas para o gerenciador de usuários interno, dentro de prefix
     // se vazio, desabilita a rota de gerenciamento de usuários interna
     'userRoutes' => 'users',
+
+    // se true, habilita botão para remover usuário (destroy)
+    'destroyUser' => true,
+
+    // view para editar campo de usuário personalizado
+    // é passado $user para a view. É necessário criar a rota/controller também
+    'customUserField' => ['view'=>'user.setores', 'label'=>'Setores', 'width'=>'200px'],
+
+    // Define o gate para a rota de busca de pessoas
+    'findUsersGate' => 'gerente',
+    // fim views internas
+    // -----------------------------------------------------
 
     // usa as permissoes internas, padrão para v4.
     // Se false, não usará permission ao efetuar login
@@ -22,13 +39,6 @@ return [
 
     // permite login somente de usuários já cadastrados na base local ou autorizados nos admins, gerentes ou users
     'onlyLocalUsers' => false,
-
-    // se true, habilita botão para remover usuário (destroy)
-    'destroyUser' => true,
-
-    // view para editar campo de usuário personalizado
-    // é passado $user para a view
-    'customUserField' => ['view'=>'user.setores', 'label'=>'Setores', 'width'=>'200px'],
 
     // se true, revoga as permissões do usuario se não estiver no env.
     // quer dizer que as permissões serão gerenciadas todas a partir do env da aplicação.

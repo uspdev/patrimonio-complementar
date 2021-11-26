@@ -49,7 +49,7 @@ $buscar = [
     [
         'text' => 'Por responsável',
         'url' => 'buscarPorResponsavel',
-        'can' => 'admin',
+        'can' => 'gerente',
     ],
 ];
 
