@@ -25,8 +25,8 @@
             <td>
               <a href="{{ route('buscarPorLocal') }}/{{ $localusp->codlocusp }}">{{ $localusp->codlocusp }}</a>
             </td>
-            <td>{{ $localusp->andar }} (USP: {{ $localusp->replicado['idfadr'] ?? ''}})</td>
-            <td>{{ $localusp->nome }} (USP: {{ $localusp->replicado['idfloc'] }})</td>
+            <td>@include('localusp.partials.andar')</td>
+            <td>@include('localusp.partials.nome')</td>
             <td>
               {{ $localusp->replicado['tiplocusp'] ?? '-' }}
               | {{ $localusp->replicado['stiloc'] ?? '-' }}
