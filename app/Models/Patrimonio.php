@@ -78,7 +78,7 @@ class Patrimonio extends Model implements Auditable
                 $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
                 $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
                 $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
-                $patrimonio->user_id = \Auth::id();
+                $patrimonio->user_id = empty($patrimonio->user_id) ? \Auth::id() : $patrimonio->user_id;
                 $patrimonio->save();
             } else {
                 $patrimonio = new Patrimonio;
@@ -113,7 +113,7 @@ class Patrimonio extends Model implements Auditable
         $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
         $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
         $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
-        $patrimonio->user_id = \Auth::id();
+        $patrimonio->user_id = empty($patrimonio->user_id) ? \Auth::id() : $patrimonio->user_id;
 
         return $patrimonio;
     }
