@@ -16,6 +16,7 @@ class LocaluspController extends Controller
     public function index()
     {
         $setores = explode(',', Auth::user()->setores);
+        Localusp::importar();
         $localusps = Localusp::whereIn('setor', $setores)->get();
 
         return view('localusp.index', compact('localusps'));

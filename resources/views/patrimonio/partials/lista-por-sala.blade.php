@@ -5,7 +5,7 @@
   @foreach ($localusp->patrimonios() as $patrimonio)
     {{ formatarNumpat($patrimonio->numpat) }} | bem: {{ mb_strtolower($patrimonio->replicado['tipo']) }} /
     {{ mb_strtolower($patrimonio->replicado['nome']) }} | descr.: {{ $patrimonio->replicado['descricao'] }} <br>
-    {{ $patrimonio->replicado['responsavel'] }} <br>
+    {{ $patrimonio->replicado['codpes'] }} - {{ $patrimonio->replicado['nompes'] }} <br>
     <br>
   @endforeach
   <div class="page-break"></div> {{-- para quegrar página no PDF --}}

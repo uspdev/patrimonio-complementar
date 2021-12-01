@@ -70,37 +70,39 @@ class Patrimonio extends Model implements Auditable
      */
     public static function importar($filter)
     {
+
+        if (isset($filter['bem'])) {
+            $patrimonio = SELF::obter($filter['bem']);
+            $patrimonio->save();
+            return $patrimonio;
+        }
+
         if (isset($filter['numpat'])) {
             $bem = Bempatrimoniado::obter($filter['numpat']);
             if ($bem) {
-                $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
-                $patrimonio->replicado = $bem;
-                $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
-                $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
-                $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
-                $patrimonio->user_id = empty($patrimonio->user_id) ? \Auth::id() : $patrimonio->user_id;
+                $patrimonio = SELF::obter($bem);
                 $patrimonio->save();
             } else {
                 $patrimonio = new Patrimonio;
                 $patrimonio->user_id = \Auth::id();
             }
-
             return $patrimonio;
         }
 
         if (isset($filter['codlocusp'])) {
             foreach (Bempatrimoniado::listarPorSala($filter['codlocusp']) as $bem) {
-                $patrimonio = Patrimonio::obter($bem);
+                $patrimonio = SELF::obter($bem);
                 $patrimonio->save();
             }
         }
 
         if (isset($filter['codpes'])) {
             foreach (Bempatrimoniado::listarPorResponsavel($filter['codpes']) as $bem) {
-                $patrimonio = Patrimonio::obter($bem);
+                $patrimonio = SELF::obter($bem);
                 $patrimonio->save();
             }
         }
+
     }
 
     /**
@@ -109,7 +111,10 @@ class Patrimonio extends Model implements Auditable
     public static function obter($bem)
     {
         $patrimonio = Patrimonio::firstOrNew(['numpat' => $bem['numpat']]);
-        $patrimonio->replicado = $bem;
+        if (json_encode($patrimonio->replicado) != json_encode($bem)) {
+            // dd($bem, $patrimonio->replicado);
+            $patrimonio->replicado = $bem;
+        }
         $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
         $patrimonio->setor = empty($patrimonio->setor) ? $bem['setor'] : $patrimonio->setor;
         $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;

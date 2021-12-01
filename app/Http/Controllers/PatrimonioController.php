@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bempatrimoniado;
+use App\Models\User;
 use App\Models\Localusp;
 use App\Models\Patrimonio;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Uspdev\Replicado\Pessoa;
+use App\Models\Bempatrimoniado;
 
 class PatrimonioController extends Controller
 {
@@ -67,17 +68,19 @@ class PatrimonioController extends Controller
                 ->get();
 
             if ($patrimonios->isNotEmpty()) {
-                $user->codpes = $patrimonios[0]->replicado['codpes'];
-                $user->name = $patrimonios[0]->replicado['nompes'];
+                $user->codpes = $codpes;
+                $user->name = Pessoa::nomeCompleto($codpes);
             }
         }
 
         return view('buscar-por-responsavel', compact('patrimonios', 'user'));
     }
 
-    public function relatorio()
+    public function relatorio(Request $request)
     {
         \Gate::authorize('gerente');
+
+        $exibir = $request->e ?? 'pendentes';
 
         $setores = \Auth::user()->setores;
         $setores = "'" . implode("','", explode(',', $setores)) . "'";
@@ -85,12 +88,12 @@ class PatrimonioController extends Controller
 
         $bens = Bempatrimoniado::listarPorSetores($setores);
 
-        $patrimonios = Patrimonio::all();
         $pendentes = [];
         $conferidos = [];
         $naoVerificados = [];
         foreach ($bens as $bem) {
-            $patrimonio = Patrimonio::obter($bem);
+            $patrimonio = Patrimonio::importar(['bem' => $bem]);
+            // $patrimonio = Patrimonio::obter($bem);
 
             if ($patrimonio->temPendencias()) {
                 $pendentes[] = $patrimonio;
@@ -99,10 +102,10 @@ class PatrimonioController extends Controller
             } else {
                 $naoVerificados[] = $patrimonio;
             }
-            $patrimonio->isDirty() && $patrimonio->save();
+            // $patrimonio->isDirty() && $patrimonio->save();
         }
 
-        return view('relatorio', compact('pendentes', 'conferidos', 'naoVerificados'));
+        return view('relatorio', compact('pendentes', 'conferidos', 'naoVerificados', 'exibir'));
     }
 
     public function listarPorNumero(Request $request)

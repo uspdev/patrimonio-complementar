@@ -8,116 +8,137 @@ class Bempatrimoniado
 {
     public static function obter($numpat)
     {
-        $numpat = str_replace('.', '', $numpat);
-
-        $query = "SELECT p.nompesttd, b.*
-        FROM BEMPATRIMONIADO b
-        INNER JOIN PESSOA p on p.codpes = b.codpes
-        WHERE numpat = CONVERT(decimal, :numpat)
-        ";
-
-        $query = "SELECT
-            B.stabem,
-            B.sglcendsp setor, --predio
-            CONCAT(RTRIM(l.idfblc), '+', RTRIM(l.idfadr)) piso, -- piso
-            B.codlocusp, CONCAT(RTRIM(l.tiplocusp),'+', RTRIM(l.stiloc)) sala, -- local
-            CONCAT(RTRIM(P.codpes),' - ', P.nompesttd) responsavel, P.nompesttd nompes, P.codpes, -- pessoa
-            B.numpat,   B.epforibem,
-            c.tipitmmat tipo, c.nomsgpitmmat nome, -- classificacao
-            CONCAT(B.epfmarpat,' / ', B.modpat, ' / ', B.tippat) descricao
-            from BEMPATRIMONIADO B
-            INNER JOIN dbo.PESSOA P on P.codpes = B.codpes
-            INNER JOIN dbo.LOCALUSP l on l.codlocusp = B.codlocusp
-            INNER JOIN dbo.CLASSIFITEMMAT c on c.coditmmat = B.coditmmat
-            WHERE numpat = CONVERT(decimal, :numpat)
-            --ORDER BY
-            --B.numpat ASC
-            --B.sglcendsp ASC, piso ASC, B.codlocusp ASC, B.numpat ASC
-        ";
-
-        $param['numpat'] = $numpat;
-
-        return DB::fetch($query, $param);
+        $numpats = SELF::listar(['numpat' => $numpat]);
+        if ($numpats) {
+            return $numpats[0];
+        } else {
+            return [];
+        }
     }
 
     public static function listarPorSala($codlocusp = null)
     {
-        $params = [];
-        $filtroLocal = '';
-        if ($codlocusp) {
-            $filtroLocal = 'AND l.codlocusp = :codlocusp';
-            $params['codlocusp'] = $codlocusp;
-        }
-        $query = "SELECT
-            B.sglcendsp setor, --predio
-            CONCAT(RTRIM(l.idfblc), '+', RTRIM(l.idfadr)) piso, -- piso
-            B.codlocusp, CONCAT(RTRIM(l.tiplocusp),'+', RTRIM(l.stiloc)) sala, -- local
-            P.codpes, CONCAT(RTRIM(P.codpes),' - ', P.nompesttd) responsavel, P.nompesttd nompes, -- pessoa
-            B.numpat,   B.epforibem,
-            c.tipitmmat tipo, c.nomsgpitmmat nome, -- classificacao
-            CONCAT(B.epfmarpat,' / ', B.modpat, ' / ', B.tippat) descricao
-        FROM BEMPATRIMONIADO B
-            INNER JOIN dbo.PESSOA P on P.codpes = B.codpes
-            INNER JOIN dbo.LOCALUSP l on l.codlocusp = B.codlocusp
-            INNER JOIN dbo.CLASSIFITEMMAT c on c.coditmmat = B.coditmmat
-        WHERE B.sglcendsp IN ('SET','LAMEM','LMABC')
-            AND stabem='Ativo'
-            {$filtroLocal}
-        ORDER BY
-            --B.numpat ASC
-	        B.sglcendsp ASC, piso ASC, B.codlocusp ASC, B.numpat ASC
-    ";
+        $filtros = ['l.codlocusp' => $codlocusp, 'B.stabem' => 'Ativo'];
 
-        return DB::fetchAll($query, $params);
+        $setores = \Auth::user()->setores;
+        $setores = "'" . implode("','", explode(',', $setores)) . "'";
+        $filtrosIn = ['B.sglcendsp' => $setores];
+
+        $numpats = SELF::listar($filtros, $filtrosIn);
+        // dd($numpats);
+        return $numpats;
     }
 
     public static function listarPorSetores($setores)
     {
-        $query = "SELECT
-            B.sglcendsp setor, --predio
-            CONCAT(RTRIM(l.idfblc), '+', RTRIM(l.idfadr)) piso, -- piso
-            B.codlocusp, CONCAT(RTRIM(l.tiplocusp),'+', RTRIM(l.stiloc)) sala, -- local
-            P.codpes, CONCAT(RTRIM(P.codpes),' - ', P.nompesttd) responsavel, P.nompesttd nompes, -- pessoa
-            B.numpat,   B.epforibem,
-            c.tipitmmat tipo, c.nomsgpitmmat nome, -- classificacao
-            CONCAT(B.epfmarpat,' / ', B.modpat, ' / ', B.tippat) descricao
-        FROM BEMPATRIMONIADO B
-            INNER JOIN dbo.PESSOA P on P.codpes = B.codpes
-            INNER JOIN dbo.LOCALUSP l on l.codlocusp = B.codlocusp
-            INNER JOIN dbo.CLASSIFITEMMAT c on c.coditmmat = B.coditmmat
-        WHERE B.sglcendsp IN ({$setores})
-            AND stabem = 'Ativo'
-        ORDER BY
-            --B.numpat ASC
-	        B.sglcendsp ASC, piso ASC, B.codlocusp ASC, B.numpat ASC
-        ";
+        $filtros = ['B.stabem' => 'Ativo'];
+        $filtrosIn = ['B.sglcendsp' => $setores];
 
-        return DB::fetchAll($query);
+        $numpats = SELF::listar($filtros, $filtrosIn);
+        // dd($numpats);
+        return $numpats;
     }
 
     public static function listarPorResponsavel($codpes)
     {
+        $filtros = ['P.codpes' => $codpes];
+        $numpats = SELF::listar($filtros);
+        // dd($numpats);
+        return $numpats;
+    }
+
+    /**
+     * Lista patrimonios usando filtros e filtro tipo IN
+     */
+    public static function listar($filtros = [], $filtrosIn = [])
+    {
+        list($filter_query, $params) = SELF::criaFiltro($filtros, []);
+
+        if ($filtrosIn) {
+            $filter_query .= $filter_query ? ' AND ' : '';
+            $filter_query .= SELF::criaFiltroIn($filtrosIn);
+        }
+
         $query = "SELECT
-            B.sglcendsp setor, --predio
-            CONCAT(RTRIM(l.idfblc), '+', RTRIM(l.idfadr)) piso, -- piso
-            B.codlocusp, CONCAT(RTRIM(l.tiplocusp),'+', RTRIM(l.stiloc)) sala, -- local
-            P.codpes, CONCAT(RTRIM(P.codpes),' - ', P.nompesttd) responsavel, P.nompesttd nompes, -- pessoa
-            B.numpat,   B.epforibem,
+            P.nompesttd nompes, P.codpes, -- pessoa
+            -- B.stabem,
+            -- B.sglcendsp setor, --predio
+            -- B.codlocusp,
+            -- B.numpat,   B.epforibem,
+            B.*,
             c.tipitmmat tipo, c.nomsgpitmmat nome, -- classificacao
             CONCAT(B.epfmarpat,' / ', B.modpat, ' / ', B.tippat) descricao
-        FROM BEMPATRIMONIADO B
-            INNER JOIN dbo.PESSOA P on P.codpes = B.codpes
-            INNER JOIN dbo.LOCALUSP l on l.codlocusp = B.codlocusp
-            INNER JOIN dbo.CLASSIFITEMMAT c on c.coditmmat = B.coditmmat
-        WHERE B.codpes = :codpes
-            AND stabem = 'Ativo'
-        ORDER BY
-            --B.numpat ASC
-	        B.sglcendsp ASC, piso ASC, B.codlocusp ASC, B.numpat ASC
+            FROM BEMPATRIMONIADO B
+                INNER JOIN dbo.PESSOA P on P.codpes = B.codpes
+                INNER JOIN dbo.LOCALUSP l on l.codlocusp = B.codlocusp
+                INNER JOIN dbo.CLASSIFITEMMAT c on c.coditmmat = B.coditmmat
+            WHERE {$filter_query}
+            ORDER BY B.numpat ASC
         ";
 
-        $params['codpes'] = $codpes;
+        // dd($query, $params);
 
         return DB::fetchAll($query, $params);
+    }
+
+
+    /**
+     * Retorna array contendo string formatada do WHERE com os filtros e
+     * as colunas => valores no formato para $params
+     *
+     * @param array $filtros (opcional) - campo_tabela => valor
+     * @param array $tipos (opcional) - campo_tabela => tipo (ex.: codpes => int)
+     *
+     * @return array posição [0] => string WHERE, posição [1] = 'colunas' => valores
+     *
+     */
+    public static function criaFiltro(array $filtros, array $tipos = [])
+    {
+        $str_where = '';
+        $params = [];
+        if (!empty($filtros) && (count($filtros) > 0)) {
+            foreach ($filtros as $coluna => $valor) {
+                // se $coluna tiver 'tabela.coluna', vamos tirar o 'tabela.'
+                $param = explode('.', $coluna);
+                $param = end($param);
+
+                if (array_key_exists($coluna, $tipos)) {
+                    $str_where .= " $coluna = CONVERT({$tipos[$coluna]}, :{$param}) ";
+                } else {
+                    $str_where .= " {$coluna} = :{$param} ";
+                }
+
+                $params[$param] = $valor;
+
+                // Enquanto existir um filtro, adiciona o operador AND
+                $str_where .= next($filtros) ? ' AND ' : '';
+            }
+            $str_where = ' (' . $str_where . ') ';
+        }
+        return [$str_where, $params];
+    }
+
+    /**
+     * Retorna string formatada do WHERE com os filtros tipo IN
+     *
+     * Ex. Para $filtroIn = ['codpes' => "'123','456'"], a saída será (codpes IN('123','456'))
+     *
+     * @param array $filtroIn (opcional) - campo_tabela => valor
+     * @return string
+     * @author Masaki K Neto em 1/12/2021
+     */
+    public static function criaFiltroIn(array $filtroIn)
+    {
+        $str_where = '';
+        if (!empty($filtroIn) && (count($filtroIn) > 0)) {
+            foreach ($filtroIn as $coluna => $valor) {
+                $str_where .= "$coluna IN ($valor)";
+
+                // Enquanto existir um filtro, adiciona o operador AND
+                $str_where .= next($filtroIn) ? ' AND ' : '';
+            }
+            $str_where = ' (' . $str_where . ') ';
+        }
+        return $str_where;
     }
 }
