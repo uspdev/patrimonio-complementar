@@ -44,8 +44,8 @@
             <b>{{ $patrimonio->codpes }}</b>
           </td>
           <td>
-            @if ($patrimonio->setor != $patrimonio->replicado['setor'])
-              <span class="text-danger">USP: {{ $patrimonio->replicado['setor'] }}</span>
+            @if ($patrimonio->setor != $patrimonio->replicado['sglcendsp'])
+              <span class="text-danger">USP: {{ $patrimonio->replicado['sglcendsp'] }}</span>
               <i class="fas fa-angle-right"></i>
             @endif
             <b>{{ $patrimonio->setor }}</b>
