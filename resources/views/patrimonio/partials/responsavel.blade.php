@@ -1,9 +1,8 @@
-
 @if ($bem['codpes'] != $patrimonio->codpes)
-{{ $patrimonio->obterNomeCodpes() }} - {{ $patrimonio->codpes }}
+  {{ $patrimonio->obterNomeCodpes() }} - {{ $patrimonio->codpes }}
   (<span class="text-danger">USP: <b>{{ $bem['nompes'] }}</b> - {{ $bem['codpes'] }}</span>)
 @else
-  <b>{{ $bem['nompes'] }}</b> - {{ $bem['codpes'] }}
+  <b>{{ $bem['nompes'] }}</b> - <a href="{{ route('buscarPorResponsavel') }}/{{ $patrimonio->codpes }}">{{ $bem['codpes'] }} <i class="fas fa-share"></i></a>
   @if ($patrimonio->conferido_em)
     <i class="fas fa-check text-success"></i>
   @endif
