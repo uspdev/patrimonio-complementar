@@ -13,6 +13,7 @@
   @if (count($patrimonios))
     <div class="h4 mb-3">
       Local {{ $localusp->codlocusp }} - {{ $localusp->nome }}
+      | {{ $localusp->andar }} | {{ $localusp->setor }}
       <span class="badge badge-primary">{{ count($patrimonios) }} registros</span>
     </div>
 
