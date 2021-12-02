@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Uspdev\Replicado\Pessoa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Uspdev\Replicado\Pessoa;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patrimonio extends Model implements Auditable
 {
@@ -48,7 +49,7 @@ class Patrimonio extends Model implements Auditable
             $this->conferido_em
             && (
                 $this->conferido_em->addMinutes(3)->gt(now())
-                || \Gate::check('admin')
+                || Gate::check('admin')
             )
         );
     }
@@ -84,7 +85,7 @@ class Patrimonio extends Model implements Auditable
                 $patrimonio->save();
             } else {
                 $patrimonio = new Patrimonio;
-                $patrimonio->user_id = \Auth::id();
+                $patrimonio->user_id = Auth::id();
             }
             return $patrimonio;
         }
@@ -118,7 +119,7 @@ class Patrimonio extends Model implements Auditable
         $patrimonio->codlocusp = empty($patrimonio->codlocusp) ? $bem['codlocusp'] : $patrimonio->codlocusp;
         $patrimonio->setor = empty($patrimonio->setor) ? $bem['sglcendsp'] : $patrimonio->setor;
         $patrimonio->codpes = empty($patrimonio->codpes) ? $bem['codpes'] : $patrimonio->codpes;
-        $patrimonio->user_id = empty($patrimonio->user_id) ? \Auth::id() : $patrimonio->user_id;
+        $patrimonio->user_id = empty($patrimonio->user_id) ? Auth::id() : $patrimonio->user_id;
 
         return $patrimonio;
     }
