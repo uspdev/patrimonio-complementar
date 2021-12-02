@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Bempatrimoniado;
 use App\Models\Localusp;
 use App\Models\Patrimonio;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Uspdev\Replicado\Pessoa;
-use App\Models\Bempatrimoniado;
 
 class PatrimonioController extends Controller
 {
@@ -63,6 +63,7 @@ class PatrimonioController extends Controller
             Patrimonio::importar(['codpes' => $codpes]);
 
             $patrimonios = Patrimonio::where('codpes', $codpes)
+                ->where('replicado->stabem', 'Ativo')
                 ->orWhere('replicado->despes', $codpes)
                 ->orderBy('numpat', 'ASC')
                 ->get();

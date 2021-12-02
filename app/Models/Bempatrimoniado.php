@@ -41,7 +41,10 @@ class Bempatrimoniado
 
     public static function listarPorResponsavel($codpes)
     {
-        $filtros = ['P.codpes' => $codpes];
+        $filtros = [
+            'P.codpes' => $codpes,
+            'B.stabem' => 'Ativo',
+        ];
         $numpats = SELF::listar($filtros);
         // dd($numpats);
         return $numpats;
