@@ -18,6 +18,7 @@ class PatrimonioController extends Controller
     public function listarPorSala(Request $request)
     {
         \Gate::authorize('gerente');
+        \UspTheme::activeUrl('listarPorSala');
 
         $data = Bempatrimoniado::listarPorSala();
 
@@ -35,6 +36,7 @@ class PatrimonioController extends Controller
     public function buscarPorLocal($codlocusp = null)
     {
         \Gate::authorize('gerente');
+        \UspTheme::activeUrl('buscarPorLocal');
 
         if (!$codlocusp) {
             $localusp = new Localusp;
@@ -49,12 +51,13 @@ class PatrimonioController extends Controller
                 ->get();
         }
 
-        return view('localusp', compact('localusp', 'patrimonios'));
+        return view('buscar-por-local', compact('localusp', 'patrimonios'));
     }
 
     public function buscarPorResponsavel($codpes = null)
     {
         \Gate::authorize('gerente');
+        \UspTheme::activeUrl('buscarPorResponsavel');
 
         $user = new User;
         $patrimonios = collect();
@@ -80,6 +83,7 @@ class PatrimonioController extends Controller
     public function relatorio(Request $request)
     {
         \Gate::authorize('gerente');
+        \UspTheme::activeUrl('relatorio');
 
         $exibir = $request->e ?? 'pendentes';
 

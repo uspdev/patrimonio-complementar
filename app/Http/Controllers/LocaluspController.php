@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Localusp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Uspdev\UspTheme\Facades\UspTheme;
 
 class LocaluspController extends Controller
 {
@@ -15,6 +17,9 @@ class LocaluspController extends Controller
      */
     public function index()
     {
+        Gate::authorize('gerente');
+        UspTheme::activeUrl('localusp');
+
         $setores = explode(',', Auth::user()->setores);
         Localusp::importar();
         $localusps = Localusp::whereIn('setor', $setores)->get();
