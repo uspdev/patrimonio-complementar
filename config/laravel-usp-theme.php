@@ -37,7 +37,7 @@ $submenu2 = [
 
 $buscar = [
     [
-        'text' => 'Numpat',
+        'text' => 'por Número',
         'url' => 'numpat',
         'can' => 'gerente',
     ],

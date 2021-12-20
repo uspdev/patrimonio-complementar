@@ -175,7 +175,18 @@ class PatrimonioController extends Controller
     {
         \Gate::authorize('user');
 
-        return view('patrimonio.index');
+        $patrimonios = collect();
+        $user = \Auth::user();
+
+            Patrimonio::importar(['codpes' => $user->codpes]);
+
+            $patrimonios = Patrimonio::where('codpes', $user->codpes)
+                ->where('replicado->stabem', 'Ativo')
+                ->orWhere('replicado->despes', $user->codpes)
+                ->orderBy('numpat', 'ASC')
+                ->get();
+
+        return view('patrimonio.index', compact('user', 'patrimonios'));
     }
 
     /**
