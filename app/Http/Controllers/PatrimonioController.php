@@ -80,7 +80,7 @@ class PatrimonioController extends Controller
         return view('buscar-por-responsavel', compact('patrimonios', 'user'));
     }
 
-    public function relatorio(Request $request)
+    public function relatorio(Request $request, $tipo = 'Pendentes')
     {
         \Gate::authorize('gerente');
         \UspTheme::activeUrl('relatorio');
@@ -110,7 +110,18 @@ class PatrimonioController extends Controller
             // $patrimonio->isDirty() && $patrimonio->save();
         }
 
-        return view('relatorio', compact('pendentes', 'conferidos', 'naoVerificados', 'exibir'));
+        switch ($tipo) {
+            case 'Não Verificados':
+                $patrimonios = $naoVerificados;
+                break;
+            case 'Conferidos':
+                $patrimonios = $conferidos;
+                break;
+            default:
+                $patrimonios = $pendentes;
+        }
+
+        return view('relatorio', compact('patrimonios', 'pendentes', 'conferidos', 'naoVerificados', 'exibir', 'tipo'));
     }
 
     public function listarPorNumero(Request $request)
@@ -178,13 +189,13 @@ class PatrimonioController extends Controller
         $patrimonios = collect();
         $user = \Auth::user();
 
-            Patrimonio::importar(['codpes' => $user->codpes]);
+        Patrimonio::importar(['codpes' => $user->codpes]);
 
-            $patrimonios = Patrimonio::where('codpes', $user->codpes)
-                ->where('replicado->stabem', 'Ativo')
-                ->orWhere('replicado->despes', $user->codpes)
-                ->orderBy('numpat', 'ASC')
-                ->get();
+        $patrimonios = Patrimonio::where('codpes', $user->codpes)
+            ->where('replicado->stabem', 'Ativo')
+            ->orWhere('replicado->despes', $user->codpes)
+            ->orderBy('numpat', 'ASC')
+            ->get();
 
         return view('patrimonio.index', compact('user', 'patrimonios'));
     }

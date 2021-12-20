@@ -9,7 +9,21 @@
     <span class="badge badge-secondary"> {{ count($naoVerificados) }} não verificados</span>
   </div>
 
-  <div class="h3">Pendentes</div>
+  <div class="h3">
+
+    <div class="dropdown">
+      <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+        aria-expanded="false">
+        {{ $tipo }}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="relatorio/Pendentes">Pendentes</a>
+        <a class="dropdown-item" href="relatorio/Conferidos">Conferidos</a>
+        <a class="dropdown-item" href="relatorio/Não verificados">Não verificados</a>
+      </div>
+    </div>
+
+  </div>
 
   <table class="table table-bordered table-sm table-hover datatable">
     <thead>
@@ -24,7 +38,7 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($pendentes as $patrimonio)
+      @foreach ($patrimonios as $patrimonio)
         <tr>
           <td>
             <a href="numpat/{{ $patrimonio->numpat }}">{{ formatarNumpat($patrimonio->numpat) }}</a>
