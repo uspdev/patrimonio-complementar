@@ -46,7 +46,7 @@
               @endif
             </td>
             <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
-            <td>{{ $patrimonio->replicado['codpes'] }} - {{ $patrimonio->replicado['nompes'] }}</td>
+            <td>{{ $patrimonio->codpes }} - {{ $patrimonio->obterNomeCodpes() }}</td>
             <td>
               {{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
               {{ $patrimonio->replicado['descricao'] }}
