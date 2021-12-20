@@ -111,7 +111,7 @@ class PatrimonioController extends Controller
         }
 
         switch ($tipo) {
-            case 'Não Verificados':
+            case 'Não verificados':
                 $patrimonios = $naoVerificados;
                 break;
             case 'Conferidos':
