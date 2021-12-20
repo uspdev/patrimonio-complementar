@@ -55,7 +55,7 @@
               <span class="text-danger">USP: {{ $patrimonio->replicado['codpes'] }} </span>
               <i class="fas fa-angle-right"></i>
             @endif
-            <b>{{ $patrimonio->codpes }}</b>
+            <b>{{ $patrimonio->codpes }} - {{ $patrimonio->obterNomeCodpes() }}</b>
           </td>
           <td>
             @if ($patrimonio->setor != $patrimonio->replicado['sglcendsp'])
