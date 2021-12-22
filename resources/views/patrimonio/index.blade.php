@@ -63,7 +63,7 @@
             <td>
               <a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a>
             </td>
-            <td>{{ $patrimonio->codlocusp }} - {{ $patrimonio->localusp()->nome }}</td>
+            <td>{{ $patrimonio->codlocusp }} - {{ $patrimonio->localusp()->nome }} ({{ $patrimonio->localusp()->setor }})</td>
             <td>
               {{ $patrimonio->local }}
             </td>
