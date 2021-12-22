@@ -38,18 +38,20 @@
 
       </div>
 
-      @include('patrimonio.partials.editar-form')
+      @can('gerente')
+        @include('patrimonio.partials.editar-form')
 
-      @if ($bem['stabem'] == 'Ativo' && $editar == false)
-        <div class="mt-3">
-          @include('patrimonio.partials.conferir-button')
+        @if ($bem['stabem'] == 'Ativo' && $editar == false)
+          <div class="mt-3">
+            @include('patrimonio.partials.conferir-button')
 
-          <div class="float-right">
-            <button class="btn btn-primary" wire:click="$set('editar', true)"><i class="fas fa-edit"></i></button>
+            <div class="float-right">
+              <button class="btn btn-primary" wire:click="$set('editar', true)"><i class="fas fa-edit"></i></button>
+            </div>
+            <div class="clearfix"></div>
           </div>
-          <div class="clearfix"></div>
-        </div>
-      @endif
+        @endif
+      @endcan
 
     @else
       <div class="text-danger">

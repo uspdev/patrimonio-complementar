@@ -25,7 +25,7 @@
     </div>
 
   @endcan
-  
+
   <br>
   <div class="h4">
     Meus Patrimônios
@@ -38,9 +38,9 @@
           <th></th>
           <th>Número</th>
           <th>Local</th>
-          <th>Tipo/Descrição</th>
-          <th>Usuário</th>
           <th>Local na sala</th>
+          <th>Usuário</th>
+          <th>Tipo/Descrição</th>
         </tr>
       </thead>
       <tbody>
@@ -63,17 +63,18 @@
             <td>
               <a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a>
             </td>
-            <td>{{ $patrimonio->codlocusp }}</td>
+            <td>{{ $patrimonio->codlocusp }} - {{ $patrimonio->localusp()->nome }}</td>
             <td>
-              {{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
-              {{ $patrimonio->replicado['descricao'] }}
+              {{ $patrimonio->local }}
             </td>
             <td>
               {{ $patrimonio->usuario }}
             </td>
             <td>
-              {{ $patrimonio->local }}
+              {{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
+              {{ $patrimonio->replicado['descricao'] }}
             </td>
+
           </tr>
         @endforeach
       </tbody>

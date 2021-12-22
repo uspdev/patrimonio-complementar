@@ -130,6 +130,10 @@ class Patrimonio extends Model implements Auditable
         return Pessoa::nomeCompleto($this->codpes);
     }
 
+    public function localusp() {
+        return Localusp::where('codlocusp', $this->codlocusp)->first();
+    }
+
     /**
      * Relacionamento com user
      */
