@@ -79,12 +79,12 @@ class BuscarPatrimonio extends Component
 
     public function mount()
     {
+        $this->authorize('user');
         $this->numpat && $this->buscar();
     }
 
     public function render()
     {
-        $this->authorize('user');
         \UspTheme::activeUrl('numpat');
         return view('livewire.buscar-patrimonio')->extends('layouts.app')->slot('content');
     }
