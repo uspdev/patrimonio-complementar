@@ -13,7 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.7",
-        "owen-it/laravel-auditing": "^13.0",
+        "owen-it/laravel-auditing": "^12.0",
         "uspdev/laravel-usp-theme": "^2.3",
         "uspdev/replicado": "^1.9",
         "uspdev/senhaunica-socialite": "^4.1"

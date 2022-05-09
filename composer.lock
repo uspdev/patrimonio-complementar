@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf891a32d0df31e3d81e168c733d4494",
+    "content-hash": "27a9a28822ae61ce6faf6c4725327c25",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2837,29 +2837,29 @@
         },
         {
             "name": "owen-it/laravel-auditing",
-            "version": "v13.0.3",
+            "version": "v12.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/owen-it/laravel-auditing.git",
-                "reference": "332d136a7d67a2c06ee85aa17efeafb3ba25c972"
+                "reference": "98f1cfddbc4ed257e5644fe02e97db5674c7571a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/332d136a7d67a2c06ee85aa17efeafb3ba25c972",
-                "reference": "332d136a7d67a2c06ee85aa17efeafb3ba25c972",
+                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/98f1cfddbc4ed257e5644fe02e97db5674c7571a",
+                "reference": "98f1cfddbc4ed257e5644fe02e97db5674c7571a",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/console": "^7.0|^8.0|^9.0",
-                "illuminate/database": "^7.0|^8.0|^9.0",
-                "illuminate/filesystem": "^7.0|^8.0|^9.0",
+                "illuminate/console": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/filesystem": "^6.0|^7.0|^8.0|^9.0",
                 "php": "^7.3|^8.0"
             },
             "require-dev": {
                 "laravel/legacy-factories": "*",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^5.0|^6.0|^7.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0",
                 "phpunit/phpunit": "^9.0"
             },
             "suggest": {
@@ -2893,10 +2893,6 @@
                 {
                     "name": "Raphael França",
                     "email": "raphaelfrancabsb@gmail.com"
-                },
-                {
-                    "name": "Morten D. Hansen",
-                    "email": "morten@visia.dk"
                 }
             ],
             "description": "Audit changes of your Eloquent models in Laravel/Lumen",
@@ -2921,7 +2917,7 @@
                 "issues": "https://github.com/owen-it/laravel-auditing/issues",
                 "source": "https://github.com/owen-it/laravel-auditing"
             },
-            "time": "2022-04-20T14:28:57+00:00"
+            "time": "2022-02-22T13:39:06+00:00"
         },
         {
             "name": "phenx/php-font-lib",
