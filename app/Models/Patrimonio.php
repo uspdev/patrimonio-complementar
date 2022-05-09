@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Uspdev\Replicado\Pessoa;
+use App\Replicado\Bempatrimoniado;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Model;
@@ -38,18 +39,15 @@ class Patrimonio extends Model implements Auditable
 
     public function mostrarBotaoConfirmar()
     {
-        return (
-            !$this->conferido_em
+        return (!$this->conferido_em
             || $this->conferido_em->diff(now())->days > 90
         );
     }
 
     public function mostrarBotaoConfirmarUndo()
     {
-        return (
-            $this->conferido_em
-            && (
-                $this->conferido_em->addMinutes(3)->gt(now())
+        return ($this->conferido_em
+            && ($this->conferido_em->addMinutes(3)->gt(now())
                 || Gate::check('admin')
             )
         );
@@ -104,7 +102,6 @@ class Patrimonio extends Model implements Auditable
                 $patrimonio->save();
             }
         }
-
     }
 
     /**
@@ -130,9 +127,18 @@ class Patrimonio extends Model implements Auditable
         return Pessoa::nomeCompleto($this->codpes);
     }
 
-    public function localusp() {
+    public function localusp()
+    {
         return Localusp::where('codlocusp', $this->codlocusp)->first();
     }
+
+    // public function getReplicadoAttribute($value)
+    // {
+    //     if (isset($value['timestamp'])) {
+    //         unset($value['timestamp']);
+    //     }
+    //     return $value;
+    // }
 
     /**
      * Relacionamento com user

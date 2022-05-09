@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Bempatrimoniado;
+use App\Replicado\Bempatrimoniado;
 use App\Models\Localusp;
 use App\Models\Patrimonio;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

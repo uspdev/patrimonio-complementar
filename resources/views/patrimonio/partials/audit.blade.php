@@ -15,24 +15,24 @@
             <td style="width:100%;">
               @if ($attribute == 'replicado')
                 @foreach ($modified['new'] as $key => $val)
-                {{-- em alguns registros os dados replicados estão incompletos, então precisa testar isset() --}}
+                  {{-- em alguns registros os dados replicados estão incompletos, então precisa testar isset() --}}
                   @if (isset($modified['new'][$key]) && isset($modified['old'][$key]) && $modified['new'][$key] == $modified['old'][$key])
                     {{-- {{ $key }}: {{ $modified['new'][$key] }} [OK] <br> --}}
                   @else
-                    {{ $key }}: {{ $modified['new'][$key] ?? '-' }} ->
-                    {{ $modified['old'][$key] ?? '-' }}<br>
+                    {{ $key }}: {{ $modified['old'][$key] ?? '-' }} ->
+                    {{ $modified['new'][$key] ?? '-' }}<br>
                   @endif
                 @endforeach
               @else
-              {{ json_encode($modified['old'] ?? 'null', JSON_PRETTY_PRINT) }} -> {{ json_encode($modified['new'], JSON_PRETTY_PRINT) }}
-            
-        @endif
-        </td>
-        </tr>
-  @endforeach
-  </table>
-  </li>
-@empty
-  <p>@lang('article.unavailable_audits')</p>
+                {{ json_encode($modified['old'] ?? 'null', JSON_PRETTY_PRINT) }} ->
+                {{ json_encode($modified['new'], JSON_PRETTY_PRINT) }}
+              @endif
+            </td>
+          </tr>
+        @endforeach
+      </table>
+    </li>
+  @empty
+    <p>@lang('article.unavailable_audits')</p>
   @endforelse
 </ul>

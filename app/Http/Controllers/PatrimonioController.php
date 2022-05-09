@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bempatrimoniado;
+use App\Replicado\Bempatrimoniado;
 use App\Models\Localusp;
 use App\Models\Patrimonio;
 use App\Models\User;
