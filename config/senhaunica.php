@@ -28,9 +28,7 @@ return [
 
     // view para editar campo de usuário personalizado
     // é passado $user para a view
-    'customUserField' => [
-        ['view' => '', 'label' => '', 'width' => ''],
-    ],
+    'customUserField' => ['view' => 'user.setores', 'label' => 'Setores', 'width' => '200px'],
 
     // Define o gate para a rota de busca de pessoas
     'findUsersGate' => 'gerente',
