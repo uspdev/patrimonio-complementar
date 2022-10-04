@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Patrimonio;
 use App\Models\User;
+use App\Models\Patrimonio;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PatrimonioPolicy
@@ -41,7 +42,7 @@ class PatrimonioPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +54,8 @@ class PatrimonioPolicy
      */
     public function update(User $user, Patrimonio $patrimonio)
     {
-        //
+        Gate::check('gerente');
+        return ($user->codpes == $patrimonio->codpes);
     }
 
     /**
