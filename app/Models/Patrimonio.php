@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Uspdev\Replicado\Pessoa;
 use App\Replicado\Bempatrimoniado;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Uspdev\Replicado\Pessoa;
 
 class Patrimonio extends Model implements Auditable
 {
@@ -37,19 +37,29 @@ class Patrimonio extends Model implements Auditable
         // });
     }
 
+    /**
+     * Mostrao botão de conferir novamente após $days dias
+     */
     public function mostrarBotaoConfirmar()
     {
-        return (!$this->conferido_em
-            || $this->conferido_em->diff(now())->days > 90
+        $days = 15;
+        return (
+            !$this->conferido_em
+            || $this->conferido_em->diff(now())->days > $days
         );
     }
 
+    /**
+     * Mostra o botão de desfazer confirmar até $minutes minutos depois de confirmar.
+     *
+     * Para o caso de clicar errado no botão e poder desfazer
+     */
     public function mostrarBotaoConfirmarUndo()
     {
-        return ($this->conferido_em
-            && ($this->conferido_em->addMinutes(3)->gt(now())
-                || Gate::check('admin')
-            )
+        $minutes = 3;
+        return (
+            $this->conferido_em
+            && ($this->conferido_em->addMinutes($minutes)->gt(now()) || Gate::check('admin'))
         );
     }
 
