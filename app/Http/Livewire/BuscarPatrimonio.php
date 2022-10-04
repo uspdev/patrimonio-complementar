@@ -48,13 +48,22 @@ class BuscarPatrimonio extends Component
         $this->dispatchBrowserEvent('update-url', ['url' => 'numpat/' . $this->numpat]);
     }
 
+    public function salvar() {
+        $this->authorize('patrimonios.update', $this->patrimonio);
+        $this->validate();
+        $this->patrimonio->save();
+        $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
+        $this->editar = false;
+        $this->emitSelf('refresh');
+    }
+
     public function confirmar()
     {
-        $this->authorize('gerente');
+        $this->authorize('patrimonios.update', $this->patrimonio);
         $this->validate();
 
         $this->patrimonio->conferido_em = now();
-        $this->patrimonio->user_id = Auth::id();
+        // $this->patrimonio->user_id = Auth::id();
         $this->patrimonio->save();
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
 
@@ -70,7 +79,7 @@ class BuscarPatrimonio extends Component
 
     public function confirmarUndo()
     {
-        $this->authorize('gerente');
+        $this->authorize('patrimonios.update', $this->patrimonio);
 
         $this->patrimonio->conferido_em = null;
         $this->patrimonio->save();

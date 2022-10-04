@@ -3,6 +3,7 @@
     <i class="fas fa-check-circle"></i> Confirmar
   </button>
 @endif
+
 @if ($patrimonio->mostrarBotaoConfirmarUndo())
   <button class="btn btn-warning" wire:click="confirmarUndo">
     <i class="fas fa-undo"></i> Desf. confirmar

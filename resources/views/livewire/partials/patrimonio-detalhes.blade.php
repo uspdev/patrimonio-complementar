@@ -24,9 +24,8 @@
     @endif
   @endif
 
-  {{-- </div> --}}
 
-  @can('gerente')
+  @can('patrimonios.update', $patrimonio)
     @include('patrimonio.partials.editar-form')
 
     @if ($bem['stabem'] == 'Ativo' && $editar == false)
@@ -50,12 +49,30 @@
 
   <hr />
   <div class="row">
-    <div class="col-md-4">
-      @include('patrimonio.partials.dados-usp')
-    </div>
-    <div class="col-md-8">
-      @includeWhen(Gate::check('gerente'), 'patrimonio.partials.audit')
-    </div>
-  </div>
+    <div class="col-md-12">
 
-</div>
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active" id="nav-dadosusp-tab" data-toggle="tab" data-target="#nav-dadosusp" type="button"
+            role="tab">Dados USP</button>
+          <button class="nav-link" id="nav-registro-tab" data-toggle="tab" data-target="#nav-registro" type="button"
+            role="tab">Log</button>
+          {{-- <button class="nav-link" id="nav-contact-tab" data-toggle="tab" data-target="#nav-contact" type="button"
+            role="tab">Contact</button> --}}
+        </div>
+      </nav>
+
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-dadosusp" role="tabpanel">
+          <div class="mb-3"></div>
+          @include('patrimonio.partials.dados-usp')
+        </div>
+        <div class="tab-pane fade" id="nav-registro" role="tabpanel">
+          <div class="mb-3"></div>
+          @includeWhen(Gate::check('patrimonios.update', $patrimonio), 'patrimonio.partials.audit')
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel">teste</div>
+      </div>
+    </div>
+
+  </div>
