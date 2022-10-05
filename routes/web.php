@@ -20,6 +20,8 @@ use App\Http\Controllers\PatrimonioController;
 
 Route::resource('/', PatrimonioController::class);
 Route::resource('/user', UserController::class);
+
+Route::get('/localusp/admin', [LocaluspController::class, 'admin']);
 Route::resource('/localusp', LocaluspController::class);
 
 Route::get('/numpat/{numpat?}', \App\Http\Livewire\BuscarPatrimonio::class)->name('buscarPorNumpat');

@@ -74,11 +74,11 @@ $menu = [
         'url' => 'relatorio',
         'can' => 'gerente',
     ],
-    // [
-    //     'text' => 'Menu admin',
-    //     'submenu' => $admin,
-    //     'can' => 'admin',
-    // ],
+    [
+        'text' => '<span class="text-danger">Locais admin</span>',
+        'url' => 'localusp/admin',
+        'can' => 'admin',
+    ],
 ];
 
 $right_menu = [

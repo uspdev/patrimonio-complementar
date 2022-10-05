@@ -4,37 +4,42 @@
 
 
   @if (count($localusps))
-    <div class="h4 mb-3">
+    <div class="h4">
       Locais
     </div>
+    <div class="small">
+      Os locais não são associados a setor na base replicada.
+    </div>
 
-    <table class="table table-bordered table-hover datatable ">
-      <thead>
-        <tr>
-          <th>Setor</th>
-          <th>Número</th>
-          <th>Andar</th>
-          <th>Nome</th>
-          <th>Replicação</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($localusps as $localusp)
+    <div class="mt-3">
+      <table class="table table-bordered table-hover datatable">
+        <thead>
           <tr>
-            <td>{{ $localusp->setor }}</td>
-            <td>
-              <a href="{{ route('buscarPorLocal') }}/{{ $localusp->codlocusp }}">{{ $localusp->codlocusp }}</a>
-            </td>
-            <td>@include('localusp.partials.andar')</td>
-            <td>@include('localusp.partials.nome')</td>
-            <td>
-              {{ $localusp->replicado['tiplocusp'] ?? '-' }}
-              | {{ $localusp->replicado['stiloc'] ?? '-' }}
-            </td>
+            <th>Setor</th>
+            <th>Número</th>
+            <th>Andar</th>
+            <th>Nome</th>
+            <th>Replicação</th>
           </tr>
-        @endforeach
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @foreach ($localusps as $localusp)
+            <tr>
+              <td>{{ $localusp->setor }}</td>
+              <td>
+                <a href="{{ route('buscarPorLocal') }}/{{ $localusp->codlocusp }}">{{ $localusp->codlocusp }}</a>
+              </td>
+              <td>@include('localusp.partials.andar')</td>
+              <td>@include('localusp.partials.nome')</td>
+              <td>
+                {{ $localusp->replicado['tiplocusp'] ?? '-' }}
+                | {{ $localusp->replicado['stiloc'] ?? '-' }}
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
 
   @else
     @if ($localusp->codlocusp)
@@ -57,5 +62,4 @@
       })
     })
   </script>
-
 @endsection

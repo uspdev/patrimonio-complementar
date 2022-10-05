@@ -21,8 +21,21 @@ class LocaluspController extends Controller
         UspTheme::activeUrl('localusp');
 
         $setores = explode(',', Auth::user()->setores);
-        Localusp::importar();
+        // Localusp::importar();
+
         $localusps = Localusp::whereIn('setor', $setores)->get();
+
+        return view('localusp.index', compact('localusps'));
+    }
+
+    public function admin(){
+        Gate::authorize('admin');
+        UspTheme::activeUrl('localusp/admin');
+
+        // $setores = explode(',', Auth::user()->setores);
+        Localusp::importar();
+
+        $localusps = Localusp::get();
 
         return view('localusp.index', compact('localusps'));
     }
