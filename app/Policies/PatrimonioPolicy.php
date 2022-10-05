@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Patrimonio;
-use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Gate;
 
 class PatrimonioPolicy
 {
@@ -54,8 +54,13 @@ class PatrimonioPolicy
      */
     public function update(User $user, Patrimonio $patrimonio)
     {
-        Gate::check('gerente');
-        return ($user->codpes == $patrimonio->codpes);
+        // bens próprios
+        $ret = ($user->codpes == $patrimonio->codpes) ? true : false;
+
+        // gerente do setor
+        $ret = (Gate::check('gerente') && strpos($user->setores, $patrimonio->setor) !== false) ? true : $ret;
+
+        return $ret;
     }
 
     /**
