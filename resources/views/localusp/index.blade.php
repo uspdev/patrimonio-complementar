@@ -5,10 +5,11 @@
 
   @if (count($localusps))
     <div class="h4">
-      Locais
+      Locais <span class="badge badge-primary">{{ Auth::user()->setores }}</span>
     </div>
-    <div class="small">
-      Os locais não são associados a setor na base replicada.
+    <div class="ml-3">
+      Os locais não são associados a setor na base replicada. Se um local não aparecer aqui solicite sua inclusão ao
+      resposável desse sistema.
     </div>
 
     <div class="mt-3">
@@ -40,7 +41,6 @@
         </tbody>
       </table>
     </div>
-
   @else
     @if ($localusp->codlocusp)
       Não foram encontrados registros na sala {{ $localusp->codlocusp }}
