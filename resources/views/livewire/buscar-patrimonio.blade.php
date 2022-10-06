@@ -2,9 +2,9 @@
   <div class="d-block">
 
     <form wire:submit.prevent="buscar">
-      <x-wire-input-number model="numpat" prepend="<i class='fas fa-landmark'></i>">
+      <x-wire-input-text model="numpat" prepend="<i class='fas fa-landmark'></i>">
         <button class="btn btn-primary ml-1">OK</button>
-      </x-wire-input-number>
+      </x-wire-input-text>
     </form>
   </div>
   {{-- {{ $numpat }} --}}

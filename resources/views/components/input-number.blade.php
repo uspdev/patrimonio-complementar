@@ -16,7 +16,7 @@
       </div>
     @endif
     <input id="{{ $id }}" class="form-control" type="number"
-      {{ $attributes }} title="@error($model){{ $message }}@enderror" 
+      {{ $attributes }} title="@error($model){{ $message }}@enderror"
     />
     {{ $slot }}
     @if ($append)
@@ -30,33 +30,4 @@
   </div>
 
     @error($model) <span class="small text-danger">{{ $message }}</span> @enderror
-  </div>
-
-  @Once
-
-    @section('styles')
-      <style>
-        .border-red-500 {}
-
-      </style>
-    @endsection
-
-    @section('javascripts_bottom')
-      @parent
-      <script>
-        $(function() {
-        //   $('.wire-input-text').find('input').popover({
-        //     html: true,
-        //     placement: 'top'
-        //   })
-
-          $('body').on('click', '.clear-input', function() {
-            console.log('limpou input')
-            $(this).parent().find('input').val('')
-          })
-
-        })
-      </script>
-    @endsection
-
-  @endonce
+</div>

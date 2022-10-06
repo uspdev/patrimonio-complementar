@@ -26,6 +26,7 @@
   @Once
 
     @section('styles')
+      @parent
       <style>
         .border-red-500 {}
 

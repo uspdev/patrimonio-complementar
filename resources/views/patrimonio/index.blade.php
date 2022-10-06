@@ -11,9 +11,9 @@
         {{-- <div class="h4"></div> --}}
 
         <form id="form-numpat" action="{{ route('buscarPorNumpat') }}">
-          <x-input-number name="numpat" prepend="Patrimônio">
+          <x-input-text name="numpat" prepend="Patrimônio">
             <button id="searchNumpat" class="btn btn-sm btn-primary ml-1">OK</button>
-          </x-input-number>
+          </x-input-text>
         </form>
 
         <form id="form-localusp" action="{{ route('buscarPorLocal') }}">

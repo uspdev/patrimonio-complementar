@@ -7,14 +7,25 @@
   Nro: <b>{{ formatarNumpat($bem['numpat']) }}</b><br>
 
   @if (!$editar)
-    {{ $bem['tipo'] }} | {{ $bem['nome'] }}<br>
-    Desc: {{ $bem['descricao'] }}<br>
-    Setor/bloco: @include('patrimonio.partials.setor')<br>
-    Local: @include('patrimonio.partials.local')<br>
-    Resp: @include('patrimonio.partials.responsavel') <br>
-    <div class="mb-2"></div>
-    Usuário: <b>{{ $patrimonio->usuario }}</b> <br>
-    Local na sala: <b>{{ $patrimonio->local }}</b>
+    <div class="row">
+      <div class="col-md-6">
+        {{ $bem['tipo'] }} | {{ $bem['nome'] }}<br>
+        Desc: {{ $bem['descricao'] }}<br>
+        Setor/bloco: <b>@include('patrimonio.partials.setor')</b><br>
+        Local: @include('patrimonio.partials.local')<br>
+        Resp: @include('patrimonio.partials.responsavel') <br>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2"></div>
+        Usuário: <b>{{ $patrimonio->usuario }}</b> <br>
+        Local na sala: <b>{{ $patrimonio->local }}</b><br>
+        Observações: <br>
+        <div class="ml-2 font-weight-bold">
+            {!! nl2br($patrimonio->obs) !!}
+        </div>
+      </div>
+    </div>
+
     @if ($errors->any())
       <div class="alert alert-danger">
         @foreach ($errors->all() as $error)
@@ -53,8 +64,8 @@
 
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <button class="nav-link active" id="nav-dadosusp-tab" data-toggle="tab" data-target="#nav-dadosusp" type="button"
-            role="tab">Dados USP</button>
+          <button class="nav-link active" id="nav-dadosusp-tab" data-toggle="tab" data-target="#nav-dadosusp"
+            type="button" role="tab">Dados USP</button>
           <button class="nav-link" id="nav-registro-tab" data-toggle="tab" data-target="#nav-registro" type="button"
             role="tab">Log</button>
           {{-- <button class="nav-link" id="nav-contact-tab" data-toggle="tab" data-target="#nav-contact" type="button"

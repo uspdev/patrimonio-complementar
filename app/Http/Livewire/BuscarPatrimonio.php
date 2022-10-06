@@ -2,11 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Replicado\Bempatrimoniado;
 use App\Models\Localusp;
 use App\Models\Patrimonio;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class BuscarPatrimonio extends Component
@@ -29,6 +27,7 @@ class BuscarPatrimonio extends Component
         'patrimonio.codpes' => 'required|integer|min:1',
         'patrimonio.usuario' => 'nullable|string',
         'patrimonio.local' => 'nullable|string',
+        'patrimonio.obs' => 'nullable|string',
     ];
 
     // protected $queryString = ['numpat'];
@@ -41,14 +40,16 @@ class BuscarPatrimonio extends Component
 
     public function buscar()
     {
-        $this->patrimonio = Patrimonio::importar(['numpat'=>$this->numpat]);
+        $this->numpat = str_replace('.', '', $this->numpat);
+        $this->patrimonio = Patrimonio::importar(['numpat' => $this->numpat]);
         $this->bem = $this->patrimonio->replicado;
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
 
         $this->dispatchBrowserEvent('update-url', ['url' => 'numpat/' . $this->numpat]);
     }
 
-    public function salvar() {
+    public function salvar()
+    {
         $this->authorize('patrimonios.update', $this->patrimonio);
         $this->validate();
         $this->patrimonio->save();

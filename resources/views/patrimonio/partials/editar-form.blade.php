@@ -7,6 +7,7 @@
       <x-wire-input-number model="patrimonio.codpes" prepend="Resp"></x-input-text>
       <x-wire-input-text model="patrimonio.usuario" prepend="Usuário"></x-wire-input-text>
       <x-wire-input-text model="patrimonio.local" prepend="Local na sala"></x-wire-input-text>
+      <x-wire-input-textarea model="patrimonio.obs" prepend="Observações"></x-wire-input-text>
     </div>
     <button class="btn btn-small btn-primary">OK</button>
     <button class="btn btn-small btn-warning" wire:click="cancelar">Cancelar</button>

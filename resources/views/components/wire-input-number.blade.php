@@ -17,37 +17,31 @@
     @endif
     <input id="{{ $id }}" class="form-control" type="number" wire:dirty.class="border-danger"
       wire:model.lazy="{{ $model }}" {{ $attributes }} title="@error($model){{ $message }}@enderror" />
-      {{ $slot }}
-    </div>
-
-    @error($model) <span class="small text-danger">{{ $message }}</span> @enderror
+    {{ $slot }}
   </div>
 
-  @Once
+    @error($model) <span class="small text-danger">{{ $message }}</span> @enderror
+</div>
 
-    @section('styles')
-      <style>
-        .border-red-500 {}
+@Once
 
-      </style>
-    @endsection
 
-    @section('javascripts_bottom')
-      @parent
-      <script>
-        $(function() {
-          $('.wire-input-text').find('input').popover({
-            html: true,
-            placement: 'top'
-          })
-
-          // $('body').on('click', '.clear-input-{{ $model }}', function() {
-          //   console.log('limpou input')
-          //   $set({{ $model }}, '')
-          // })
-
+  @section('javascripts_bottom')
+    @parent
+    <script>
+      $(function() {
+        $('.wire-input-text').find('input').popover({
+          html: true,
+          placement: 'top'
         })
-      </script>
-    @endsection
 
-  @endonce
+        // $('body').on('click', '.clear-input-{{ $model }}', function() {
+        //   console.log('limpou input')
+        //   $set({{ $model }}, '')
+        // })
+
+      })
+    </script>
+  @endsection
+
+@endonce
