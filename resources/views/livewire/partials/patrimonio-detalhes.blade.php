@@ -21,7 +21,7 @@
         Local na sala: <b>{{ $patrimonio->local }}</b><br>
         Observações: <br>
         <div class="ml-2 font-weight-bold">
-            {!! nl2br($patrimonio->obs) !!}
+          {!! nl2br($patrimonio->obs) !!}
         </div>
       </div>
     </div>
@@ -40,20 +40,22 @@
     @include('patrimonio.partials.editar-form')
 
     @if ($bem['stabem'] == 'Ativo' && $editar == false)
-      <div class="mt-3">
-        @include('patrimonio.partials.conferir-button')
+      <div class="row mt-3">
+        <div class="col-md-6">
+          @include('patrimonio.partials.conferir-button')
 
-        {{-- Somente admin por enquanto --}}
-        @includeWhen(Gate::check('admin'), 'patrimonio.partials.abrir-mercurio-button', [
-            'numpat' => $bem['numpat'],
-        ])
+          {{-- Somente admin por enquanto --}}
+          @includeWhen(Gate::check('admin'), 'patrimonio.partials.abrir-mercurio-button', [
+              'numpat' => $bem['numpat'],
+          ])
 
-        {{-- <button class="btn btn-success">Dados USP estão corretos <i class="fas fa-download"></i></button> --}}
+          {{-- <button class="btn btn-success">Dados USP estão corretos <i class="fas fa-download"></i></button> --}}
 
-        <div class="float-right">
-          <button class="btn btn-primary" wire:click="$set('editar', true)"><i class="fas fa-edit"></i></button>
+          <div class="float-right">
+            <button class="btn btn-primary" wire:click="$set('editar', true)"><i class="fas fa-edit"></i></button>
+          </div>
+          <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
       </div>
     @endif
   @endcan

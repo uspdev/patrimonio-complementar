@@ -1,7 +1,7 @@
 {{-- Deve passar $numpat como parâmetro --}}
 <a class="btn btn-secondary" id="abrir-mercurio"
   href="https://uspdigital.usp.br/mercurioweb/merPatrimonioListar.jsp?codmnu=2421" target="_MERCURIO_WEB">
-  Abrir Mercúrio web <i class="fas fa-external-link-alt"></i>
+  Mercúrio <i class="fas fa-external-link-alt"></i>
 </a>
 <input id="numpat" type="hidden" name="numpat" value="{{ $numpat }}">
 
@@ -15,6 +15,7 @@
         var numpat = $('#numpat')
         if (navigator.clipboard) {
           navigator.clipboard.writeText(numpat.val())
+          console.log('Numpat ', numpat)
         } else {
           alert("Use uma conexão HTTPS para copiar numpat para a área de transferência!")
         }
