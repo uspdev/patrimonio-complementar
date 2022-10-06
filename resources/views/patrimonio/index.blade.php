@@ -23,7 +23,6 @@
         </form>
       </div>
     </div>
-
   @endcan
 
   <br>
@@ -40,7 +39,8 @@
           <th>Local</th>
           <th>Local na sala</th>
           <th>Usuário</th>
-          <th>Tipo/Descrição</th>
+          <th>Observações</th>
+          <th>Tipo/Nome/Descrição</th>
         </tr>
       </thead>
       <tbody>
@@ -72,16 +72,17 @@
               {{ $patrimonio->usuario }}
             </td>
             <td>
+              {{ $patrimonio->obs }}
+            </td>
+            <td>
               {{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
               {{ $patrimonio->replicado['descricao'] }}
             </td>
-
           </tr>
         @endforeach
       </tbody>
     </table>
   @else
-
   @endif
 
 
@@ -102,5 +103,4 @@
       // console.log(codlocusp)
     })
   </script>
-
 @endsection
