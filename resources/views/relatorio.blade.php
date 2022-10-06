@@ -42,6 +42,7 @@
         <tr>
           <td>
             <a href="numpat/{{ $patrimonio->numpat }}">{{ formatarNumpat($patrimonio->numpat) }}</a>
+            {{-- {{ $patrimonio->replicado['stabem'] }} --}}
           </td>
           <td>
             @if ($patrimonio->codlocusp != $patrimonio->replicado['codlocusp'])

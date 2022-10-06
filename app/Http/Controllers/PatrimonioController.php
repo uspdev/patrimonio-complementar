@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Replicado\Bempatrimoniado;
 use App\Models\Localusp;
 use App\Models\Patrimonio;
 use App\Models\User;
+use App\Replicado\Bempatrimoniado;
 use Illuminate\Http\Request;
 use Uspdev\Replicado\Pessoa;
 
@@ -89,7 +89,6 @@ class PatrimonioController extends Controller
 
         $setores = \Auth::user()->setores;
         $setores = "'" . implode("','", explode(',', $setores)) . "'";
-        // dd($setores);
 
         $bens = Bempatrimoniado::listarPorSetores($setores);
 
@@ -98,7 +97,6 @@ class PatrimonioController extends Controller
         $naoVerificados = [];
         foreach ($bens as $bem) {
             $patrimonio = Patrimonio::importar(['bem' => $bem]);
-            // $patrimonio = Patrimonio::obter($bem);
 
             if ($patrimonio->temPendencias()) {
                 $pendentes[] = $patrimonio;
@@ -107,7 +105,6 @@ class PatrimonioController extends Controller
             } else {
                 $naoVerificados[] = $patrimonio;
             }
-            // $patrimonio->isDirty() && $patrimonio->save();
         }
 
         switch ($tipo) {
@@ -190,10 +187,11 @@ class PatrimonioController extends Controller
         $user = \Auth::user();
 
         Patrimonio::importar(['codpes' => $user->codpes]);
+        Patrimonio::limpar(['codpes' => $user->codpes]);
 
         $patrimonios = Patrimonio::where('codpes', $user->codpes)
-            ->where('replicado->stabem', 'Ativo')
-            ->orWhere('replicado->despes', $user->codpes)
+            ->orWhere('replicado->codpes', $user->codpes)
+            // ->where('replicado->stabem', 'Ativo')
             ->orderBy('numpat', 'ASC')
             ->get();
 
