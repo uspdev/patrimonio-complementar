@@ -70,18 +70,3 @@
 
 
 @endsection
-
-@section('javascripts_bottom')
-  @parent
-  <script>
-    $(document).ready(function() {
-
-      // troca o envio do form por link com o nro da sala
-      $('#form-localusp').submit(function(e) {
-        e.preventDefault(e)
-        window.location.href = $(this).attr('action')+ '/' + $(this).find('input').val()
-      })
-    })
-  </script>
-
-@endsection

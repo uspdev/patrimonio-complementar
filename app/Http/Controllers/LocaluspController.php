@@ -28,13 +28,20 @@ class LocaluspController extends Controller
         return view('localusp.index', compact('localusps', 'setores'));
     }
 
-    public function admin(){
+    /**
+     * Lista de todos os locais para admin gerenciar.
+     */
+    public function admin(Request $request)
+    {
         Gate::authorize('admin');
         UspTheme::activeUrl('localusp/admin');
 
-        $setores = ['TODOS'];
-        Localusp::importar();
+        if ($request->sync == 'true') {
+            Localusp::importar();
+            return back();
+        }
 
+        $setores = ['TODOS'];
         $localusps = Localusp::get();
 
         return view('localusp.index', compact('localusps', 'setores'));
@@ -92,7 +99,18 @@ class LocaluspController extends Controller
      */
     public function update(Request $request, Localusp $localusp)
     {
-        //
+        Gate::authorize('gerente');
+
+        $validated = $request->validate([
+            'setor' => 'required|string|max:50',
+            'andar' => 'required|string|max:50',
+            'nome' => 'required|string|max:150',
+        ]);
+
+        $localusp->update($validated);
+        $localusp->save();
+        request()->session()->flash('alert-info', 'Localusp ' . $localusp->codlocusp . ' alterado com sucesso!');
+        return back()->withInput();
     }
 
     /**
