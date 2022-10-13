@@ -18,11 +18,10 @@ use App\Http\Controllers\PatrimonioController;
 |
  */
 
-Route::resource('/', PatrimonioController::class);
-Route::resource('/user', UserController::class);
-
-Route::get('/localusp/admin', [LocaluspController::class, 'admin']);
+Route::get('/localusp/admin', [LocaluspController::class, 'admin'])->name('localusp.admin');
 Route::resource('/localusp', LocaluspController::class);
+
+Route::resource('/user', UserController::class);
 
 Route::get('/numpat/{numpat?}', \App\Http\Livewire\BuscarPatrimonio::class)->name('buscarPorNumpat');
 
@@ -33,3 +32,4 @@ Route::get('/relatorio/{tipo?}', [PatrimonioController::class, 'relatorio'])->na
 Route::get('/listarPorSala', [PatrimonioController::class, 'listarPorSala']);
 // Route::get('/listarPorSala/{codlocusp?}', [PatrimonioController::class, 'listarPorSala']);
 Route::get('/listarPorNumero', [PatrimonioController::class, 'listarPorNumero']);
+Route::resource('/', PatrimonioController::class);
