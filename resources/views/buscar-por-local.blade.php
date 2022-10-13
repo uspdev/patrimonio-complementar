@@ -10,13 +10,13 @@
     </form>
   </div>
 
-  @if (count($patrimonios))
-    <div class="h4 mb-3">
-      Local {{ $localusp->codlocusp }} - {{ $localusp->nome }}
-      | {{ $localusp->andar }} | {{ $localusp->setor }}
-      <span class="badge badge-primary">{{ count($patrimonios) }} registros</span>
-    </div>
+  <div class="h4 mb-3">
+    LocaUSP <b>{{ $localusp->codlocusp }}</b> | Nome {{ $localusp->nome }}
+    | Andar {{ $localusp->andar }} | Setor {{ $localusp->setor }}
+    <span class="badge badge-primary">{{ count($patrimonios) }} registros</span>
+  </div>
 
+  @if (count($patrimonios))
     <table class="table table-bordered table-hover datatable ">
       <thead>
         <tr>

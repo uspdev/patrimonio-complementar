@@ -20,11 +20,12 @@ class Bempatrimoniado
     {
         $filtros = ['l.codlocusp' => $codlocusp, 'B.stabem' => 'Ativo'];
 
-        $setores = \Auth::user()->setores;
-        $setores = "'" . implode("','", explode(',', $setores)) . "'";
-        $filtrosIn = ['B.sglcendsp' => $setores];
+        // $setores = \Auth::user()->setores;
+        // $setores = "'" . implode("','", explode(',', $setores)) . "'";
+        // $filtrosIn = ['B.sglcendsp' => $setores];
 
-        $numpats = SELF::listar($filtros, $filtrosIn);
+        // $numpats = SELF::listar($filtros, $filtrosIn);
+        $numpats = SELF::listar($filtros);
         // dd($numpats);
         return $numpats;
     }

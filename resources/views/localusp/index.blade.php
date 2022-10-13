@@ -2,11 +2,12 @@
 
 @section('content')
 
+  <div class="h4">
+    Locais
+    <span class="badge badge-primary">{{ implode(',', $setores) }}</span>
+  </div>
 
   @if (count($localusps))
-    <div class="h4">
-      Locais <span class="badge badge-primary">{{ Auth::user()->setores }}</span>
-    </div>
     <div class="ml-3">
       Os locais não são associados a setor na base replicada. Se um local não aparecer aqui solicite sua inclusão ao
       resposável desse sistema.
@@ -20,7 +21,7 @@
             <th>Número</th>
             <th>Andar</th>
             <th>Nome</th>
-            <th>Replicação</th>
+            <th>Replicação (tipo|estilo?|bloco)</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,7 @@
               <td>
                 {{ $localusp->replicado['tiplocusp'] ?? '-' }}
                 | {{ $localusp->replicado['stiloc'] ?? '-' }}
+                | {{ $localusp->replicado['idfblc'] ?? '-' }}
               </td>
             </tr>
           @endforeach
@@ -42,9 +44,7 @@
       </table>
     </div>
   @else
-    @if ($localusp->codlocusp)
-      Não foram encontrados registros na sala {{ $localusp->codlocusp }}
-    @endif
+    Não foram encontrados locais associados aos setores acima.
   @endif
 
 

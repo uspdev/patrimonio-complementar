@@ -30,7 +30,7 @@ class PatrimonioController extends Controller
             return $pdf->download('relatorio.pdf');
         }
 
-        return view('patrimonio.listar-por-sala', compact('localusps'));
+        return view('patrimonio.listar-por-sala', compact('localusps', 'setores'));
     }
 
     public function buscarPorLocal($codlocusp = null)
@@ -121,58 +121,62 @@ class PatrimonioController extends Controller
         return view('relatorio', compact('patrimonios', 'pendentes', 'conferidos', 'naoVerificados', 'exibir', 'tipo'));
     }
 
-    public function listarPorNumero(Request $request)
-    {
-        \Gate::authorize('gerente');
+    /**
+     * Gera lista de patrimonios por numero
+     * Desativado
+     */
+    // public function listarPorNumero(Request $request)
+    // {
+    //     \Gate::authorize('gerente');
 
-        $data = Bempatrimoniado::listarPorSala();
+    //     $data = Bempatrimoniado::listarPorSala();
 
-        $data = \Arr::sort($data, function ($value) {
-            return $value['numpat'];
-        });
+    //     $data = \Arr::sort($data, function ($value) {
+    //         return $value['numpat'];
+    //     });
 
-        $linPorPagina = 52;
-        $numCols = 2;
-        $regPorPagina = $linPorPagina * $numCols;
+    //     $linPorPagina = 52;
+    //     $numCols = 2;
+    //     $regPorPagina = $linPorPagina * $numCols;
 
-        $out = [];
-        $contRow = 0;
-        $countCol = 0;
-        $pag = [];
-        $col = [];
-        foreach ($data as $row) {
-            $col[] = $row;
-            $contRow++;
+    //     $out = [];
+    //     $contRow = 0;
+    //     $countCol = 0;
+    //     $pag = [];
+    //     $col = [];
+    //     foreach ($data as $row) {
+    //         $col[] = $row;
+    //         $contRow++;
 
-            // divide colunas
-            if ($contRow == $linPorPagina) {
-                $pag[] = $col;
-                $col = [];
-                $contRow = 0;
-                $countCol++;
-            }
+    //         // divide colunas
+    //         if ($contRow == $linPorPagina) {
+    //             $pag[] = $col;
+    //             $col = [];
+    //             $contRow = 0;
+    //             $countCol++;
+    //         }
 
-            // divide paginas
-            if ($countCol == $numCols) {
-                $out[] = $pag;
-                $pag = [];
-                $countCol = 0;
-            }
-        }
+    //         // divide paginas
+    //         if ($countCol == $numCols) {
+    //             $out[] = $pag;
+    //             $pag = [];
+    //             $countCol = 0;
+    //         }
+    //     }
 
-        // pega ultima coluna/pagina
-        $pag[] = $col;
-        $out[] = $pag;
+    //     // pega ultima coluna/pagina
+    //     $pag[] = $col;
+    //     $out[] = $pag;
 
-        // dd($out);
+    //     // dd($out);
 
-        if (isset($request->pdf)) {
-            $pdf = PDF::loadView('pdf', compact('data', 'out'));
-            return $pdf->download('relatorio.pdf');
-        }
+    //     if (isset($request->pdf)) {
+    //         $pdf = PDF::loadView('pdf', compact('data', 'out'));
+    //         return $pdf->download('relatorio.pdf');
+    //     }
 
-        return view('patrimonio.listar-por-numero', ['data' => $out]);
-    }
+    //     return view('patrimonio.listar-por-numero', ['data' => $out]);
+    // }
 
     /**
      * Display a listing of the resource.
