@@ -48,9 +48,10 @@
             <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
             <td>{{ $patrimonio->codpes }} - {{ $patrimonio->obterNomeCodpes() }}</td>
             <td>
-                ({{ $patrimonio->replicado['sglcendsp'] }})
-              {{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
-              {{ $patrimonio->replicado['descricao'] }}
+              ({{ $patrimonio->replicado['sglcendsp'] }})
+              {{ $patrimonio->replicado['tipo'] }}
+              ; {{ $patrimonio->replicado['nome'] }}
+              ; {{ $patrimonio->replicado['descricao'] }}
             </td>
             <td>
               {{ $patrimonio->usuario }}
@@ -62,7 +63,6 @@
         @endforeach
       </tbody>
     </table>
-
   @else
     @if ($localusp->codlocusp)
       Não foram encontrados registros na sala {{ $localusp->codlocusp }}
