@@ -23,7 +23,7 @@
           <th></th>
           <th>Número</th>
           <th>Responsável</th>
-          <th>Tipo/Descrição</th>
+          <th>(Cendsp) Tipo/Nome/Descrição</th>
           <th>Usuário</th>
           <th>Local na sala</th>
         </tr>
@@ -48,6 +48,7 @@
             <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
             <td>{{ $patrimonio->codpes }} - {{ $patrimonio->obterNomeCodpes() }}</td>
             <td>
+                ({{ $patrimonio->replicado['sglcendsp'] }})
               {{ $patrimonio->replicado['tipo'] }}; {{ $patrimonio->replicado['nome'] }};
               {{ $patrimonio->replicado['descricao'] }}
             </td>
