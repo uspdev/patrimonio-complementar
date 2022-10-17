@@ -48,7 +48,7 @@
             <td><a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a></td>
             <td>{{ $patrimonio->codpes }} - {{ $patrimonio->obterNomeCodpes() }}</td>
             <td>
-              ({{ $patrimonio->replicado['sglcendsp'] }})
+              ({{ $patrimonio->replicado['sglcendsp'] ?? '' }})
               {{ $patrimonio->replicado['tipo'] }}
               ; {{ $patrimonio->replicado['nome'] }}
               ; {{ $patrimonio->replicado['descricao'] }}
