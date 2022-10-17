@@ -27,7 +27,7 @@
 
   <br>
   <div class="h4">
-    Meus Patrimônios
+    Meus Patrimônios <span class="badge badge-primary">{{ count($patrimonios) }}</span>
   </div>
 
   @if ($patrimonios->isNotEmpty())
