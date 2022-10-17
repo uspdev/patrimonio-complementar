@@ -15,18 +15,7 @@
     @foreach ($patrimonios as $patrimonio)
       <tr>
         <td>
-          @if ($patrimonio->conferido_em)
-            @if ($patrimonio->temPendencias())
-              <span class="d-none">1pendente</span>
-              <span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i></span>
-            @else
-              <span class="d-none">2conferido</span>
-              <span class="badge badge-success"><i class="fas fa-check"></i></span>
-            @endif
-          @else
-            <span class="d-none">0naoVerificado</span>
-            <span class="badge badge-secondary"><i class="fas fa-question"></i></span>
-          @endif
+          @include('partials.badge-status')
         </td>
         <td>
           <a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a>
@@ -34,9 +23,15 @@
         <td data-order="{{ $patrimonio->codlocusp }}">
           {{ $patrimonio->codlocusp }} - {{ $patrimonio->localusp()->nome ?? '' }}
           ({{ $patrimonio->localusp()->setor ?? '' }})
+          @if ($patrimonio->codlocusp != $patrimonio->replicado['codlocusp'])
+            <span class="badge badge-warning">USP: {{ $patrimonio->replicado['codlocusp'] }}</span>
+          @endif
         </td>
         <td>
           {{ $patrimonio->codpes }} - {{ $patrimonio->obterNomeCodpes() }}
+          @if ($patrimonio->codpes != $patrimonio->replicado['codpes'])
+          <span class="badge badge-warning">USP: {{ $patrimonio->replicado['codpes'] }}</span>
+        @endif
         </td>
         <td>
           {{ $patrimonio->usuario }}
@@ -45,7 +40,7 @@
           {{ $patrimonio->local }}
         </td>
         <td>
-            {{  $patrimonio->obs }}
+          {{ $patrimonio->obs }}
         </td>
         <td>
           ({{ $patrimonio->replicado['sglcendsp'] ?? '' }})
