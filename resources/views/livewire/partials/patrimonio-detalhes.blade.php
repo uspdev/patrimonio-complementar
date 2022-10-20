@@ -45,14 +45,14 @@
           @include('patrimonio.partials.conferir-button')
 
           {{-- Somente admin por enquanto --}}
-          @includeWhen(Gate::check('admin'), 'patrimonio.partials.abrir-mercurio-button', [
+          {{-- @includeWhen(Gate::check('admin'), 'patrimonio.partials.abrir-mercurio-button', [
               'numpat' => $bem['numpat'],
-          ])
+          ]) --}}
 
           {{-- <button class="btn btn-success">Dados USP estão corretos <i class="fas fa-download"></i></button> --}}
 
           <div class="float-right">
-            <button class="btn btn-primary" wire:click="$set('editar', true)"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-success" wire:click="$set('editar', true)">Editar <i class="fas fa-edit"></i></button>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -82,7 +82,7 @@
         </div>
         <div class="tab-pane fade" id="nav-registro" role="tabpanel">
           <div class="mb-3"></div>
-          @includeWhen(Gate::check('patrimonios.update', $patrimonio), 'patrimonio.partials.audit')
+          @include('patrimonio.partials.audit')
         </div>
         <div class="tab-pane fade" id="nav-contact" role="tabpanel">teste</div>
       </div>
