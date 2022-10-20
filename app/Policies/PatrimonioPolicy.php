@@ -54,8 +54,11 @@ class PatrimonioPolicy
      */
     public function update(User $user, Patrimonio $patrimonio)
     {
-        // bens próprios
-        $ret = ($user->codpes == $patrimonio->codpes) ? true : false;
+        // bens próprios ou se o usuário está alterando o responsável
+        $ret = ($user->codpes == $patrimonio->codpes || $user->codpes == $patrimonio->getOriginal('codpes')) ? true : false;
+
+        // se no replicado consta como sendo do usuário
+        $ret = ($user->codpes == $patrimonio->replicado['codpes']) ? true : $ret;
 
         // gerente do setor
         $ret = (Gate::check('gerente') && strpos($user->setores, $patrimonio->setor) !== false) ? true : $ret;
