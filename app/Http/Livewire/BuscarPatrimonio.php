@@ -52,6 +52,12 @@ class BuscarPatrimonio extends Component
     {
         $this->authorize('patrimonios.update', $this->patrimonio);
         $this->validate();
+        // esta lógica deve ir para dentro da validação
+        if (!$this->patrimonio->obterNomeCodpes()) {
+            $this->addError('patrimonio.codpes', 'Responsável inválido');
+            $this->emitSelf('refresh');
+            return null;
+        }
         $this->patrimonio->save();
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
         $this->editar = false;
