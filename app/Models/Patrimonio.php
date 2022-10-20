@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Uspdev\Replicado\Pessoa;
 use App\Replicado\Bempatrimoniado;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Uspdev\Replicado\Pessoa;
 
 class Patrimonio extends Model implements Auditable
 {
@@ -84,7 +84,7 @@ class Patrimonio extends Model implements Auditable
      * @param array $filter Array contendo campo a filtrar
      * @return void
      */
-    public static function importar(Array $filter)
+    public static function importar(array $filter)
     {
 
         if (isset($filter['bem'])) {
@@ -121,7 +121,8 @@ class Patrimonio extends Model implements Auditable
         }
     }
 
-    public static function limpar($filter) {
+    public static function limpar($filter)
+    {
         if (isset($filter['codpes'])) {
             foreach (Patrimonio::where('codpes', $filter['codpes'])->get() as $patrimonio) {
                 $bem = Bempatrimoniado::obter($patrimonio->numpat);
@@ -152,9 +153,14 @@ class Patrimonio extends Model implements Auditable
         return $patrimonio;
     }
 
+    /**
+     * Permite preencher o nome a partir do codpes
+     */
     public function obterNomeCodpes()
     {
-        return Pessoa::nomeCompleto($this->codpes);
+        $nome = Pessoa::obterNome($this->codpes);
+        // acredito que o replicado deva retornar null ou vazio ao invés de um registro vazio
+        return empty($nome) ? null : $nome;
     }
 
     public function localusp()
