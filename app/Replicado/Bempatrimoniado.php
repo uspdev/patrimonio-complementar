@@ -4,6 +4,9 @@ namespace App\Replicado;
 
 use Uspdev\Replicado\DB;
 
+/**
+ * Métodos que deveriam estar no replicado
+ */
 class Bempatrimoniado
 {
     public static function obter($numpat)
@@ -16,17 +19,26 @@ class Bempatrimoniado
         }
     }
 
+    /**
+     * Lista os centros de despesa que possuem algum bem patrimoniado
+     *
+     * @return Array
+     * @author Masaki K Neto, 20/10/2022
+     */
+    public static function listarCentrosDespesa()
+    {
+        $query = "SELECT DISTINCT sglcendsp
+            FROM BEMPATRIMONIADO
+            WHERE stabem = 'Ativo'
+            ORDER BY sglcendsp";
+
+        return DB::fetchAll($query);
+    }
+
     public static function listarPorSala($codlocusp = null)
     {
         $filtros = ['l.codlocusp' => $codlocusp, 'B.stabem' => 'Ativo'];
-
-        // $setores = \Auth::user()->setores;
-        // $setores = "'" . implode("','", explode(',', $setores)) . "'";
-        // $filtrosIn = ['B.sglcendsp' => $setores];
-
-        // $numpats = SELF::listar($filtros, $filtrosIn);
         $numpats = SELF::listar($filtros);
-        // dd($numpats);
         return $numpats;
     }
 
@@ -84,7 +96,6 @@ class Bempatrimoniado
 
         return DB::fetchAll($query, $params);
     }
-
 
     /**
      * Retorna array contendo string formatada do WHERE com os filtros e
