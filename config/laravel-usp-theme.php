@@ -79,6 +79,11 @@ $menu = [
         'url' => 'localusp/admin',
         'can' => 'admin',
     ],
+    [
+        'text' => '<span class="text-danger">Centros de despesa</span>',
+        'url' => 'cendsp',
+        'can' => 'admin',
+    ],
 ];
 
 $right_menu = [
