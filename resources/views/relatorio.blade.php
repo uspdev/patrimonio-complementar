@@ -66,7 +66,7 @@
             <b>{{ $patrimonio->setor }}</b>
           </td>
           <td>
-            {{ $patrimonio->replicado['tipo'] }} | {{ $patrimonio->replicado['nome'] }}
+            {{ $patrimonio->replicado['tipo'] }} | {{ $patrimonio->replicado['material'] }}
           </td>
           <td>
             {{ $patrimonio->usuario }}

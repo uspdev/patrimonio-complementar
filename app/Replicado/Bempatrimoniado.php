@@ -82,7 +82,7 @@ class Bempatrimoniado
             -- B.codlocusp,
             -- B.numpat,   B.epforibem,
             B.*,
-            c.tipitmmat tipo, c.nomsgpitmmat nome, -- classificacao
+            c.tipitmmat tipo, c.nomsgpitmmat material, -- classificacao
             CONCAT(B.epfmarpat,' / ', B.modpat, ' / ', B.tippat) descricao
             FROM BEMPATRIMONIADO B
                 INNER JOIN dbo.PESSOA P on P.codpes = B.codpes

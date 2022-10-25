@@ -9,7 +9,7 @@
   @if (!$editar)
     <div class="row">
       <div class="col-md-6">
-        {{ $bem['tipo'] }} | {{ $bem['nome'] }}<br>
+        {{ $bem['tipo'] }} | {{ $bem['material'] }}<br>
         Desc: {{ $bem['descricao'] }}<br>
         Setor/bloco: <b>@include('patrimonio.partials.setor')</b><br>
         Local: @include('patrimonio.partials.local')<br>

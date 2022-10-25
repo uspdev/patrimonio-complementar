@@ -45,7 +45,7 @@
         <td>
           ({{ $patrimonio->replicado['sglcendsp'] ?? '' }})
           {{ $patrimonio->replicado['tipo'] }}
-          ; {{ $patrimonio->replicado['nome'] }}
+          ; {{ $patrimonio->replicado['material'] }}
           ; {{ $patrimonio->replicado['descricao'] }}
         </td>
       </tr>
