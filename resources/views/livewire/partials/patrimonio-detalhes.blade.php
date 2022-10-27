@@ -1,9 +1,6 @@
 @include('patrimonio.partials.conferido-badge')
 
 <div>
-  @if ($bem['stabem'] != 'Ativo')
-    <div class="text-danger">Estado: {{ $bem['stabem'] }}</div>
-  @endif
   Nro: <b>{{ formatarNumpat($bem['numpat']) }}</b><br>
 
   @if (!$editar)
