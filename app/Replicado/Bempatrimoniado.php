@@ -9,16 +9,6 @@ use Uspdev\Replicado\DB;
  */
 class Bempatrimoniado
 {
-    public static function obter($numpat)
-    {
-        $numpats = SELF::listar(['numpat' => $numpat]);
-        if ($numpats) {
-            return $numpats[0];
-        } else {
-            return [];
-        }
-    }
-
     /**
      * Lista os centros de despesa que possuem algum bem patrimoniado
      *
@@ -35,19 +25,32 @@ class Bempatrimoniado
         return DB::fetchAll($query);
     }
 
+    public static function obter($numpat)
+    {
+        $numpats = SELF::listar(['numpat' => $numpat]);
+        if ($numpats) {
+            return $numpats[0];
+        } else {
+            return [];
+        }
+    }
+
     public static function listarPorSala($codlocusp = null)
     {
-        $filtros = ['l.codlocusp' => $codlocusp, 'B.stabem' => 'Ativo'];
+        $filtros = [
+            'l.codlocusp' => $codlocusp,
+            // 'B.stabem' => 'Ativo',
+        ];
         $numpats = SELF::listar($filtros);
         return $numpats;
     }
 
     public static function listarPorSetores($setores)
     {
-        $filtros = ['B.stabem' => 'Ativo'];
+        // $filtros = ['B.stabem' => 'Ativo'];
         $filtrosIn = ['B.sglcendsp' => $setores];
 
-        $numpats = SELF::listar($filtros, $filtrosIn);
+        $numpats = SELF::listar([], $filtrosIn);
         // dd($numpats);
         return $numpats;
     }
@@ -56,7 +59,7 @@ class Bempatrimoniado
     {
         $filtros = [
             'P.codpes' => $codpes,
-            'B.stabem' => 'Ativo',
+            // 'B.stabem' => 'Ativo',
         ];
         $numpats = SELF::listar($filtros);
         // dd($numpats);
@@ -65,9 +68,19 @@ class Bempatrimoniado
 
     /**
      * Lista patrimonios usando filtros e filtro tipo IN
+     *
+     * Filtra por padrão somente ativos, a não ser se passado diferente
+     *
+     * @param Array $filtros
+     * @param Array $filtrosIn
+     * @return Array lista de registros de patrimonios encontrados
      */
     public static function listar($filtros = [], $filtrosIn = [])
     {
+        if (!isset($filtros['B.stabem']) && !isset($filtros['numpat'])) {
+            $filtros['B.stabem'] = 'Ativo';
+        }
+
         list($filter_query, $params) = SELF::criaFiltro($filtros, []);
 
         if ($filtrosIn) {
