@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.7",
         "owen-it/laravel-auditing": "^12.0",
+        "uspdev/laravel-tools": "^1.1",
         "uspdev/laravel-usp-theme": "^2.5.2",
         "uspdev/replicado": "^1.9",
         "uspdev/senhaunica-socialite": "^4.1"
