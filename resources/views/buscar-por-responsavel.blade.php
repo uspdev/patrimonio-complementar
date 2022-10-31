@@ -10,17 +10,16 @@
 @section('content')
   <div class="h4">Buscar por Responsável</div>
 
-  <form id="form-responsavel" action="{{ route('buscarPorResponsavel') }}">
+  <form id="form-responsavel" action="{{ route('buscarPorResponsavel') }}" class="col-md-6">
     <x-senhaunica::select-pessoa prepend="Responsável">
       <input type="submit" class="btn btn-sm btn-primary ml-1" value="OK">
     </x-senhaunica::select-pessoa>
   </form>
 
-  <div class="bold">
-    {{ $user->codpes }} - {{ $user->name }} <span class="badge badge-primary">{{ count($patrimonios) ?? 0 }}</span>
-  </div>
-
   @if ($patrimonios->isNotEmpty())
+    <div class="bold">
+      {{ $user->codpes }} - {{ $user->name }} <span class="badge badge-primary">{{ count($patrimonios) ?? 0 }}</span>
+    </div>
     @include('partials.listagem')
   @endif
 @endsection

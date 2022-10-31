@@ -14,9 +14,7 @@
   <tbody>
     @foreach ($patrimonios as $patrimonio)
       <tr>
-        <td>
-          @include('partials.badge-status')
-        </td>
+        <td>@include('partials.badge-status')</td>
         <td>
           <a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a>
         </td>
@@ -30,18 +28,12 @@
         <td>
           {{ $patrimonio->codpes }} - {{ $patrimonio->obterNomeCodpes() }}
           @if ($patrimonio->codpes != $patrimonio->replicado['codpes'])
-          <span class="badge badge-warning">USP: {{ $patrimonio->replicado['codpes'] }}</span>
-        @endif
+            <span class="badge badge-warning">USP: {{ $patrimonio->replicado['codpes'] }}</span>
+          @endif
         </td>
-        <td>
-          {{ $patrimonio->usuario }}
-        </td>
-        <td>
-          {{ $patrimonio->local }}
-        </td>
-        <td>
-          {{ $patrimonio->obs }}
-        </td>
+        <td>{{ $patrimonio->usuario }}</td>
+        <td>{{ $patrimonio->local }}</td>
+        <td>{{ $patrimonio->obs }}</td>
         <td>
           ({{ $patrimonio->replicado['sglcendsp'] ?? '' }})
           {{ $patrimonio->replicado['tipo'] }}
