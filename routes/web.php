@@ -1,12 +1,10 @@
 <?php
 
-use Uspdev\Replicado\DB;
-use Illuminate\Http\Request;
-use App\Replicado\Bempatrimoniado;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CentrodespesaController;
 use App\Http\Controllers\LocaluspController;
 use App\Http\Controllers\PatrimonioController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,10 +31,7 @@ Route::get('/relatorio/{tipo?}', [PatrimonioController::class, 'relatorio'])->na
 Route::get('/listarPorSala', [PatrimonioController::class, 'listarPorSala']);
 // Route::get('/listarPorSala/{codlocusp?}', [PatrimonioController::class, 'listarPorSala']);
 Route::get('/listarPorNumero', [PatrimonioController::class, 'listarPorNumero']);
+
 Route::resource('/', PatrimonioController::class);
 
-Route::get('/cendsp', function() {
-    $cendsps = Arr::pluck(Bempatrimoniado::listarCentrosDespesa(), 'sglcendsp');
-    return view('cendsp', compact('cendsps'));
-    dd();
-});
+Route::resource('/cendsp', CentrodespesaController::class);

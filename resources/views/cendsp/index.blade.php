@@ -14,7 +14,7 @@
     <tbody>
       @foreach ($cendsps as $cendsp)
         <tr>
-          <td>{{ $cendsp }} </td>
+          <td><a href="cendsp/{{ $cendsp }}">{{ $cendsp }}</a> </td>
         </tr>
       @endforeach
     </tbody>
