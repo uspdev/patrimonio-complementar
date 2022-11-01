@@ -87,13 +87,6 @@ class Patrimonio extends Model implements Auditable
      */
     public static function importar(array $filter)
     {
-
-        if (isset($filter['bem'])) {
-            $patrimonio = SELF::obter($filter['bem']);
-            $patrimonio->save();
-            return $patrimonio;
-        }
-
         if (isset($filter['numpat'])) {
             $bem = Bempatrimoniado::obter($filter['numpat']);
             if ($bem) {
@@ -105,6 +98,12 @@ class Patrimonio extends Model implements Auditable
                 $patrimonio = new Patrimonio;
                 $patrimonio->user_id = Auth::id();
             }
+            return $patrimonio;
+        }
+
+        if (isset($filter['bem'])) {
+            $patrimonio = SELF::obter($filter['bem']);
+            $patrimonio->save();
             return $patrimonio;
         }
 
@@ -122,12 +121,25 @@ class Patrimonio extends Model implements Auditable
                 $patrimonio->save();
             }
         }
+
+        if (isset($filter['sglcendsp'])) {
+            $deleted = 0;
+            foreach (Bempatrimoniado::listar($filter) as $bem) {
+                $patrimonio = SELF::obter($bem);
+                $patrimonio->save();
+            }
+        }
     }
 
+    /**
+     *  Apaga (soft delete) os patrimonios não ativos do DB local
+     */
     public static function limpar($filter)
     {
         if (isset($filter['codpes'])) {
             foreach (Patrimonio::where('codpes', $filter['codpes'])->get() as $patrimonio) {
+                // Aqui fazemos várias consultas ao replicado, um para cada numpat.
+                // Poderia fazer uma unica consulta com todos para minimizar impacto
                 $bem = Bempatrimoniado::obter($patrimonio->numpat);
                 $patrimonio->replicado = $bem;
                 $patrimonio->save();
@@ -166,6 +178,9 @@ class Patrimonio extends Model implements Auditable
         return empty($nome) ? null : $nome;
     }
 
+    /**
+     * Retorna o localusp associado ao patrimonio
+     */
     public function localusp()
     {
         return Localusp::where('codlocusp', $this->codlocusp)->first();

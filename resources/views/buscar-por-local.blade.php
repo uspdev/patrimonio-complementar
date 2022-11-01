@@ -10,13 +10,12 @@
     </form>
   </div>
 
-  <div class="h4 mb-3">
-    LocaUSP <b>{{ $localusp->codlocusp }}</b> | Nome {{ $localusp->nome }}
-    | Andar {{ $localusp->andar }} | Setor {{ $localusp->setor }}
-    <span class="badge badge-primary">{{ count($patrimonios) }} registros</span>
-  </div>
-
   @if (count($patrimonios))
+    <div class="h4 mb-3">
+      LocaUSP <b>{{ $localusp->codlocusp }}</b> | Nome {{ $localusp->nome }}
+      | Andar {{ $localusp->andar }} | Setor {{ $localusp->setor }}
+      <span class="badge badge-primary">{{ count($patrimonios) }} registros</span>
+    </div>
     @include('partials.listagem')
   @else
     @if ($localusp->codlocusp)
@@ -38,5 +37,4 @@
       })
     })
   </script>
-
 @endsection
