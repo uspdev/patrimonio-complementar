@@ -77,6 +77,10 @@ class Bempatrimoniado
      */
     public static function listar($filtros = [], $filtrosIn = [])
     {
+        $filter_query = '';
+        $params = [];
+
+        // vamos filtrar somente ativos, a não seja especificado stabem ou se que seja de um numpat específico
         if (!isset($filtros['B.stabem']) && !isset($filtros['numpat'])) {
             $filtros['B.stabem'] = 'Ativo';
         }
