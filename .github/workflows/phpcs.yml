@@ -1,19 +1,10 @@
-on: pull_request
-
-name: Inspections
+on: [pull_request]
+name: Main
 jobs:
-  runPHPCSInspection:
-    name: Run PHPCS inspection
+  php-cs-fixer:
+    name: PHP-CS-Fixer
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      # with:
-      #   ref: ${{ github.event.pull_request.head.sha }}
-    - name: Run PHPCS inspection
-      uses: rtCamp/action-phpcs-code-review@v2
-      env:
-        GH_BOT_TOKEN: "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"
-        SKIP_FOLDERS: "tests,.github"
-        PHPCS_SNIFFS_EXCLUDE: "WordPress.Files.FileName"
-      with:
-        args: "WordPress,WordPress-Core,WordPress-Docs"
+    - uses: actions/checkout@v3
+    - name: PHP-CS-Fixer
+      uses: docker://oskarstark/php-cs-fixer-ga
