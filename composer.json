@@ -1,8 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "uspdev/patrimonio-complementar",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Sistema complementar ao patrimonio da USP",
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
@@ -14,9 +13,9 @@
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.7",
         "owen-it/laravel-auditing": "^12.0",
+        "uspdev/laravel-replicado": "^1.0",
         "uspdev/laravel-tools": "^1.1",
-        "uspdev/laravel-usp-theme": "^2.5.2",
-        "uspdev/replicado": "^1.9",
+        "uspdev/laravel-usp-theme": "^2.5",
         "uspdev/senhaunica-socialite": "^4.1",
         "ybr-nx/laravel-mariadb": "^1.0"
     },

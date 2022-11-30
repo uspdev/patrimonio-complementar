@@ -11,6 +11,11 @@ use Uspdev\Replicado\Pessoa;
 
 class PatrimonioController extends Controller
 {
+    // testando lint
+
+      public function lint() {
+        // sem nada
+      }
 
     /**
      * Gera relatório de listagem por sala com geração de PDF
