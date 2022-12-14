@@ -28,6 +28,10 @@ A ferramenta exibe relatório que indica quais bens ainda não foram localizados
 * Processo normal do Laravel
 * Use o --seed para criar os locais pela primeira vez (SET, Lamem e LMCC)
 
+Este app pode usar otimização em produção:
+
+    php artisan optimize
+
 ### Locais USP
 
 Os locais USP não são associados a centros de despesa ou setores. O sistema permite associar um local a um setor para autorizar gerentes locais do setor a listar os bens desses locais.
