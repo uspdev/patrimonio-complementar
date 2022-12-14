@@ -34,4 +34,14 @@ Os locais USP não são associados a centros de despesa ou setores. O sistema pe
 
 ### MariaDB e json
 
-Adicionado suporte à sintaxe do mysql para acesso a json para o mariadb.
+Adicionado suporte à sintaxe do mysql para acesso a json para o mariadb. Algumas consultas a campos `json` utilizam essa configuração. 
+
+```
+DB_CONNECTION=mariadb
+```
+
+## Laravel Dusk
+
+Teste de navegador. https://laravel.com/docs/8.x/dusk
+
+    php artisan dusk
