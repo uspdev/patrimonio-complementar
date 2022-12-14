@@ -6505,16 +6505,16 @@
         },
         {
             "name": "uspdev/laravel-replicado",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/uspdev/laravel-replicado.git",
-                "reference": "02949739e2587c37e0778554a9a9c261cefa6103"
+                "reference": "ece1603a2520d7ee3aef40784ce2cd6099a74975"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uspdev/laravel-replicado/zipball/02949739e2587c37e0778554a9a9c261cefa6103",
-                "reference": "02949739e2587c37e0778554a9a9c261cefa6103",
+                "url": "https://api.github.com/repos/uspdev/laravel-replicado/zipball/ece1603a2520d7ee3aef40784ce2cd6099a74975",
+                "reference": "ece1603a2520d7ee3aef40784ce2cd6099a74975",
                 "shasum": ""
             },
             "require": {
@@ -6546,9 +6546,9 @@
             "description": "Wrapper laravel para uspdev/replicado",
             "support": {
                 "issues": "https://github.com/uspdev/laravel-replicado/issues",
-                "source": "https://github.com/uspdev/laravel-replicado/tree/1.0.2"
+                "source": "https://github.com/uspdev/laravel-replicado/tree/1.0.3"
             },
-            "time": "2022-11-30T19:28:33+00:00"
+            "time": "2022-12-14T18:29:40+00:00"
         },
         {
             "name": "uspdev/laravel-tools",
@@ -6653,16 +6653,16 @@
         },
         {
             "name": "uspdev/replicado",
-            "version": "1.16.1",
+            "version": "1.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/uspdev/replicado.git",
-                "reference": "cd7d9d1e033448ced12539c71d4bd215392cfb6f"
+                "reference": "6757c575f23072ea365ce21c144fd261fd28ea93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uspdev/replicado/zipball/cd7d9d1e033448ced12539c71d4bd215392cfb6f",
-                "reference": "cd7d9d1e033448ced12539c71d4bd215392cfb6f",
+                "url": "https://api.github.com/repos/uspdev/replicado/zipball/6757c575f23072ea365ce21c144fd261fd28ea93",
+                "reference": "6757c575f23072ea365ce21c144fd261fd28ea93",
                 "shasum": ""
             },
             "require": {
@@ -6696,9 +6696,9 @@
             "homepage": "https://github.com/uspdev/replicado",
             "support": {
                 "issues": "https://github.com/uspdev/replicado/issues",
-                "source": "https://github.com/uspdev/replicado/tree/1.16.1"
+                "source": "https://github.com/uspdev/replicado/tree/1.16.2"
             },
-            "time": "2022-11-28T19:29:13+00:00"
+            "time": "2022-12-14T18:09:08+00:00"
         },
         {
             "name": "uspdev/senhaunica-socialite",
@@ -8056,16 +8056,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.20",
+            "version": "9.2.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980"
+                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/af7463c955007de36db0c5e26d03e2f933c2e980",
-                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
+                "reference": "3f893e19712bb0c8bc86665d1562e9fd509c4ef0",
                 "shasum": ""
             },
             "require": {
@@ -8121,7 +8121,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.20"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.21"
             },
             "funding": [
                 {
@@ -8129,7 +8129,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-13T07:49:28+00:00"
+            "time": "2022-12-14T13:26:54+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
