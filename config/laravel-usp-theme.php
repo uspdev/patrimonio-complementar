@@ -31,7 +31,7 @@ $submenu2 = [
     [
         'text' => 'Por sala',
         'url' => 'listarPorSala',
-        'can' => 'gerente',
+        'can' => 'manager',
     ],
 ];
 
@@ -39,17 +39,17 @@ $buscar = [
     [
         'text' => 'por Número',
         'url' => 'numpat',
-        'can' => 'gerente',
+        'can' => 'manager',
     ],
     [
         'text' => 'Por local',
         'url' => 'buscarPorLocal',
-        'can' => 'gerente',
+        'can' => 'manager',
     ],
     [
         'text' => 'Por responsável',
         'url' => 'buscarPorResponsavel',
-        'can' => 'gerente',
+        'can' => 'manager',
     ],
 ];
 
@@ -57,22 +57,22 @@ $menu = [
     [
         'text' => 'Listar',
         'submenu' => $submenu2,
-        'can' => 'gerente',
+        'can' => 'manager',
     ],
     [
         'text' => 'Buscar',
         'submenu' => $buscar,
-        'can' => 'gerente',
+        'can' => 'manager',
     ],
     [
         'text' => 'Locais',
         'url' => 'localusp',
-        'can' => 'gerente',
+        'can' => 'manager',
     ],
     [
         'text' => 'Relatório',
         'url' => 'relatorio',
-        'can' => 'gerente',
+        'can' => 'manager',
     ],
     [
         'text' => '<span class="text-danger">Locais admin</span>',

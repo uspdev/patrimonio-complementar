@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+  LocaUSP {{ $l->codlocusp }} | Nome {{ $l->nome }} | Andar {{ $l->andar }} | Setor {{ $l->setor }}
+@endsection
+
 @section('content')
 
   <div class="mb-3">
@@ -14,7 +18,6 @@
     <div class="h4 mb-3">
       LocaUSP <b>{{ $localusp->codlocusp }}</b> | Nome {{ $localusp->nome }}
       | Andar {{ $localusp->andar }} | Setor {{ $localusp->setor }}
-      <span class="badge badge-primary">{{ count($patrimonios) }} registros</span>
     </div>
     @include('partials.listagem')
   @else

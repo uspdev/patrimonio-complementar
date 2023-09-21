@@ -25,6 +25,13 @@ class Bempatrimoniado
         return DB::fetchAll($query);
     }
 
+    /**
+     * Obtém os dados de um determinado bem patrimoniado
+     *
+     * @param Int $numpat
+     * @return Array dados de um patrimônio
+     * @author Masakik, em 15/9/2023
+     */
     public static function obter($numpat)
     {
         $numpats = SELF::listar(['numpat' => $numpat]);
@@ -35,7 +42,8 @@ class Bempatrimoniado
         }
     }
 
-    public static function listarPorSala($codlocusp = null)
+    // usava no relatório mas agora usa relacionamento de local compatrimonios
+        public static function listarPorSala($codlocusp = null)
     {
         $filtros = [
             'l.codlocusp' => $codlocusp,
@@ -45,6 +53,15 @@ class Bempatrimoniado
         return $numpats;
     }
 
+    /**
+     * Lista os patrimônios associados a siglas de setores (sglcendsp)
+     *
+     * Pode ser um setor ou uma lista de setores separados porvírgula
+     *
+     * @param String $setores
+     * @return List Array com array de patrimônio
+     * @author Masakik, em 15/9/2023
+     */
     public static function listarPorSetores($setores)
     {
         // $filtros = ['B.stabem' => 'Ativo'];
@@ -55,6 +72,13 @@ class Bempatrimoniado
         return $numpats;
     }
 
+    /**
+     * Lista os patrimônios sob responsabilidade de codpes
+     *
+     * @param Int $codpes
+     * @return List Array com array de patrimônio
+     * @author Masakik, em 15/9/2023
+     */
     public static function listarPorResponsavel($codpes)
     {
         $filtros = [
@@ -70,6 +94,7 @@ class Bempatrimoniado
      * Lista patrimonios usando filtros e filtro tipo IN
      *
      * Filtra por padrão somente ativos, a não ser se passado diferente
+     * Talvez possa ser um método protected
      *
      * @param Array $filtros
      * @param Array $filtrosIn
@@ -94,10 +119,6 @@ class Bempatrimoniado
 
         $query = "SELECT
             P.nompesttd nompes, P.codpes, -- pessoa
-            -- B.stabem,
-            -- B.sglcendsp setor, --predio
-            -- B.codlocusp,
-            -- B.numpat,   B.epforibem,
             B.*,
             c.tipitmmat tipo, c.nomsgpitmmat material, -- classificacao
             CONCAT(B.epfmarpat,' / ', B.modpat, ' / ', B.tippat) descricao

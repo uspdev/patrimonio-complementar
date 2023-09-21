@@ -31,7 +31,7 @@ return [
     'customUserField' => ['view' => 'user.setores', 'label' => 'Setores', 'width' => '200px'],
 
     // Define o gate para a rota de busca de pessoas
-    'findUsersGate' => 'gerente',
+    'findUsersGate' => 'manager',
 
     // fim views internas
     // -----------------------------------------------------

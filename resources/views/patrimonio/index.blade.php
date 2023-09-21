@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  @can('gerente')
+  @can('manager')
     <div class="row">
       <div class="col-md-6">
         <div class="card h4 text-warning">

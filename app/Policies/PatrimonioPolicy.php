@@ -61,7 +61,7 @@ class PatrimonioPolicy
         $ret = ($user->codpes == $patrimonio->replicado['codpes']) ? true : $ret;
 
         // gerente do setor
-        $ret = (Gate::check('gerente') && strpos($user->setores, $patrimonio->setor) !== false) ? true : $ret;
+        $ret = (Gate::check('manager') && strpos($user->setores, $patrimonio->setor) !== false) ? true : $ret;
 
         return $ret;
     }

@@ -79,7 +79,6 @@ class Patrimonio extends Model implements Auditable
     /**
      * Cria/importa novos patrimonios a partir do filtro informado
      *
-     * Persiste somente se 'Ativo'
      * Deve ser informado $filter. Ex.: ['codpes' => $user->codpes]
      *
      * @param array $filter Array contendo campo a filtrar
@@ -91,9 +90,7 @@ class Patrimonio extends Model implements Auditable
             $bem = Bempatrimoniado::obter($filter['numpat']);
             if ($bem) {
                 $patrimonio = SELF::obter($bem);
-                if ($bem['stabem'] == 'Ativo') {
                     $patrimonio->save();
-                }
             } else {
                 $patrimonio = new Patrimonio;
                 $patrimonio->user_id = Auth::id();
@@ -169,7 +166,7 @@ class Patrimonio extends Model implements Auditable
     }
 
     /**
-     * Permite preencher o nome a partir do codpes
+     * Permite validar o nome a partir do codpes
      */
     public function obterNomeCodpes()
     {

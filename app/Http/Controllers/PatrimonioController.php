@@ -22,32 +22,34 @@ class PatrimonioController extends Controller
      */
     public function listarPorSala(Request $request)
     {
-        \Gate::authorize('gerente');
+        \Gate::authorize('manager');
         \UspTheme::activeUrl('listarPorSala');
 
-        $data = Bempatrimoniado::listarPorSala();
+        // $data = Bempatrimoniado::listarPorSala();
 
         $setores = explode(',', \Auth::user()->setores);
         $localusps = Localusp::whereIn('setor', $setores)->orderBy('setor')->orderBy('codlocusp')->get();
+        $view = 'tela';
 
         if (isset($request->pdf)) {
-            $pdf = \PDF::loadView('pdf', compact('localusps'));
+            $view = 'pdf';
+            $pdf = \PDF::loadView('pdf', compact('localusps', 'view'));
             return $pdf->download('relatorio.pdf');
         }
 
-        return view('patrimonio.listar-por-sala', compact('localusps', 'setores'));
+        return view('patrimonio.listar-por-sala', compact('localusps', 'setores', 'view'));
     }
 
     public function buscarPorLocal($codlocusp = null)
     {
-        \Gate::authorize('gerente');
+        \Gate::authorize('manager');
         \UspTheme::activeUrl('buscarPorLocal');
 
         if (!$codlocusp) {
             $localusp = new Localusp;
             $patrimonios = [];
         } else {
-            $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
+            $l = $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
 
             Patrimonio::importar(['codlocusp' => $codlocusp]);
             $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
@@ -56,12 +58,12 @@ class PatrimonioController extends Controller
                 ->get();
         }
 
-        return view('buscar-por-local', compact('localusp', 'patrimonios'));
+        return view('buscar-por-local', compact('l', 'localusp', 'patrimonios'));
     }
 
     public function buscarPorResponsavel($codpes = null)
     {
-        \Gate::authorize('gerente');
+        \Gate::authorize('manager');
         \UspTheme::activeUrl('buscarPorResponsavel');
 
         $user = new User;
@@ -87,7 +89,7 @@ class PatrimonioController extends Controller
 
     public function relatorio(Request $request, $tipo = 'Pendentes')
     {
-        \Gate::authorize('gerente');
+        \Gate::authorize('manager');
         \UspTheme::activeUrl('relatorio');
 
         $exibir = $request->e ?? 'pendentes';
@@ -132,7 +134,7 @@ class PatrimonioController extends Controller
      */
     // public function listarPorNumero(Request $request)
     // {
-    //     \Gate::authorize('gerente');
+    //     \Gate::authorize('manager');
 
     //     $data = Bempatrimoniado::listarPorSala();
 

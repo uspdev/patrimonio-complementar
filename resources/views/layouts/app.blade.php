@@ -8,6 +8,8 @@
   </style>
 @endsection
 
+@include('laravel-usp-theme::blocos.datatable-simples')
+
 @section('flash')
   @if ($errors->any())
     <div class="alert alert-danger">

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Uspdev\Replicado\DB;
+use App\Replicado\Bempatrimoniado;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Localusp extends Model
 {
@@ -20,7 +21,7 @@ class Localusp extends Model
 
     /**
      * Lê as informações do replicado e preenche a base local
-     * 
+     *
      * @return null
      */
     public static function importar()
@@ -41,7 +42,9 @@ class Localusp extends Model
     // lista os patrimonios do local
     public function patrimonios()
     {
-        return Patrimonio::where('codlocusp', $this->codlocusp)->orderBy('numpat')->get();
+        Patrimonio::importar(['codlocusp' => $this->codlocusp]);
+        $patrimonios = Patrimonio::where('codlocusp', $this->codlocusp)->where('replicado->stabem', 'Ativo')->orderBy('numpat')->get();
+        return $patrimonios;
     }
 
     public function contarPatrimonios()

@@ -18,7 +18,7 @@ class CentrodespesaController extends Controller
      */
     public function index()
     {
-        Gate::authorize('gerente');
+        Gate::authorize('manager');
 
         $cendsps = Arr::pluck(Bempatrimoniado::listarCentrosDespesa(), 'sglcendsp');
         return view('cendsp.index', compact('cendsps'));
@@ -53,7 +53,7 @@ class CentrodespesaController extends Controller
      */
     public function show(string $sglcendsp)
     {
-        Gate::authorize('gerente');
+        Gate::authorize('manager');
 
         Patrimonio::importar(['sglcendsp' => $sglcendsp]);
         // DB::enableQueryLog();

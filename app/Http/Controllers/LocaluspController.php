@@ -17,7 +17,7 @@ class LocaluspController extends Controller
      */
     public function index()
     {
-        Gate::authorize('gerente');
+        Gate::authorize('manager');
         UspTheme::activeUrl('localusp');
 
         $setores = explode(',', Auth::user()->setores);
@@ -99,7 +99,7 @@ class LocaluspController extends Controller
      */
     public function update(Request $request, Localusp $localusp)
     {
-        Gate::authorize('gerente');
+        Gate::authorize('manager');
 
         $validated = $request->validate([
             'setor' => 'required|string|max:50',

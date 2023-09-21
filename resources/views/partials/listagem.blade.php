@@ -1,4 +1,4 @@
-<table class="table table-bordered table-hover datatable ">
+<table class="table table-bordered table-hover datatable-simples dt-buttons dt-buttons-pdf-landscape dt-fixed-header">
   <thead>
     <tr>
       <th></th>
