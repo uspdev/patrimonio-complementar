@@ -3,7 +3,7 @@
 @section('content')
 
   <div class="h4">
-    Locais <span class="badge badge-success">{{ count($localusps) }}</span>
+    Locais
     <span class="badge badge-primary">{{ implode(',', $setores) }}</span>
     <a href="{{ route('localusp.admin') }}?sync=true" class="btn btn-sm btn-outline-secondary">Sincronizar com replicado</a>
   </div>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="mt-3">
-      <table class="table table-bordered table-hover localusp">
+      <table class="table table-bordered table-hover localusp datatable-simples dt-fixed-header dt-buttons dt-button-pdf">
         <thead>
           <tr>
             <th></th>
@@ -53,28 +53,4 @@
   @endif
 
 
-@endsection
-
-@section('javascripts_bottom')
-  @parent
-  <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.8/css/fixedHeader.dataTables.min.css">
-  <script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
-  <script>
-    $(document).ready(function() {
-
-      oTable = $('.localusp').DataTable({
-        dom: 't',
-        "paging": false,
-        "sort": true,
-        "order": [
-          [1, "asc"]
-        ],
-        "fixedHeader": true,
-        columnDefs: [{
-          targets: 0,
-          orderable: false
-        }],
-      });
-    })
-  </script>
 @endsection
