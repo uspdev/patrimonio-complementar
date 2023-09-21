@@ -28,7 +28,7 @@ class PatrimonioController extends Controller
         // $data = Bempatrimoniado::listarPorSala();
 
         $setores = explode(',', \Auth::user()->setores);
-        $localusps = Localusp::whereIn('setor', $setores)->orderBy('setor')->orderBy('codlocusp')->get();
+        $l = $localusps = Localusp::whereIn('setor', $setores)->orderBy('setor')->orderBy('codlocusp')->get();
         $view = 'tela';
 
         if (isset($request->pdf)) {
@@ -37,7 +37,7 @@ class PatrimonioController extends Controller
             return $pdf->download('relatorio.pdf');
         }
 
-        return view('patrimonio.listar-por-sala', compact('localusps', 'setores', 'view'));
+        return view('patrimonio.listar-por-sala', compact('l', 'localusps', 'setores', 'view'));
     }
 
     public function buscarPorLocal($codlocusp = null)
@@ -46,7 +46,7 @@ class PatrimonioController extends Controller
         \UspTheme::activeUrl('buscarPorLocal');
 
         if (!$codlocusp) {
-            $localusp = new Localusp;
+            $l = $localusp = new Localusp;
             $patrimonios = [];
         } else {
             $l = $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
