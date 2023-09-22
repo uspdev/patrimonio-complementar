@@ -13,9 +13,10 @@ class PatrimonioController extends Controller
 {
     // testando lint
 
-      public function lint() {
+    public function lint()
+    {
         // sem nada
-      }
+    }
 
     /**
      * Gera relatório de listagem por sala com geração de PDF
@@ -52,7 +53,8 @@ class PatrimonioController extends Controller
             $l = $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
 
             Patrimonio::importar(['codlocusp' => $codlocusp]);
-            $patrimonios = Patrimonio::where('codlocusp', $codlocusp)
+            $patrimonios = Patrimonio::where('replicado->stabem', 'Ativo')
+                ->where('codlocusp', $codlocusp)
                 ->orWhere('replicado->codlocusp', $codlocusp)
                 ->orderBy('numpat', 'ASC')
                 ->get();
@@ -202,7 +204,7 @@ class PatrimonioController extends Controller
 
         $patrimonios = Patrimonio::where('codpes', $user->codpes)
             ->orWhere('replicado->codpes', $user->codpes)
-            // ->where('replicado->stabem', 'Ativo')
+        // ->where('replicado->stabem', 'Ativo')
             ->orderBy('numpat', 'ASC')
             ->get();
 
