@@ -27,7 +27,7 @@
   @endcan
 
   <div class="h4 mt-3">
-    Meus Patrimônios <span class="badge badge-primary">{{ count($patrimonios) }}</span>
+    Meus Patrimônios
   </div>
   @if ($patrimonios->isNotEmpty())
     @include('partials.listagem')

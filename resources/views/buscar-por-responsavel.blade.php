@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-  <div class="h4">Buscar por Responsável</div>
+  {{-- <div class="h4">Buscar por Responsável</div> --}}
 
   <form id="form-responsavel" action="{{ route('buscarPorResponsavel') }}" class="col-md-6">
     <x-senhaunica::select-pessoa prepend="Responsável">
@@ -17,8 +17,8 @@
   </form>
 
   @if ($patrimonios->isNotEmpty())
-    <div class="bold">
-      {{ $user->codpes }} - {{ $user->name }} <span class="badge badge-primary">{{ count($patrimonios) ?? 0 }}</span>
+    <div class="h4">
+      {{ $user->codpes }} - {{ $user->name }}
     </div>
     @include('partials.listagem')
   @endif
