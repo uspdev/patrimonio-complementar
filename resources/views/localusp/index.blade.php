@@ -45,8 +45,8 @@
                 | {{ $localusp->replicado['stiloc'] ?? '-' }}
                 <span  title="{{ json_encode($localusp->replicado) }}"><i class="fas fa-info-circle text-info"></i></span>
               </td>
-              <td>{{ $localusp->created_at->format('d/m/Y H:i') }}</td>
-              <td>{{ $localusp->updated_at->format('d/m/Y H:i') }}</td>
+              <td data-order="{{ $localusp->created_at }}">{{ $localusp->created_at->format('d/m/Y H:i') }}</td>
+              <td data-order="{{ $localusp->updated_at }}">{{ $localusp->updated_at->format('d/m/Y H:i') }}</td>
             </tr>
           @endforeach
         </tbody>
