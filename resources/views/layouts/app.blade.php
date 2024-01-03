@@ -9,6 +9,7 @@
 @endsection
 
 @include('laravel-usp-theme::blocos.datatable-simples')
+@include('laravel-usp-theme::blocos.spinner')
 
 @section('flash')
   @if ($errors->any())

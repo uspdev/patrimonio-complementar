@@ -15,6 +15,7 @@ class Localusp extends Model
         'codlocusp', 'setor', 'andar', 'nome',
     ];
 
+
     protected $casts = [
         'replicado' => 'array',
     ];
@@ -26,17 +27,22 @@ class Localusp extends Model
      */
     public static function importar()
     {
-        $query = "SELECT * FROM LOCALUSP WHERE codund IN (" . getenv('REPLICADO_CODUNDCLG') . ")";
+        $query = "SELECT * FROM LOCALUSP WHERE codund IN (" . config('replicado.codundclgs') . ")";
 
         $locaisReplicado = DB::fetchAll($query);
+        $count = 0;
         foreach ($locaisReplicado as $localReplicado) {
             $localusp = Localusp::firstOrNew(['codlocusp' => $localReplicado['codlocusp']]);
             $localusp->replicado = $localReplicado;
             $localusp->setor = $localusp->setor ?? $localReplicado['idfblc'];
             $localusp->andar = $localusp->andar ?? $localReplicado['idfadr'];
             $localusp->nome = $localusp->nome ?? $localReplicado['idfloc'];
+            if (!$localusp->exists) {
+                $count++;
+            }
             $localusp->save();
         }
+        return $count;
     }
 
     // lista os patrimonios do local

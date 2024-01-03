@@ -5,13 +5,13 @@
   <div class="h4">
     Locais
     <span class="badge badge-primary">{{ implode(',', $setores) }}</span>
-    <a href="{{ route('localusp.admin') }}?sync=true" class="btn btn-sm btn-outline-secondary">Sincronizar com replicado</a>
+    <a href="{{ route('localusp.admin') }}?sync=true" class="btn btn-sm btn-spinner btn-outline-secondary">Sincronizar com replicado</a>
   </div>
 
   @if (count($localusps))
     <div class="ml-3">
-      Os locais não são associados a setor na base replicada. Se um local não aparecer aqui solicite sua inclusão ao
-      resposável desse sistema.
+      Os locais não são associados a setor na base replicada. São associados ao idfblc - identificação do bloco.
+      Se um local não aparecer aqui solicite sua inclusão ao responsável desse sistema.
     </div>
 
     <div class="mt-3">
@@ -19,11 +19,13 @@
         <thead>
           <tr>
             <th></th>
-            <th>Setor</th>
+            <th>Setor (bloco)</th>
             <th>Número</th>
             <th>Andar</th>
             <th>Nome</th>
-            <th>Replicação (tipo|estilo?|bloco)</th>
+            <th>Replicação (tipo | estilo)</th>
+            <th>Criado em</th>
+            <th>Atualizado em</th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +34,7 @@
               <td>
                 @include('localusp.partials.modal-editar')
               </td>
-              <td>{{ $localusp->setor }}</td>
+              <td>@include('localusp.partials.setor')</td>
               <td>
                 <a href="{{ route('buscarPorLocal') }}/{{ $localusp->codlocusp }}">{{ $localusp->codlocusp }}</a>
               </td>
@@ -41,8 +43,10 @@
               <td>
                 {{ $localusp->replicado['tiplocusp'] ?? '-' }}
                 | {{ $localusp->replicado['stiloc'] ?? '-' }}
-                | {{ $localusp->replicado['idfblc'] ?? '-' }}
+                <span  title="{{ json_encode($localusp->replicado) }}"><i class="fas fa-info-circle text-info"></i></span>
               </td>
+              <td>{{ $localusp->created_at->format('d/m/Y H:i') }}</td>
+              <td>{{ $localusp->updated_at->format('d/m/Y H:i') }}</td>
             </tr>
           @endforeach
         </tbody>

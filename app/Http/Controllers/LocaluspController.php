@@ -37,12 +37,15 @@ class LocaluspController extends Controller
         UspTheme::activeUrl('localusp/admin');
 
         if ($request->sync == 'true') {
-            Localusp::importar();
+            $count = Localusp::importar();
+
+            request()->session()->flash('alert-info', $count . ' locais importados com sucesso!');
             return back();
         }
 
         $setores = ['TODOS'];
         $localusps = Localusp::get();
+
 
         return view('localusp.index', compact('localusps', 'setores'));
     }
