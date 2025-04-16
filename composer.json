@@ -4,15 +4,14 @@
     "description": "Sistema complementar ao patrimonio da USP",
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
-        "barryvdh/laravel-dompdf": "dev-master",
-        "fruitcake/laravel-cors": "^2.0",
+        "php": "^7.3|^8.3",
+        "barryvdh/laravel-dompdf": "^2.2",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.65",
-        "laravel/sanctum": "^2.11",
+        "laravel/framework": "^11",
+        "laravel/sanctum": "^4.8",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.7",
-        "owen-it/laravel-auditing": "^12.0",
+        "livewire/livewire": "^3.4",
+        "owen-it/laravel-auditing": "^13.0",
         "uspdev/laravel-replicado": "^1.0",
         "uspdev/laravel-tools": "^1",
         "uspdev/laravel-usp-theme": "^2.5",
@@ -20,14 +19,13 @@
         "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/dusk": "^6.25",
+        "laravel/dusk": "^8.0",
         "laravel/sail": "^1.0.1",
         "lucascudo/laravel-pt-br-localization": "^1.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10"
+        "nunomaduro/collision": "^8.1",
+        "phpunit/phpunit": "^12.1.2"
     },
     "autoload": {
         "psr-4": {
