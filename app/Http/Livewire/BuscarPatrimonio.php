@@ -55,13 +55,13 @@ class BuscarPatrimonio extends Component
         // esta lógica deve ir para dentro da validação
         if (!$this->patrimonio->obterNomeCodpes()) {
             $this->addError('patrimonio.codpes', 'Responsável inválido');
-            $this->emitSelf('refresh');
+            $this->dispatch('refresh')->self();
             return null;
         }
         $this->patrimonio->save();
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
         $this->editar = false;
-        $this->emitSelf('refresh');
+        $this->dispatch('refresh')->self();
     }
 
     public function confirmar()
@@ -75,7 +75,7 @@ class BuscarPatrimonio extends Component
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
 
         $this->editar = false;
-        $this->emitSelf('refresh');
+        $this->dispatch('refresh')->self();
     }
 
     public function cancelar()
