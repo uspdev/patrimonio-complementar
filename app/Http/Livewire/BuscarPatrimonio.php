@@ -45,7 +45,7 @@ class BuscarPatrimonio extends Component
         $this->bem = $this->patrimonio->replicado;
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
 
-        $this->dispatchBrowserEvent('update-url', ['url' => 'numpat/' . $this->numpat]);
+        $this->dispatch('update-url', ['url' => 'numpat/' . $this->numpat]);
     }
 
     public function salvar()
