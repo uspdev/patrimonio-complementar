@@ -28,7 +28,9 @@ return [
 
     // view para editar campo de usuário personalizado
     // é passado $user para a view
-    'customUserField' => [['view' => 'user.setores', 'label' => 'Setores', 'width' => '200px'],],
+    'customUserField' => [
+        ['view' => 'user.setores', 'label' => 'Setores', 'width' => '200px'],
+    ],
 
     // Define o gate para a rota de busca de pessoas
     'findUsersGate' => 'manager',
@@ -61,6 +63,10 @@ return [
 
     'dev' => env('SENHAUNICA_DEV', 'no'),
     'callback_id' => env('SENHAUNICA_CALLBACK_ID'),
+
+    // codigo da unidade para identificar logins proprios
+    // relevante se permission=true
+    'codigoUnidade' => env('SENHAUNICA_CODIGO_UNIDADE'),
 
     // SENHAUNICA_KEY e SENHAUNICA_SECRET são carregados em services.php da biblioteca
 ];
