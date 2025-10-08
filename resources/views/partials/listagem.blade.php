@@ -1,7 +1,7 @@
 <table class="table table-bordered table-hover datatable-simples dt-buttons dt-buttons-pdf-landscape dt-fixed-header">
   <thead>
     <tr>
-      <th></th>
+      {{-- <th></th> --}}
       <th>Número</th>
       <th>Local</th>
       <th>Responsável</th>
@@ -13,8 +13,16 @@
   </thead>
   <tbody>
     @foreach ($patrimonios as $patrimonio)
+      @php
+        // patrimonios que sao transferidos para outra unidade saem do sistema.
+        if (!$patrimonio->replicado) {
+            continue;
+        }
+      @endphp
       <tr>
-        <td>@include('partials.badge-status')</td>
+        {{-- <td>
+          @include('partials.badge-status')
+        </td> --}}
         <td>
           <a href="numpat/{{ $patrimonio['numpat'] }}">{{ formatarNumpat($patrimonio['numpat']) }}</a>
         </td>

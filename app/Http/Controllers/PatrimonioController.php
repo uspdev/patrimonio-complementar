@@ -51,7 +51,6 @@ class PatrimonioController extends Controller
             $patrimonios = [];
         } else {
             $l = $localusp = Localusp::firstOrNew(['codlocusp' => $codlocusp]);
-
             Patrimonio::importar(['codlocusp' => $codlocusp]);
             $patrimonios = Patrimonio::where('replicado->stabem', 'Ativo')
                 ->where('codlocusp', $codlocusp)
@@ -209,6 +208,10 @@ class PatrimonioController extends Controller
             ->get();
 
         return view('patrimonio.index', compact('user', 'patrimonios'));
+    }
+    
+    public function numpat($numpat = null) {
+        return view('patrimonio.show', compact('numpat'));
     }
 
     /**

@@ -1,7 +1,7 @@
 <div>
   <div class="row d-block">
     <div class="col-md-6">
-      <form wire:submit.prevent="buscar">
+      <form wire:submit="buscar">
         <x-wire-input-text model="numpat" prepend="<i class='fas fa-landmark'></i>">
           <button class="btn btn-primary ml-1">OK</button>
         </x-wire-input-text>

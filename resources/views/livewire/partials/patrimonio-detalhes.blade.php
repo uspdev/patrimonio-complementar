@@ -10,7 +10,7 @@
         Desc: {{ $bem['descricao'] }}<br>
         Setor/bloco: <b>@include('patrimonio.partials.setor')</b><br>
         Local: @include('patrimonio.partials.local')<br>
-        Resp: @include('patrimonio.partials.responsavel') <br>
+        Resp: @include('patrimonio.partials.responsavel')<br>
       </div>
       <div class="col-md-6">
         <div class="mb-2"></div>
@@ -86,3 +86,4 @@
     </div>
 
   </div>
+</div>

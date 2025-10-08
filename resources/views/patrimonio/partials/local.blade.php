@@ -1,12 +1,8 @@
-({{ $localusp->setor }})
+({{ $localusp->setor }}) {{ $patrimonio->codlocusp }} - {{ $localusp->nome }}
 
 @if (Gate::check('manager'))
-  <a href="buscarPorLocal/{{ $patrimonio->codlocusp }}">{{ $patrimonio->codlocusp }} <i class="fas fa-share"></i></a>
-@else
-  {{ $patrimonio->codlocusp }}
+  <a href="buscarPorLocal/{{ $patrimonio->codlocusp }}"><i class="fas fa-share"></i></a>
 @endif
-
-- {{ $localusp->nome }}
 
 {{-- se local difere do replicado vamos acrescentar dados --}}
 @if ($bem['codlocusp'] != $patrimonio->codlocusp)

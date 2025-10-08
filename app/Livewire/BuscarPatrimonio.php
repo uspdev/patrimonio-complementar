@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Localusp;
 use App\Models\Patrimonio;
@@ -17,21 +17,54 @@ class BuscarPatrimonio extends Component
     public $patrimonio;
     public $localusp;
 
-    // form editar
-    public $editar; // true or false
+    public $setor;
+    public $codlocusp;
+    public $codpes;
+    public $usuario;
+    public $local;
+    public $obs;
 
-    protected $rules = [
-        'patrimonio.numpat' => 'integer',
-        'patrimonio.setor' => 'required|string',
-        'patrimonio.codlocusp' => 'required|integer',
-        'patrimonio.codpes' => 'required|integer|min:1',
-        'patrimonio.usuario' => 'nullable|string',
-        'patrimonio.local' => 'nullable|string',
-        'patrimonio.obs' => 'nullable|string',
-    ];
+    public $nomeLocal;
+
+    // form editar
+    public $editar = false; // true or false
+
+    public function rules()
+    {
+        return [
+            'numpat' => 'required|integer|min:1',
+            'setor' => 'required|string',
+            'codlocusp' => 'required|integer|min:1',
+            'codpes' => 'required|integer|min:1',
+            // 'codpes' => [ // esta validação está falhando ...
+            //     'required',
+            //     function ($attribute, $value, $fail) {
+            //         if (empty($this->patrimonio->obterNomeCodpes())) {
+            //             $fail('Responsável inválido');
+            //         }
+            //     },
+            // ],
+            'usuario' => 'nullable|string',
+            'local' => 'nullable|string',
+            'obs' => 'nullable|string',
+        ];
+    }
 
     // protected $queryString = ['numpat'];
     // protected $listeners = ['refresh' => '$refresh'];
+
+    public function updatedCodlocusp($value)
+    {
+        $this->nomeLocal = null;
+
+        if (!empty($value) && is_numeric($value)) {
+            $local = Localusp::find($value);
+
+            if ($local) {
+                $this->nomeLocal = $local->nomloc;
+            }
+        }
+    }
 
     public function updatedNumpat()
     {
@@ -40,10 +73,18 @@ class BuscarPatrimonio extends Component
 
     public function buscar()
     {
-        $this->numpat = str_replace('.', '', $this->numpat);
+        $this->numpat = (int) str_replace('.', '', $this->numpat);
         $this->patrimonio = Patrimonio::importar(['numpat' => $this->numpat]);
+
         $this->bem = $this->patrimonio->replicado;
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
+
+        $this->setor = $this->patrimonio->setor;
+        $this->codlocusp = $this->patrimonio->codlocusp;
+        $this->codpes = $this->patrimonio->codpes;
+        $this->usuario = $this->patrimonio->usuario;
+        $this->local = $this->patrimonio->local;
+        $this->obs = $this->patrimonio->obs;
 
         $this->dispatch('update-url', ['url' => 'numpat/' . $this->numpat]);
     }
@@ -52,12 +93,13 @@ class BuscarPatrimonio extends Component
     {
         $this->authorize('patrimonios.update', $this->patrimonio);
         $this->validate();
-        // esta lógica deve ir para dentro da validação
-        if (!$this->patrimonio->obterNomeCodpes()) {
-            $this->addError('patrimonio.codpes', 'Responsável inválido');
-            $this->dispatch('refresh')->self();
-            return null;
-        }
+        $this->patrimonio->setor = $this->setor;
+        $this->patrimonio->codlocusp = $this->codlocusp;
+        $this->patrimonio->codpes = $this->codpes;
+        $this->patrimonio->usuario = $this->usuario;
+        $this->patrimonio->local = $this->local;
+        $this->patrimonio->obs = $this->obs;
+
         $this->patrimonio->save();
         $this->localusp = Localusp::firstOrNew(['codlocusp' => $this->patrimonio->codlocusp]);
         $this->editar = false;
@@ -93,15 +135,17 @@ class BuscarPatrimonio extends Component
         $this->patrimonio->refresh();
     }
 
-    public function mount()
+    public function mount($numpat = null)
     {
         $this->authorize('user');
-        $this->numpat && $this->buscar();
+        if ($numpat) {
+            $this->buscar();
+        }
     }
 
     public function render()
     {
         \UspTheme::activeUrl('numpat');
-        return view('livewire.buscar-patrimonio')->extends('layouts.app')->slot('content');
+        return view('livewire.buscar-patrimonio');
     }
 }

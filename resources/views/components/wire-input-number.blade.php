@@ -16,7 +16,7 @@
       </div>
     @endif
     <input id="{{ $id }}" class="form-control" type="number" wire:dirty.class="border-danger"
-      wire:model.lazy="{{ $model }}" {{ $attributes }} title="@error($model){{ $message }}@enderror" />
+      wire:model="{{ $model }}" {{ $attributes }} title="@error($model){{ $message }}@enderror" />
     {{ $slot }}
   </div>
 

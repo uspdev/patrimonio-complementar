@@ -66,10 +66,15 @@ class Patrimonio extends Model implements Auditable
 
     public function temPendencias()
     {
+        // se não existe no replicado
+        if (empty($this->replicado)) {
+            return true;
+        }
+
         if (
-            (!empty($this->codlocusp) && $this->codlocusp != $this->replicado['codlocusp']) ||
-            (!empty($this->setor) && $this->setor != $this->replicado['sglcendsp']) ||
-            (!empty($this->codpes) && $this->codpes != $this->replicado['codpes'])
+            (!empty($this->codlocusp) && ($this->codlocusp != $this->replicado['codlocusp'])) ||
+            (!empty($this->setor) && ($this->setor != $this->replicado['sglcendsp'])) ||
+            (!empty($this->codpes) && ($this->codpes != $this->replicado['codpes']))
         ) {
             return true;
         }
@@ -140,7 +145,7 @@ class Patrimonio extends Model implements Auditable
                 $bem = Bempatrimoniado::obter($patrimonio->numpat);
                 $patrimonio->replicado = $bem;
                 $patrimonio->save();
-                if ($bem['stabem'] != 'Ativo') {
+                if (isset($bem['stabem']) && $bem['stabem'] != 'Ativo') {
                     $patrimonio->delete();
                 }
             }

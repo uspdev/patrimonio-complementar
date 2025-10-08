@@ -18,7 +18,7 @@
       </div>
     @endif
     <textarea id="{{ $id }}" class="form-control" type="text" wire:dirty.class="border-danger"
-      wire:model.lazy="{{ $model }}" {{ $attributes }} title="@error($model){{ $message }}@enderror"></textarea>
+      wire:model="{{ $model }}" {{ $attributes }} title="@error($model){{ $message }}@enderror"></textarea>
     {{ $slot }}
   </div>
 

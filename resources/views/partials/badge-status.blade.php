@@ -2,17 +2,17 @@
   @if ($patrimonio->temPendencias())
     <span class="d-none">1pendente</span>
     <span class="badge badge-danger" title="Com pendências">
-      <i class="fas fa-exclamation-triangle"></i> {{ $patrimonio->conferido_em->diffInDays(now()) }}
+      <i class="fas fa-exclamation-triangle"></i> {{ $patrimonio->conferido_em->diffForHUmans() }}
     </span>
   @else
     <span class="d-none">2conferido</span>
     @if ($patrimonio->conferido_em->diffInDays(now()) > 90)
       <span class="badge badge-warning" title="Verificado há mais de 90 dias">
-        <i class="fas fa-exclamation"></i> {{ $patrimonio->conferido_em->diffInDays(now()) }}
+        <i class="fas fa-exclamation"></i> {{ $patrimonio->conferido_em->diffForHUmans() }}
       </span>
     @else
       <span class="badge badge-success" title="Verificado há menos de 90 dias">
-        <i class="fas fa-check"></i> {{ $patrimonio->conferido_em->diffInDays(now()) }}
+        <i class="fas fa-check"></i> {{ $patrimonio->conferido_em->diffForHUmans() }}
       </span>
     @endif
   @endif
