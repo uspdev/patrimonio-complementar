@@ -5,7 +5,7 @@
   @forelse ($patrimonio->audits()->orderBy('created_at', 'DESC')->get() as $audit)
     <div class="mt-3">
       <b>{{ $audit->created_at->format('d/m/Y H:i') }}</b> ({{ dias($audit->created_at) }}) |
-      {{ $audit->user->name }} |
+      {{ $audit->user?->name }} |
       {{ $audit->event }} <br>
 
       <table class="table table-sm table-bordered">
