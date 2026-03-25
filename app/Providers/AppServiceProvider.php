@@ -25,14 +25,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Livewire::setScriptRoute(function ($handle) {
-            return Route::get(config('app.url') . '/livewire/livewire.js', $handle);
-        });
-        Livewire::setUpdateRoute(function ($handle) {
-            return Route::post(
-                parse_url(config('app.url'), PHP_URL_PATH) . '/livewire/update',
-                $handle
-            );
-        });
+        $path = parse_url(config('app.url'), PHP_URL_PATH);
+        if ($path && $path !== '/') {
+            $path = rtrim($path, '/');
+
+            Livewire::setScriptRoute(function ($handle) use ($path) {
+                return Route::get($path . '/livewire/livewire.js', $handle);
+            });
+
+            Livewire::setUpdateRoute(function ($handle) use ($path) {
+                return Route::post($path . '/livewire/update', $handle)
+                    ->name('livewire.update');
+            });
+        }
     }
 }
