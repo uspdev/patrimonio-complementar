@@ -62,6 +62,8 @@ class PatrimonioPolicy
 
         // gerente do setor
         $ret = (Gate::check('manager') && strpos($user->setores, $patrimonio->setor) !== false) ? true : $ret;
+        
+        $ret = (Gate::check('admin')) ? true : $ret;
 
         return $ret;
     }
