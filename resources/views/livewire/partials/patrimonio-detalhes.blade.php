@@ -3,57 +3,55 @@
 <div>
   Nro: <b>{{ formatarNumpat($bem['numpat']) }}</b><br>
 
-  @if (!$editar)
-    <div class="row">
-      <div class="col-md-6">
-        {{ $bem['tipo'] }} | {{ $bem['material'] }}<br>
-        Desc: {{ $bem['descricao'] }}<br>
-        Setor/bloco: <b>@include('patrimonio.partials.setor')</b><br>
-        Local: @include('patrimonio.partials.local')<br>
-        Resp: @include('patrimonio.partials.responsavel')<br>
-      </div>
-      <div class="col-md-6">
-        <div class="mb-2"></div>
-        Usuário: <b>{{ $patrimonio->usuario }}</b> <br>
-        Local na sala: <b>{{ $patrimonio->local }}</b><br>
-        Observações: <br>
-        <div class="ml-2 font-weight-bold">
-          {!! nl2br($patrimonio->obs) !!}
+  @can('patrimonios.update', $patrimonio)
+    @if ($editar == true)
+      @include('patrimonio.partials.editar-form')
+    @else
+      <div class="row">
+        <div class="col-md-6">
+          {{ $bem['tipo'] }} | {{ $bem['material'] }}<br>
+          Desc: {{ $bem['descricao'] }}<br>
+          Setor/bloco: <b>@include('patrimonio.partials.setor')</b><br>
+          Local: @include('patrimonio.partials.local')<br>
+          Resp: @include('patrimonio.partials.responsavel')<br>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-2"></div>
+          Usuário: <b>{{ $patrimonio->usuario }}</b> <br>
+          Local na sala: <b>{{ $patrimonio->local }}</b><br>
+          Observações: <br>
+          <div class="ml-2 font-weight-bold">
+            {!! nl2br($patrimonio->obs) !!}
+          </div>
         </div>
       </div>
-    </div>
 
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-          <div>{{ $error }}</div>
-        @endforeach
-      </div>
-    @endif
-  @endif
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+            <div>{{ $error }}</div>
+          @endforeach
+        </div>
+      @endif
+      @if ($bem['stabem'] == 'Ativo')
+        <div class="row mt-3">
+          <div class="col-md-6">
+            @include('patrimonio.partials.conferir-button')
 
-
-  @can('patrimonios.update', $patrimonio)
-    @include('patrimonio.partials.editar-form')
-
-    @if ($bem['stabem'] == 'Ativo' && $editar == false)
-      <div class="row mt-3">
-        <div class="col-md-6">
-          @include('patrimonio.partials.conferir-button')
-
-          {{-- Somente admin por enquanto --}}
-          {{-- @includeWhen(Gate::check('admin'), 'patrimonio.partials.abrir-mercurio-button', [
+            {{-- Somente admin por enquanto --}}
+            {{-- @includeWhen(Gate::check('admin'), 'patrimonio.partials.abrir-mercurio-button', [
               'numpat' => $bem['numpat'],
           ]) --}}
 
-          {{-- <button class="btn btn-success">Dados USP estão corretos <i class="fas fa-download"></i></button> --}}
+            {{-- <button class="btn btn-success">Dados USP estão corretos <i class="fas fa-download"></i></button> --}}
 
-          <div class="float-right">
-            <button class="btn btn-success" wire:click="$set('editar', true)">Editar <i class="fas fa-edit"></i></button>
+            <div class="float-right">
+              <button class="btn btn-success" wire:click="$set('editar', true)">Editar <i class="fas fa-edit"></i></button>
+            </div>
+            <div class="clearfix"></div>
           </div>
-          <div class="clearfix"></div>
         </div>
-      </div>
+      @endif
     @endif
   @endcan
 

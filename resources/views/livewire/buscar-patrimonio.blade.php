@@ -10,9 +10,12 @@
 
   </div>
   {{-- {{ $numpat }} --}}
-  <div>
-    @includeWhen($bem, 'livewire.partials.patrimonio-detalhes')
-    @includeUnless($bem, 'livewire.partials.patrimonio-nao-encontrado')
+  <div wire:key="patrimonio-wrapper">
+    @if ($bem)
+      @include('livewire.partials.patrimonio-detalhes')
+    @else
+      @include('livewire.partials.patrimonio-nao-encontrado')
+    @endif
   </div>
 
   @section('javascripts_bottom')
