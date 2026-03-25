@@ -9,7 +9,6 @@
     </div>
 
   </div>
-  {{-- {{ $numpat }} --}}
   <div wire:key="patrimonio-wrapper">
     @if ($bem)
       @include('livewire.partials.patrimonio-detalhes')
@@ -18,14 +17,11 @@
     @endif
   </div>
 
-  @section('javascripts_bottom')
-    @parent
+  @push('scripts')
     <script>
-      // Atualiza a url ao mudar o numpat
-      // https://stackoverflow.com/questions/4475367/how-to-change-url-at-address-bar-without-reloading-the-page
       window.addEventListener('update-url', event => {
         window.history.pushState('', '', event.detail.url)
       })
     </script>
-  @endsection
+  @endpush
 </div>

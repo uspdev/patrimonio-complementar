@@ -26,3 +26,5 @@
     // Seu código .js
   </script>
 @endsection
+
+@stack('scripts')

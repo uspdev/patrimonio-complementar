@@ -86,7 +86,7 @@ class BuscarPatrimonio extends Component
         $this->local = $this->patrimonio->local;
         $this->obs = $this->patrimonio->obs;
 
-        $this->dispatch('update-url', ['url' => 'numpat/' . $this->numpat]);
+        $this->dispatch('update-url', url: 'numpat/' . $this->numpat);
     }
 
     public function salvar()
